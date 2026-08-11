@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abra sua conta digital no Eclipse Bank.">
+    <title>Criar conta | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/cadastro.css">
+</head>
+<body>
+    <main class="pagina-cadastro">
+        <section class="apresentacao" aria-labelledby="titulo-apresentacao">
+            <a class="marca" href="cadastro.html" aria-label="Eclipse Bank - início">
+                <span class="marca-simbolo" aria-hidden="true">
+                    <span></span>
+                </span>
+                <span>ECLIPSE<span>BANK</span></span>
+            </a>
+
+            <div class="apresentacao-conteudo">
+                <p class="etiqueta">BANCO DIGITAL, DO SEU JEITO</p>
+                <h1 id="titulo-apresentacao">Sua vida financeira em uma nova órbita.</h1>
+                <p class="texto-apresentacao">
+                    Uma conta transparente, segura e feita para você controlar cada movimento.
+                </p>
+
+                <ul class="beneficios" aria-label="Benefícios da conta">
+                    <li><span aria-hidden="true">✓</span> Conta digital sem tarifa mensal</li>
+                    <li><span aria-hidden="true">✓</span> Pix e transferências em poucos passos</li>
+                    <li><span aria-hidden="true">✓</span> Segurança em todas as operações</li>
+                </ul>
+            </div>
+
+            <p class="apresentacao-rodape">© 2026 Eclipse Bank</p>
+            <div class="orbita orbita-um" aria-hidden="true"></div>
+            <div class="orbita orbita-dois" aria-hidden="true"></div>
+        </section>
+
+        <section class="area-formulario" aria-labelledby="titulo-cadastro">
+            <div class="formulario-container">
+                <header class="cabecalho-formulario">
+                    <p class="passo">ABERTURA DE CONTA</p>
+                    <h2 id="titulo-cadastro">Crie sua conta</h2>
+                    <p>Preencha seus dados pessoais para começar.</p>
+                </header>
+
+                <form id="form-cadastro">
+                    <div class="campo campo-largo">
+                        <label for="nome">Nome completo</label>
+                        <input
+                            id="nome"
+                            name="nome"
+                            type="text"
+                            autocomplete="name"
+                            minlength="3"
+                            maxlength="100"
+                            placeholder="Como aparece no seu documento"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo campo-largo">
+                        <label for="nome-social">
+                            Nome social <span class="opcional">opcional</span>
+                        </label>
+                        <input
+                            id="nome-social"
+                            name="nomeSocial"
+                            type="text"
+                            minlength="3"
+                            maxlength="100"
+                            placeholder="Como você prefere ser chamado(a)"
+                        >
+                    </div>
+
+                    <div class="grade-campos">
+                        <div class="campo">
+                            <label for="cpf">CPF</label>
+                            <input
+                                id="cpf"
+                                name="cpf"
+                                type="text"
+                                inputmode="numeric"
+                                autocomplete="off"
+                                maxlength="14"
+                                placeholder="000.000.000-00"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="data-nascimento">Data de nascimento</label>
+                            <input
+                                id="data-nascimento"
+                                name="dataNascimento"
+                                type="date"
+                                autocomplete="bday"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="telefone">Telefone</label>
+                            <input
+                                id="telefone"
+                                name="telefone"
+                                type="tel"
+                                inputmode="tel"
+                                autocomplete="tel"
+                                maxlength="15"
+                                placeholder="(00) 00000-0000"
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="email">E-mail</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                maxlength="150"
+                                placeholder="voce@exemplo.com"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="campo campo-largo">
+                        <label for="senha">Crie uma senha</label>
+                        <input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="72"
+                            placeholder="Mínimo de 8 caracteres"
+                            aria-describedby="dica-senha"
+                            required
+                        >
+                        <small id="dica-senha">Use letras, números e evite informações pessoais.</small>
+                    </div>
+
+                    <label class="aceite" for="termos">
+                        <input id="termos" name="termos" type="checkbox" required>
+                        <span>
+                            Li e aceito os <a href="#">Termos de Uso</a> e a
+                            <a href="#">Política de Privacidade</a>.
+                        </span>
+                    </label>
+
+                    <p id="mensagem-formulario" class="mensagem-formulario" role="status" aria-live="polite"></p>
+
+                    <button class="botao-principal" type="submit">
+                        Criar minha conta
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </form>
+
+                <p class="entrar">
+                    Já possui uma conta? <a href="login.html">Entrar</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../script/cadastro.js"></script>
+</body>
+</html>
