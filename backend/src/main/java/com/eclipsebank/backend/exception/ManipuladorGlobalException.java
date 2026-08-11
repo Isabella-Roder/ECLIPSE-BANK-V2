@@ -131,4 +131,18 @@ public class ManipuladorGlobalException {
 
         return ResponseEntity.status(status).body(resposta);
     }
+
+    @ExceptionHandler(CredenciaisInvalidasException.class)
+    public ResponseEntity<ErroResposta> tratarCredenciaisInvalidas(
+        CredenciaisInvalidasException exception,
+        HttpServletRequest request
+    ) {
+        return criarResposta(
+            HttpStatus.UNAUTHORIZED,
+            "Não autorizado",
+            exception.getMessage(),
+            request,
+            Map.of()
+        );
+    }
 }

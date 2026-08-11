@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Acesse sua conta no Eclipse Bank.">
+    <title>Entrar | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <main class="pagina-login">
+        <section class="painel-marca" aria-labelledby="titulo-painel">
+            <a class="marca" href="login.html" aria-label="Eclipse Bank - início">
+                <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+                <span>ECLIPSE<span>BANK</span></span>
+            </a>
+
+            <div class="painel-conteudo">
+                <p class="etiqueta">SEU BANCO. SEU CONTROLE.</p>
+                <h1 id="titulo-painel">Tudo o que importa, em um só lugar.</h1>
+                <p>
+                    Acompanhe seu saldo, faça transferências e cuide da sua vida
+                    financeira com clareza.
+                </p>
+            </div>
+
+            <blockquote>
+                <p>“Simples por fora. Seguro em cada detalhe.”</p>
+                <footer>Eclipse Bank</footer>
+            </blockquote>
+
+            <div class="eclipse eclipse-externo" aria-hidden="true"></div>
+            <div class="eclipse eclipse-interno" aria-hidden="true"></div>
+        </section>
+
+        <section class="area-login" aria-labelledby="titulo-login">
+            <div class="login-container">
+                <header>
+                    <p class="etiqueta">ACESSO SEGURO</p>
+                    <h2 id="titulo-login">Boas-vindas de volta</h2>
+                    <p>Entre com os dados cadastrados na sua conta.</p>
+                </header>
+
+                <form id="form-login">
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autocomplete="email"
+                            maxlength="150"
+                            placeholder="voce@exemplo.com"
+                            required
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <div class="linha-label">
+                            <label for="senha">Senha</label>
+                            <a href="#">Esqueci minha senha</a>
+                        </div>
+                        <input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            autocomplete="current-password"
+                            placeholder="Digite sua senha"
+                            required
+                        >
+                    </div>
+
+                    <label class="lembrar" for="manter-conectado">
+                        <input id="manter-conectado" name="manterConectado" type="checkbox">
+                        <span>Manter meu acesso neste dispositivo</span>
+                    </label>
+
+                    <p id="mensagem-login" class="mensagem-login" role="status" aria-live="polite"></p>
+
+                    <button id="botao-login" class="botao-login" type="submit">
+                        Entrar na minha conta
+                        <span aria-hidden="true">→</span>
+                    </button>
+                </form>
+
+                <div class="divisor" aria-hidden="true"><span>ou</span></div>
+
+                <a class="botao-cadastro" href="cadastro.html">Abrir uma conta</a>
+
+                <p class="aviso-seguranca">
+                    <span aria-hidden="true">●</span>
+                    O Eclipse Bank nunca solicita sua senha por e-mail ou telefone.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../script/login.js"></script>
+</body>
+</html>

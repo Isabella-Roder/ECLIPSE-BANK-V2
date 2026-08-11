@@ -6,10 +6,12 @@ import java.util.Locale;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.eclipsebank.backend.dto.LoginRequisicao;
 import com.eclipsebank.backend.dto.UsuarioAtualizacao;
 import com.eclipsebank.backend.dto.UsuarioCadastro;
 import com.eclipsebank.backend.dto.UsuarioResposta;
 import com.eclipsebank.backend.exception.ConflitoException;
+import com.eclipsebank.backend.exception.CredenciaisInvalidasException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Usuario;
 import com.eclipsebank.backend.repository.UsuarioRepository;
@@ -153,4 +155,26 @@ public class UsuarioService {
         usuario.setAtivo(false);
     }
     
+    @Transactional(readOnly = true)
+    public UsuarioResposta login(LoginRequisicao dados) {
+        String email = normalizarEmail(dados.email());
+
+        Usuario usuario = usuarioRepository.findByEmailIgnoreCase(email)
+            .orElseThrow(CredenciaisInvalidasException::new);
+
+        if (!usuario.getAtivo()) {
+            throw new CredenciaisInvalidasException();
+        }
+
+        boolean senhaCorreta = passwordEncoder.matches(
+            dados.senha(),
+            usuario.getSenhaHash()
+        );
+
+        if (!senhaCorreta) {
+            throw new CredenciaisInvalidasException();
+        }
+
+        return UsuarioResposta.from(usuario);
+    }
 }

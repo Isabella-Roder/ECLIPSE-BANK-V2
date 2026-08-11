@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eclipsebank.backend.dto.LoginRequisicao;
 import com.eclipsebank.backend.dto.UsuarioAtualizacao;
 import com.eclipsebank.backend.dto.UsuarioCadastro;
 import com.eclipsebank.backend.dto.UsuarioResposta;
@@ -57,5 +58,10 @@ public class UsuarioController {
     public ResponseEntity<Void> desativar(@PathVariable Long id) {
         usuarioService.desativar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioResposta> login(@Valid @RequestBody LoginRequisicao dados) {
+        return ResponseEntity.ok(usuarioService.login(dados));
     }
 }
