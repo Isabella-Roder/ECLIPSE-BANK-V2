@@ -54,7 +54,7 @@ formulario.addEventListener("submit", async (evento) => {
         mensagem.textContent = "Login realizado com sucesso.";
 
         setTimeout(() => {
-            // adicionar a direção para a home
+            window.location.href = "conta.html"
         }, 750);
     } catch (erro) {
         console.error(erro);

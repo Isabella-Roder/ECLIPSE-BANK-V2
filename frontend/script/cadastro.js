@@ -64,7 +64,7 @@ formulario.addEventListener("submit", async (evento) => {
         formulario.reset();
 
         setTimeout(() => {
-            // Adicionar a direção da home aqui.
+            window.location.href = "conta.html";
         }, 750);
     } catch (erro) {
         console.error(erro);

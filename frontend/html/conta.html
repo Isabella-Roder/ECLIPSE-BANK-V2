@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha conta | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <div>
+            <span id="nome-usuario">Olá, cliente</span>
+            <button id="botao-sair" type="button">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo-painel">
+        <section class="resumo-conta" aria-labelledby="titulo-conta">
+            <p class="etiqueta">MINHA CONTA</p>
+            <h1 id="titulo-conta">Visão geral</h1>
+
+            <article class="cartao-saldo">
+                <div class="topo-saldo">
+                    <span>Saldo disponível</span>
+                    <button id="botao-ocultar-saldo" type="button">
+                        Ocultar
+                    </button>
+                </div>
+
+                <strong id="saldo-conta">R$ 0,00</strong>
+
+                <dl>
+                    <div>
+                        <dt>Agência</dt>
+                        <dd id="agencia-conta">----</dd>
+                    </div>
+
+                    <div>
+                        <dt>Conta</dt>
+                        <dd id="numero-conta">--------</dd>
+                    </div>
+                </dl>
+            </article>
+        </section>
+
+        <section class="secao-painel" aria-labelledby="titulo-acoes">
+            <h2 id="titulo-acoes">O que você deseja fazer?</h2>
+
+            <nav class="grade-acoes">
+                <a href="#">Pix</a>
+                <a href="#">Transferir</a>
+                <a href="#">Depositar</a>
+                <a href="#">Sacar</a>
+            </nav>
+        </section>
+
+        <section class="secao-painel atividade" aria-labelledby="titulo-atividade">
+            <header class="cabecalho-secao">
+                <h2 id="titulo-atividade">Atividade recente</h2>
+                <a href="#">Ver extrato</a>
+            </header>
+
+            <div id="lista-movimentacoes">
+                <p>Nenhuma movimentação encontrada.</p>
+            </div>
+        </section>
+
+        <p id="mensagem-conta" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="../script/conta.js"></script>
+</body>
+</html>
