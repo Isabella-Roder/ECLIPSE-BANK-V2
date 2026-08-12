@@ -239,6 +239,64 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
 .cabecalho-secao a { color: var(--violeta-claro); font-size: .82rem; }
 #lista-movimentacoes { margin-top: 24px; padding: 30px; border-radius: 12px; color: #8f8998; background: #0e0f17; text-align: center; }
 
+/* Depósito e saque */
+.voltar-painel { color: #c9c4d2; font-size: .82rem; font-weight: 700; text-decoration: none; }
+.voltar-painel:hover { color: var(--violeta-claro); }
+.conteudo-operacao {
+    display: grid;
+    width: min(720px,calc(100% - 40px));
+    margin: 0 auto;
+    gap: 20px;
+    padding: 65px 0 90px;
+}
+.cartao-operacao {
+    padding: clamp(25px,5vw,46px);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 22px;
+    background: linear-gradient(145deg,#171824,#10111a);
+    box-shadow: 0 28px 70px rgba(0,0,0,.25);
+}
+.cabecalho-operacao { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 36px; }
+.cabecalho-operacao .etiqueta { margin-bottom: 8px; }
+.cabecalho-operacao h1 { margin: 0; font: 500 clamp(2.2rem,6vw,3.5rem) Georgia,serif; letter-spacing: -.04em; }
+.cabecalho-operacao p:last-child { margin: 10px 0 0; color: #97919f; line-height: 1.55; }
+.icone-operacao {
+    display: grid; width: 52px; height: 52px; flex: 0 0 52px; place-items: center;
+    border-radius: 15px; font-size: 1.6rem; font-weight: 300;
+}
+.icone-operacao.credito { color: #8de0bd; background: rgba(46,160,116,.16); }
+.icone-operacao.debito { color: #ff9fb6; background: rgba(201,54,92,.16); }
+.form-operacao { display: grid; gap: 22px; }
+.pagina-operacao .campo label { color: #ded9e7; }
+.pagina-operacao .campo input { border-color: rgba(255,255,255,.11); color: var(--branco); background: #0d0e16; }
+.pagina-operacao .campo input:focus { border-color: var(--violeta); background: #10111a; }
+.entrada-monetaria { position: relative; }
+.entrada-monetaria > span {
+    position: absolute; top: 50%; left: 17px; z-index: 1; transform: translateY(-50%);
+    color: var(--violeta-claro); font-size: 1.05rem; font-weight: 800;
+}
+.entrada-monetaria input { min-height: 68px; padding-left: 55px; font-size: 1.5rem; font-weight: 700; }
+.resumo-operacao, .saldo-operacao {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 17px 18px; border: 1px solid rgba(255,255,255,.07); border-radius: 11px;
+    color: #918b99; background: #0d0e16; font-size: .8rem;
+}
+.resumo-operacao strong, .saldo-operacao strong { color: #e8e3ed; letter-spacing: .04em; }
+.saldo-operacao { margin: -12px 0 28px; }
+.saldo-operacao strong { font: 500 1.4rem Georgia,serif; }
+.mensagem-operacao { display: none; margin: 0; padding: 12px 14px; border-radius: 9px; font-size: .82rem; }
+.mensagem-operacao:not(:empty) { display: block; }
+.botao-confirmar {
+    display: flex; min-height: 56px; align-items: center; justify-content: space-between;
+    padding: 0 22px; border: 0; border-radius: 10px; color: var(--branco); background: var(--violeta);
+    box-shadow: 0 14px 32px rgba(139,92,246,.24); font-weight: 800; cursor: pointer;
+}
+.botao-confirmar:hover { background: #9b70f8; transform: translateY(-1px); }
+.botao-confirmar:disabled { cursor: wait; opacity: .65; transform: none; }
+.aviso-operacao { padding: 19px 21px; border: 1px solid rgba(255,255,255,.07); border-radius: 14px; color: #97919f; background: #10111a; }
+.aviso-operacao strong { color: #d9d4e0; font-size: .82rem; }
+.aviso-operacao p { margin: 7px 0 0; font-size: .76rem; line-height: 1.55; }
+
 @media (max-width: 900px) {
     .pagina-autenticacao > main { grid-template-columns: 1fr; }
     .apresentacao, .painel-marca { position: relative; height: auto; min-height: 500px; }
@@ -253,6 +311,8 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
     .cabecalho-painel .marca { font-size: .72rem; letter-spacing: .1em; }
     .cabecalho-painel > div { align-items: flex-end; flex-direction: column; gap: 8px; font-size: .8rem; }
     .cartao-saldo dl { gap: 22px; }
+    .cabecalho-operacao { align-items: center; }
+    .cabecalho-operacao > div { min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: .01ms !important; }

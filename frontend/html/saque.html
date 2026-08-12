@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simule um saque na sua conta Eclipse Bank.">
+    <title>Sacar | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-operacao">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-operacao">
+        <section class="cartao-operacao" aria-labelledby="titulo-operacao">
+            <header class="cabecalho-operacao">
+                <span class="icone-operacao debito" aria-hidden="true">−</span>
+                <div>
+                    <p class="etiqueta">RETIRAR SALDO</p>
+                    <h1 id="titulo-operacao">Fazer saque</h1>
+                    <p>Confira seu saldo e informe o valor que deseja retirar.</p>
+                </div>
+            </header>
+
+            <div class="saldo-operacao">
+                <span>Saldo disponível</span>
+                <strong id="saldo-disponivel">R$ 0,00</strong>
+            </div>
+
+            <form id="form-saque" class="form-operacao">
+                <div class="campo campo-valor">
+                    <label for="valor">Valor do saque</label>
+                    <div class="entrada-monetaria">
+                        <span>R$</span>
+                        <input
+                            id="valor"
+                            name="valor"
+                            type="number"
+                            inputmode="decimal"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0,00"
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">
+                        Descrição <span class="opcional">opcional</span>
+                    </label>
+                    <input
+                        id="descricao"
+                        name="descricao"
+                        type="text"
+                        maxlength="180"
+                        placeholder="Ex.: saque de teste"
+                    >
+                </div>
+
+                <p id="mensagem-operacao" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+                <button id="botao-confirmar" class="botao-confirmar" type="submit">
+                    Confirmar saque <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <aside class="aviso-operacao">
+            <strong>Proteção de saldo</strong>
+            <p>O sistema recusará valores acima do saldo disponível e registrará somente operações concluídas.</p>
+        </aside>
+    </main>
+
+    <script src="../script/saque.js"></script>
+</body>
+</html>

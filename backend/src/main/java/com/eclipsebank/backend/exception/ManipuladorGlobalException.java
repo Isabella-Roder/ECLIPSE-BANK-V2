@@ -145,4 +145,21 @@ public class ManipuladorGlobalException {
             Map.of()
         );
     }
+
+    @ExceptionHandler({
+        SaldoInsuficienteException.class,
+        ContaIndisponivelException.class
+    })
+    public ResponseEntity<ErroResposta> tratarRegraBancaria(
+        RuntimeException exception,
+        HttpServletRequest request
+    ) {
+        return criarResposta(
+            HttpStatus.UNPROCESSABLE_ENTITY,
+            "Operação não permitida",
+            exception.getMessage(),
+            request,
+            Map.of()
+        );
+    }
 }

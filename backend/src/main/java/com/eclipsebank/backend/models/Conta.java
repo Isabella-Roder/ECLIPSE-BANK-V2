@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.eclipsebank.backend.enums.StatusConta;
+import com.eclipsebank.backend.exception.ContaIndisponivelException;
+import com.eclipsebank.backend.exception.SaldoInsuficienteException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -82,6 +84,36 @@ public class Conta {
     @PreUpdate
     private void antesDeAtualizar() {
         atualizadaEm = LocalDateTime.now();
+    }
+
+    public void creditar(BigDecimal valor) {
+        validarContaAtiva();
+        validarValorPositivo(valor);
+
+        saldo = saldo.add(valor);
+    }
+
+    public void debitar(BigDecimal valor) {
+        validarContaAtiva();
+        validarValorPositivo(valor);
+
+        if (saldo.compareTo(valor) < 0) {
+            throw new SaldoInsuficienteException();
+        }
+
+        saldo = saldo.subtract(valor);
+    }
+
+    private void validarContaAtiva() {
+        if (status != StatusConta.ATIVA) {
+            throw new ContaIndisponivelException();
+        }
+    }
+
+    private void validarValorPositivo(BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero");
+        }
     }
 
     public Long getId() {
