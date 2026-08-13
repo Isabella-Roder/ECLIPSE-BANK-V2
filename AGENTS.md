@@ -61,9 +61,9 @@ O frontend é aberto pelo Live Server. Em desenvolvimento, a API fica em `http:/
 - Erros padronizados: 400, 401, 404, 409, 422 e 500.
 - Conta individual por usuário, saldo em `BigDecimal`, status e `@Version`.
 - Criação e consulta de conta.
-- Depósito e saque transacionais.
+- Depósito, saque, transferência e Pix por chave de e-mail transacionais.
 - Extrato imutável e comprovante por UUID.
-- Telas: cadastro, login, painel, depósito e saque.
+- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato e comprovante.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 
 ## Rotas existentes
@@ -83,6 +83,8 @@ GET    /api/contas/buscar?agencia=0001&numero=...
 
 POST   /api/contas/{contaId}/depositos
 POST   /api/contas/{contaId}/saques
+POST   /api/contas/{contaId}/transferencias
+POST   /api/contas/{contaId}/pix
 GET    /api/contas/{contaId}/extrato
 GET    /api/movimentacoes/{codigo}
 ```
@@ -106,18 +108,16 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 
 ## Próximos passos recomendados
 
-1. Implementar e testar `deposito.js` e `saque.js`.
-2. Carregar atividade recente no painel a partir do extrato.
-3. Criar testes automatizados de depósito, saque, rollback e saldo insuficiente.
-4. Implementar transferência atômica entre contas.
-5. Adicionar Spring Security e substituir armazenamento provisório por cookie seguro.
-6. Implementar Pix, documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+1. Criar testes automatizados de depósito, saque, transferência, Pix, rollback e saldo insuficiente.
+2. Adicionar Spring Security e substituir armazenamento provisório por cookie seguro.
+3. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+4. Evoluir o Pix para aceitar outros tipos de chave além do e-mail.
 
 ## Atenções conhecidas
 
 - Não execute duas instâncias do Spring na porta 8080.
 - O banco H2 em arquivo aceita uma instância por vez; os testes já usam banco em memória separado.
-- `frontend/script/deposito.js` e `frontend/script/saque.js` ainda precisam ser implementados.
+- A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, o fluxo ideal é direcionar para login ou criar uma sessão real; não tratar o objeto no storage como prova de autenticação.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
 

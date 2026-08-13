@@ -92,9 +92,10 @@ function preencherExtrato(movimentacoes) {
 
         const credito = 
             movimentacao.tipo === "DEPOSITO" ||
-            movimentacao.tipo === "TRANSFERENCIA_RECEBIDA";
+            movimentacao.tipo === "TRANSFERENCIA_RECEBIDA" ||
+            movimentacao.tipo === "PIX_RECEBIDO";
 
-        const sinal = movimentacao.tipo === "DEPOSITO" ? "+" : "-";
+        const sinal = credito ? "+" : "-";
 
         const data = new Date(movimentacao.criadaEm).toLocaleString("pt-BR");
 

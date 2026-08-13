@@ -40,8 +40,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 - [x] Depósito
 - [x] Saque
-- [ ] Transferência entre contas
-- [ ] Pix por chave
+- [x] Transferência entre contas
+- [x] Pix por chave de e-mail
 - [x] Validação de saldo antes de débitos
 - [x] Operações atômicas com `@Transactional`
 - [ ] Proteção contra envio duplicado da mesma operação
@@ -86,9 +86,9 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Login validado de ponta a ponta no navegador
 - [x] Painel com saldo e resumo da conta
 - [x] Tela de depósito e saque
-- [ ] Tela de transferência e Pix
-- [ ] Extrato com filtros
-- [ ] Comprovante de operação
+- [x] Tela de transferência e Pix
+- [x] Extrato com filtros
+- [x] Comprovante de operação
 - [x] Lista de movimentações recentes no painel
 - [x] Layout responsivo e identidade visual própria
 

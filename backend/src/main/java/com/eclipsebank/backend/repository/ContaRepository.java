@@ -15,4 +15,6 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
     boolean existsByUsuarioId(Long usuarioId);
 
     boolean existsByAgenciaAndNumero(String agencia, String numero);
+
+    Optional<Conta> findByUsuarioEmailIgnoreCase(String email);
 }

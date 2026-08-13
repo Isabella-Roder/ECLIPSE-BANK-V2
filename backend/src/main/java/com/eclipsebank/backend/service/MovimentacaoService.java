@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eclipsebank.backend.dto.MovimentacaoResposta;
 import com.eclipsebank.backend.dto.OperacaoValor;
+import com.eclipsebank.backend.dto.PixRequisicao;
 import com.eclipsebank.backend.dto.TransferenciaRequisicao;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
@@ -35,6 +36,11 @@ public class MovimentacaoService {
     private Conta buscarContaDestino(String agencia, String numero) {
         return contaRepository.findByAgenciaAndNumero(agencia, numero)
             .orElseThrow(() -> new RecursoNaoEncontradoException("Conta de destino não encontrada"));
+    }
+
+    private Conta buscarContaPorChavePix(String chave) {
+        return contaRepository.findByUsuarioEmailIgnoreCase(chave.trim())
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Chave pix não encontrada"));
     }
 
     private MovimentacaoResposta registrar(Conta conta, TipoMovimentacao tipo, BigDecimal valor, String descricao) {
@@ -95,6 +101,26 @@ public class MovimentacaoService {
         MovimentacaoResposta movimentacaoEnviada = registrar(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, dados.valor(), dados.descricao());
 
         registrar(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, dados.valor(), dados.descricao());
+
+        return movimentacaoEnviada;
+    }
+
+    @Transactional
+    public MovimentacaoResposta fazerPix(Long contaOrigemId, PixRequisicao dados) {
+        Conta contaOrigem = buscarConta(contaOrigemId);
+
+        Conta contaDestino = buscarContaPorChavePix(dados.chave());
+
+        if (contaOrigem.getId().equals(contaDestino.getId())) {
+            throw new IllegalArgumentException("A chave pix não pode ser a mesma da conta de origem");
+        }
+
+        contaOrigem.debitar(dados.valor());
+        contaDestino.creditar(dados.valor());
+
+        MovimentacaoResposta movimentacaoEnviada = registrar(contaOrigem, TipoMovimentacao.PIX_ENVIADO, dados.valor(), dados.descricao());
+
+        registrar(contaDestino, TipoMovimentacao.PIX_RECEBIDO, dados.valor(), dados.descricao());
 
         return movimentacaoEnviada;
     }

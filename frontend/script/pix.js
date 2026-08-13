@@ -11,9 +11,8 @@ if (!usuarioSalvo) {
 
 const usuario = JSON.parse(usuarioSalvo);
 
-const formulario = document.getElementById("form-transferencia");
-const agenciaDestino = document.getElementById("agencia-destino");
-const numeroDestino = document.getElementById("numero-destino");
+const formulario = document.getElementById("form-pix");
+const chavePix = document.getElementById("chave-pix");
 const valor = document.getElementById("valor");
 const descricao = document.getElementById("descricao");
 const saldoDisponivel = document.getElementById("saldo-disponivel");
@@ -45,9 +44,7 @@ async function carregarConta() {
         }
 
         contaId = corpo.id;
-        
         renderizarConta(corpo);
-
     } catch (erro) {
         console.error(erro);
         mensagem.textContent = "Erro: " + erro.message;
@@ -56,7 +53,7 @@ async function carregarConta() {
 
 function renderizarConta(conta) {
     saldoDisponivel.textContent = formatarValor(conta.saldo);
-    contaOrigem.textContent = `Agência ${conta.agencia} · Conta ${conta.numero}`;
+    contaOrigem.textContent = `Agência ${conta.agencia} · Numero ${conta.numero}`;
 }
 
 formulario.addEventListener("submit", async (evento) => {
@@ -66,23 +63,22 @@ formulario.addEventListener("submit", async (evento) => {
         return;
     }
 
-    if (!agenciaDestino.value || !numeroDestino.value || !valor.value) {
-        mensagem.textContent = "Preencha todos os campos";
+    if (!chavePix.value.trim() || !valor.value) {
+        mensagem.textContent = "Preencha os campos obrigatórios"
         return;
     }
 
     const dados = {
-        agenciaDestino: agenciaDestino.value.trim(),
-        numeroDestino: numeroDestino.value.trim(),
+        chave: chavePix.value.trim(),
         valor: Number(valor.value),
         descricao: descricao.value.trim() || null
-    };
+    }
 
     try {
         btnConfirmar.disabled = true;
-        btnConfirmar.textContent = "Transferindo...";
+        btnConfirmar.textContent = "Enviando...";
 
-        const resposta = await fetch(`${API_URL}/contas/${contaId}/transferencias`, {
+        const resposta = await fetch(`${API_URL}/contas/${contaId}/pix`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -94,13 +90,14 @@ formulario.addEventListener("submit", async (evento) => {
 
         if (!resposta.ok) {
             const erroDosCampos = Object.values(corpo.campos || {});
-            const textoErro = erroDosCampos[0] || corpo.mensagem || "Erro ao transferir";
+            const textoErro = erroDosCampos[0] || corpo.mensagem || "Erro ao enviar pix";
 
             throw new Error(textoErro);
         }
 
-        mensagem.className = "mensagem-operacao sucesso";
-        mensagem.textContent = "Transferencia realizada com sucesso";
+
+        mensagem.classList = "mensagem-operacao sucesso";
+        mensagem.textContent = "Pix enviado com sucesso";
 
         saldoDisponivel.textContent = formatarValor(corpo.saldoResultante);
 
@@ -110,8 +107,8 @@ formulario.addEventListener("submit", async (evento) => {
         mensagem.textContent = "Erro: " + erro.message;
     } finally {
         btnConfirmar.disabled = false;
-        btnConfirmar.textContent = "Confirmar transferência";
+        btnConfirmar.textContent = "Confirmar pix";
     }
-});
+})
 
 carregarConta();

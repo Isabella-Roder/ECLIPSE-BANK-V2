@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Envie um Pix entre contas do Eclipse Bank.">
+    <title>Pix | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-operacao">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-operacao">
+        <section class="cartao-operacao" aria-labelledby="titulo-operacao">
+            <header class="cabecalho-operacao">
+                <span class="icone-operacao debito" aria-hidden="true">◇</span>
+
+                <div>
+                    <p class="etiqueta">PAGAMENTO INSTANTÂNEO</p>
+                    <h1 id="titulo-operacao">Fazer Pix</h1>
+                    <p>Informe a chave Pix e o valor que deseja enviar.</p>
+                </div>
+            </header>
+
+            <div class="saldo-operacao">
+                <span>Saldo disponível</span>
+                <strong id="saldo-disponivel">R$ 0,00</strong>
+            </div>
+
+            <form id="form-pix" class="form-operacao">
+                <div class="campo">
+                    <label for="chave-pix">Chave Pix</label>
+                    <input
+                        id="chave-pix"
+                        name="chave"
+                        type="email"
+                        inputmode="email"
+                        autocomplete="off"
+                        maxlength="150"
+                        placeholder="email@exemplo.com"
+                        aria-describedby="dica-chave-pix"
+                        required
+                        autofocus
+                    >
+                    <small id="dica-chave-pix">
+                        Nesta versão, o e-mail cadastrado é utilizado como chave Pix.
+                    </small>
+                </div>
+
+                <div class="campo campo-valor">
+                    <label for="valor">Valor do Pix</label>
+
+                    <div class="entrada-monetaria">
+                        <span>R$</span>
+                        <input
+                            id="valor"
+                            name="valor"
+                            type="number"
+                            inputmode="decimal"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0,00"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="descricao">
+                        Descrição <span class="opcional">opcional</span>
+                    </label>
+                    <input
+                        id="descricao"
+                        name="descricao"
+                        type="text"
+                        maxlength="180"
+                        placeholder="Ex.: pagamento via Pix"
+                    >
+                </div>
+
+                <div class="resumo-operacao">
+                    <span>Conta de origem</span>
+                    <strong id="conta-origem">Carregando...</strong>
+                </div>
+
+                <p
+                    id="mensagem-operacao"
+                    class="mensagem-operacao"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
+                <button id="botao-confirmar" class="botao-confirmar" type="submit">
+                    Confirmar Pix <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <aside class="aviso-operacao">
+            <strong>Pix simulado</strong>
+            <p>
+                Esta funcionalidade faz parte do ambiente educacional do Eclipse Bank
+                e não movimenta dinheiro real.
+            </p>
+        </aside>
+    </main>
+
+    <script src="../script/pix.js"></script>
+</body>
+</html>

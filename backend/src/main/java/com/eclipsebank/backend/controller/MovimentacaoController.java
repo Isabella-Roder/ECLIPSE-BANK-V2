@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipsebank.backend.dto.MovimentacaoResposta;
 import com.eclipsebank.backend.dto.OperacaoValor;
+import com.eclipsebank.backend.dto.PixRequisicao;
 import com.eclipsebank.backend.dto.TransferenciaRequisicao;
 import com.eclipsebank.backend.service.MovimentacaoService;
 
@@ -49,6 +50,15 @@ public class MovimentacaoController {
     @PostMapping("/transferencias")
     public ResponseEntity<MovimentacaoResposta> transferir(@PathVariable Long contaId, @Valid @RequestBody TransferenciaRequisicao dados) {
         MovimentacaoResposta movimentacao = movimentacaoService.transferir(contaId, dados);
+
+        URI localizacao = URI.create("/api/movimentacoes/" + movimentacao.codigo());
+
+        return ResponseEntity.created(localizacao).body(movimentacao);
+    }
+
+    @PostMapping("/pix")
+    public ResponseEntity<MovimentacaoResposta> fazerPix(@PathVariable Long contaId, @Valid @RequestBody PixRequisicao dados) {
+        MovimentacaoResposta movimentacao = movimentacaoService.fazerPix(contaId, dados);
 
         URI localizacao = URI.create("/api/movimentacoes/" + movimentacao.codigo());
 
