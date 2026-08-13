@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulte o extrato da sua conta Eclipse Bank.">
+    <title>Extrato | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-extrato">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <div>
+            <span id="nome-usuario">Olá, cliente</span>
+            <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+        </div>
+    </header>
+
+    <main class="conteudo-extrato">
+        <header class="cabecalho-extrato">
+            <div>
+                <p class="etiqueta">MOVIMENTAÇÕES</p>
+                <h1>Seu extrato</h1>
+                <p>Acompanhe os depósitos e saques realizados na sua conta.</p>
+            </div>
+
+            <div class="resumo-extrato" aria-label="Resumo do extrato">
+                <span>Saldo atual</span>
+                <strong id="saldo-atual">R$ 0,00</strong>
+            </div>
+        </header>
+
+        <section class="filtros-extrato" aria-labelledby="titulo-filtros">
+            <h2 id="titulo-filtros">Filtrar movimentações</h2>
+
+            <div class="grade-filtros">
+                <div class="campo-filtro">
+                    <label for="filtro-tipo">Tipo</label>
+                    <select id="filtro-tipo" name="tipo">
+                        <option value="TODAS">Todas</option>
+                        <option value="DEPOSITO">Depósitos</option>
+                        <option value="SAQUE">Saques</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="data-inicial">De</label>
+                    <input id="data-inicial" name="dataInicial" type="date">
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="data-final">Até</label>
+                    <input id="data-final" name="dataFinal" type="date">
+                </div>
+
+                <button id="botao-limpar-filtros" class="botao-filtro" type="button">
+                    Limpar filtros
+                </button>
+            </div>
+        </section>
+
+        <section class="secao-extrato" aria-labelledby="titulo-lista-extrato">
+            <header class="cabecalho-lista-extrato">
+                <div>
+                    <h2 id="titulo-lista-extrato">Movimentações</h2>
+                    <p id="quantidade-movimentacoes">Carregando extrato...</p>
+                </div>
+            </header>
+
+            <div id="lista-extrato" class="lista-extrato" aria-live="polite">
+                <p class="estado-extrato">Buscando suas movimentações...</p>
+            </div>
+
+            <p id="mensagem-extrato" class="mensagem-operacao" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <script src="../script/extrato.js"></script>
+</body>
+</html>

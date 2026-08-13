@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprovante de movimentação do Eclipse Bank.">
+    <title>Comprovante | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-comprovante">
+    <header class="cabecalho-painel nao-imprimir">
+        <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="extrato.html">← Voltar para o extrato</a>
+    </header>
+
+    <main class="conteudo-comprovante">
+        <article id="cartao-comprovante" class="cartao-comprovante" aria-labelledby="titulo-comprovante">
+            <header class="topo-comprovante">
+                <div class="selo-comprovante" aria-hidden="true">✓</div>
+                <p class="etiqueta">OPERAÇÃO CONCLUÍDA</p>
+                <h1 id="titulo-comprovante">Comprovante</h1>
+                <p id="descricao-comprovante">Carregando dados da movimentação...</p>
+            </header>
+
+            <section class="valor-comprovante" aria-label="Valor da movimentação">
+                <span id="tipo-movimentacao">MOVIMENTAÇÃO</span>
+                <strong id="valor-movimentacao">R$ 0,00</strong>
+                <time id="data-movimentacao">--/--/---- --:--</time>
+            </section>
+
+            <dl class="detalhes-comprovante">
+                <div>
+                    <dt>Status</dt>
+                    <dd id="status-movimentacao">—</dd>
+                </div>
+                <div>
+                    <dt>Saldo após a operação</dt>
+                    <dd id="saldo-resultante">R$ 0,00</dd>
+                </div>
+                <div>
+                    <dt>Identificador da conta</dt>
+                    <dd id="conta-id">—</dd>
+                </div>
+                <div class="codigo-comprovante">
+                    <dt>Código de autenticação</dt>
+                    <dd id="codigo-movimentacao">—</dd>
+                </div>
+            </dl>
+
+            <footer class="rodape-comprovante">
+                <span class="marca-comprovante">ECLIPSE BANK</span>
+                <p>Documento gerado digitalmente. Confira o código de autenticação.</p>
+            </footer>
+        </article>
+
+        <p id="mensagem-comprovante" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+        <div class="acoes-comprovante nao-imprimir">
+            <a class="botao-secundario" href="extrato.html">Voltar ao extrato</a>
+            <button id="botao-imprimir" class="botao-confirmar" type="button">
+                Imprimir comprovante <span aria-hidden="true">↗</span>
+            </button>
+        </div>
+    </main>
+
+    <script src="../script/comprovante.js"></script>
+</body>
+</html>
