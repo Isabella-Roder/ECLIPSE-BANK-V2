@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipsebank.backend.dto.MovimentacaoResposta;
 import com.eclipsebank.backend.dto.OperacaoValor;
+import com.eclipsebank.backend.dto.TransferenciaRequisicao;
 import com.eclipsebank.backend.service.MovimentacaoService;
 
 import jakarta.validation.Valid;
@@ -39,6 +40,15 @@ public class MovimentacaoController {
     @PostMapping("/saques")
     public ResponseEntity<MovimentacaoResposta> sacar(@PathVariable Long contaId, @Valid @RequestBody OperacaoValor dados) {
         MovimentacaoResposta movimentacao = movimentacaoService.sacar(contaId, dados);
+
+        URI localizacao = URI.create("/api/movimentacoes/" + movimentacao.codigo());
+
+        return ResponseEntity.created(localizacao).body(movimentacao);
+    }
+
+    @PostMapping("/transferencias")
+    public ResponseEntity<MovimentacaoResposta> transferir(@PathVariable Long contaOrigemId, @Valid @RequestBody TransferenciaRequisicao dados) {
+        MovimentacaoResposta movimentacao = movimentacaoService.transferir(contaOrigemId, dados);
 
         URI localizacao = URI.create("/api/movimentacoes/" + movimentacao.codigo());
 

@@ -1,5 +1,6 @@
 package com.eclipsebank.backend.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eclipsebank.backend.dto.MovimentacaoResposta;
 import com.eclipsebank.backend.dto.OperacaoValor;
+import com.eclipsebank.backend.dto.TransferenciaRequisicao;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Conta;
@@ -30,14 +32,19 @@ public class MovimentacaoService {
             .orElseThrow(() -> new RecursoNaoEncontradoException("Conta não encontrada com o ID: " + contaId));
     }
 
-    private MovimentacaoResposta registrar(Conta conta, TipoMovimentacao tipo, OperacaoValor dados) {
+    private Conta buscarContaDestino(String agencia, String numero) {
+        return contaRepository.findByAgenciaAndNumero(agencia, numero)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Conta de destino não encontrada"));
+    }
+
+    private MovimentacaoResposta registrar(Conta conta, TipoMovimentacao tipo, BigDecimal valor, String descricao) {
         Movimentacao movimentacao = new Movimentacao();
 
         movimentacao.setConta(conta);
         movimentacao.setTipo(tipo);
-        movimentacao.setValor(dados.valor());
+        movimentacao.setValor(valor);
         movimentacao.setSaldoResultante(conta.getSaldo());
-        movimentacao.setDescricao(dados.descricao());
+        movimentacao.setDescricao(descricao);
         
         Movimentacao movimentacaoSalva = movimentacaoRepository.save(movimentacao);
 
@@ -50,7 +57,12 @@ public class MovimentacaoService {
 
         conta.creditar(dados.valor());
 
-        return registrar(conta, TipoMovimentacao.DEPOSITO, dados);
+        return registrar(
+            conta,
+            TipoMovimentacao.DEPOSITO,
+            dados.valor(),
+            dados.descricao()
+        );
     }
 
     @Transactional
@@ -59,7 +71,32 @@ public class MovimentacaoService {
 
         conta.debitar(dados.valor());
 
-        return registrar(conta, TipoMovimentacao.SAQUE, dados);
+        return registrar(
+            conta,
+            TipoMovimentacao.SAQUE,
+            dados.valor(),
+            dados.descricao()
+        );
+    }
+
+    @Transactional
+    public MovimentacaoResposta transferir(Long contaOrigemId, TransferenciaRequisicao dados) {
+        Conta contaOrigem = buscarConta(contaOrigemId);
+
+        Conta contaDestino = buscarContaDestino(dados.agenciaDestino(), dados.numeroDestino());
+
+        if (contaOrigem.getId().equals(contaDestino.getId())) {
+            throw new IllegalArgumentException("Conta de destino e origem devem ser diferentes");
+        }
+
+        contaOrigem.debitar(dados.valor());
+        contaDestino.creditar(dados.valor());
+
+        MovimentacaoResposta movimentacaoEnviada = registrar(contaOrigem, TipoMovimentacao.TRANSFERENCIA_ENVIADA, dados.valor(), dados.descricao());
+
+        registrar(contaDestino, TipoMovimentacao.TRANSFERENCIA_RECEBIDA, dados.valor(), dados.descricao());
+
+        return movimentacaoEnviada;
     }
 
     @Transactional(readOnly = true)
