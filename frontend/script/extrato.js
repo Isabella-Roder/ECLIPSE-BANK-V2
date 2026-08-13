@@ -88,9 +88,11 @@ function renderizarExtrato(lista) {
     lista.forEach((movimentacao) => {
         const linha = document.createElement("article");
 
-        const deposito = movimentacao.tipo === "DEPOSITO";
-        const sinal = deposito ? "+" : "-";
-        const classeTipo = deposito ? "credito" : "debito";
+        const credito = movimentacao.tipo === "DEPOSITO" ||
+            movimentacao.tipo === "TRANSFERENCIA_RECEBIDA";
+
+        const sinal = credito ? "+" : "-";
+        const classeTipo = credito ? "credito" : "debito";
 
         const data = new Date(movimentacao.criadaEm).toLocaleString("pt-BR");
 

@@ -47,8 +47,8 @@ public class MovimentacaoController {
     }
 
     @PostMapping("/transferencias")
-    public ResponseEntity<MovimentacaoResposta> transferir(@PathVariable Long contaOrigemId, @Valid @RequestBody TransferenciaRequisicao dados) {
-        MovimentacaoResposta movimentacao = movimentacaoService.transferir(contaOrigemId, dados);
+    public ResponseEntity<MovimentacaoResposta> transferir(@PathVariable Long contaId, @Valid @RequestBody TransferenciaRequisicao dados) {
+        MovimentacaoResposta movimentacao = movimentacaoService.transferir(contaId, dados);
 
         URI localizacao = URI.create("/api/movimentacoes/" + movimentacao.codigo());
 
