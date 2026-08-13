@@ -15,6 +15,7 @@ const nomeUsuario = document.getElementById("nome-usuario");
 const saldoConta = document.getElementById("saldo-conta");
 const agenciaConta = document.getElementById("agencia-conta");
 const numeroConta = document.getElementById("numero-conta");
+const listaMovimentacoes = document.getElementById("lista-movimentacoes");
 const mensagem = document.getElementById("mensagem-conta");
 const botaoSair = document.getElementById("botao-sair");
 
@@ -46,6 +47,7 @@ async function carregarOuCriarConta() {
         }
 
         preencherConta(corpo);
+        await carregarExtrato(corpo.id);
         mensagem.textContent = "";
 
     } catch (erro) {
@@ -54,10 +56,61 @@ async function carregarOuCriarConta() {
     }
 }
 
+async function carregarExtrato(contaId) {
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaId}/extrato`);
+
+        const corpo = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(corpo.mensagem || "Erro ao carregar extrato");
+        }
+
+        preencherExtrato(corpo);
+    } catch (erro) {
+        console.error(erro);
+        listaMovimentacoes.textContent = "Não foi possivel carregar as movimentações";
+    }
+}
+
 function preencherConta(conta) {
     saldoConta.textContent = formatarSaldo(conta.saldo);
     agenciaConta.textContent = conta.agencia;
     numeroConta.textContent = conta.numero;
+}
+
+function preencherExtrato(movimentacoes) {
+    listaMovimentacoes.innerHTML = "";
+
+    if (movimentacoes.length === 0) {
+        listaMovimentacoes.textContent = "Nenhuma movimentação recente.";
+        return;
+    }
+
+    movimentacoes.slice(0, 5).forEach((movimentacao) => {
+        const item = document.createElement("div");
+
+        const sinal = movimentacao.tipo === "DEPOSITO" ? "+" : "-";
+
+        const data = new Date(movimentacao.criadaEm).toLocaleString("pt-BR");
+
+        item.className = "item-movimentacao";
+
+        item.innerHTML = `
+            <div>
+                <strong>${movimentacao.tipo}</strong>
+                <span>${movimentacao.descricao || "Sem descrição"}</span>
+            </div>
+
+            <div>
+                <strong>
+                    ${sinal} ${formatarSaldo(movimentacao.valor)}
+                </strong>
+                <span>${data}</span>
+        `;
+
+        listaMovimentacoes.appendChild(item);
+    });
 }
 
 botaoSair.addEventListener("click", () => {

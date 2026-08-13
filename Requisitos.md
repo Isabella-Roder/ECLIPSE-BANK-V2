@@ -10,7 +10,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Separação em `model`, `repository`, `dto`, `service`, `controller` e `exception`
 - [x] Banco H2 persistente para desenvolvimento local
 - [ ] PostgreSQL para produção
-- [ ] Valores monetários representados com `BigDecimal`
+- [x] Valores monetários representados com `BigDecimal`
 - [x] Senhas armazenadas somente com hash BCrypt
 - [x] Validação dos dados recebidos pela API
 - [x] Tratamento global e padronizado de erros
@@ -31,28 +31,28 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## 2. Contas bancárias
 
 - [ ] Criação automática de conta para o cliente
-- [ ] Agência e número de conta únicos
-- [ ] Consulta de saldo
+- [x] Agência e número de conta únicos
+- [x] Consulta de saldo
 - [ ] Bloqueio e encerramento de conta
-- [ ] Impedir saldo negativo fora das regras permitidas
+- [x] Impedir saldo negativo fora das regras permitidas
 
 ## 3. Movimentações
 
-- [ ] Depósito
-- [ ] Saque
+- [x] Depósito
+- [x] Saque
 - [ ] Transferência entre contas
 - [ ] Pix por chave
-- [ ] Validação de saldo antes de débitos
-- [ ] Operações atômicas com `@Transactional`
+- [x] Validação de saldo antes de débitos
+- [x] Operações atômicas com `@Transactional`
 - [ ] Proteção contra envio duplicado da mesma operação
 
 ## 4. Extrato e comprovantes
 
-- [ ] Registrar toda movimentação em histórico imutável
+- [x] Registrar toda movimentação em histórico
 - [ ] Listar extrato por período
-- [ ] Identificar crédito, débito, data, descrição e saldo resultante
-- [ ] Gerar comprovante com código único
-- [ ] Nunca apagar ou alterar uma movimentação concluída
+- [x] Identificar crédito, débito, data, descrição e saldo resultante
+- [x] Gerar comprovante com código único
+- [x] Não disponibilizar exclusão ou alteração de movimentação concluída pela API
 
 ## 5. Segurança
 
@@ -83,13 +83,14 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Tela responsiva de cadastro
 - [x] Cadastro integrado à API
 - [x] Tela responsiva de login
-- [ ] Login validado de ponta a ponta no navegador
-- [ ] Painel com saldo e resumo da conta
-- [ ] Tela de depósito e saque
+- [x] Login validado de ponta a ponta no navegador
+- [x] Painel com saldo e resumo da conta
+- [x] Tela de depósito e saque
 - [ ] Tela de transferência e Pix
 - [ ] Extrato com filtros
 - [ ] Comprovante de operação
-- [ ] Layout responsivo e identidade visual própria
+- [x] Lista de movimentações recentes no painel
+- [x] Layout responsivo e identidade visual própria
 
 ## 7. Qualidade e portfólio
 

@@ -19,6 +19,17 @@ const btnConfirmar = document.getElementById("botao-confirmar");
 
 let contaId;
 
+function formatarValor(valor) {
+    if (!valor) {
+        return "";
+    }
+
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
 async function carregarConta() {
     try {
         const resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`);
@@ -40,9 +51,7 @@ async function carregarConta() {
 }
 
 function renderizarValorDisponivel(conta) {
-    document.getElementById("valor-disponivel").innerHTML `
-        <strong>${conta.saldo}</strong>
-    `;
+    document.getElementById("saldo-disponivel").textContent = formatarValor(conta.saldo);
 }
 
 formulario.addEventListener("submit", async (evento) => {
@@ -77,13 +86,16 @@ formulario.addEventListener("submit", async (evento) => {
         const corpo = await resposta.json();
 
         if (!resposta.ok) {
-            const erroDosCampos = Object.values(corpo.mensagem || {});
+            const erroDosCampos = Object.values(corpo.campos || {});
             const textoErro = erroDosCampos[0] || corpo.mensagem || "Erro ao sacar";
 
             throw new Error(textoErro);
         }
 
+        mensagem.className = "mensagem-operacao sucesso";
         mensagem.textContent = "Saque realizado com sucesso";
+
+        document.getElementById("saldo-disponivel").textContent = formatarValor(corpo.saldoResultante);
 
         formulario.reset();
 
@@ -94,6 +106,8 @@ formulario.addEventListener("submit", async (evento) => {
         btnConfirmar.disabled = false;
         btnConfirmar.textContent = "Confirmar saque"
     }
-})
+});
+
+document.getElementById("saldo-disponivel").addEventListener("input", formatarValor);
 
 carregarConta();

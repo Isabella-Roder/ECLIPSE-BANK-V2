@@ -237,7 +237,55 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
 .cabecalho-secao { display: flex; align-items: center; justify-content: space-between; }
 .cabecalho-secao h2 { margin: 0; }
 .cabecalho-secao a { color: var(--violeta-claro); font-size: .82rem; }
-#lista-movimentacoes { margin-top: 24px; padding: 30px; border-radius: 12px; color: #8f8998; background: #0e0f17; text-align: center; }
+#lista-movimentacoes {
+    display: grid;
+    margin-top: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    color: #8f8998;
+    background: #0e0f17;
+}
+.item-movimentacao {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 19px 21px;
+    text-align: left;
+    transition: background .16s;
+}
+.item-movimentacao + .item-movimentacao {
+    border-top: 1px solid rgba(255,255,255,.07);
+}
+.item-movimentacao:hover { background: rgba(139,92,246,.06); }
+.item-movimentacao > div {
+    display: grid;
+    min-width: 0;
+    gap: 6px;
+}
+.item-movimentacao > div:last-child {
+    flex: 0 0 auto;
+    text-align: right;
+}
+.item-movimentacao strong {
+    color: #eeeaf3;
+    font-size: .9rem;
+    letter-spacing: .025em;
+}
+.item-movimentacao > div:first-child strong {
+    color: var(--violeta-claro);
+    font-size: .69rem;
+    letter-spacing: .13em;
+}
+.item-movimentacao span {
+    overflow: hidden;
+    color: #8f8998;
+    font-size: .75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 /* Depósito e saque */
 .voltar-painel { color: #c9c4d2; font-size: .82rem; font-weight: 700; text-decoration: none; }
@@ -311,6 +359,8 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
     .cabecalho-painel .marca { font-size: .72rem; letter-spacing: .1em; }
     .cabecalho-painel > div { align-items: flex-end; flex-direction: column; gap: 8px; font-size: .8rem; }
     .cartao-saldo dl { gap: 22px; }
+    .item-movimentacao { align-items: flex-start; flex-direction: column; gap: 13px; }
+    .item-movimentacao > div:last-child { width: 100%; text-align: left; }
     .cabecalho-operacao { align-items: center; }
     .cabecalho-operacao > div { min-width: 0; }
 }
