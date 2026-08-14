@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const parametros = new URLSearchParams(window.location.search);
 const codigo = parametros.get("codigo");
@@ -23,7 +23,18 @@ function formatarDinheiro(valor) {
 
 async function carregarComprovante() {
     try {
-        const resposta = await fetch(`${API_URL}/movimentacoes/${codigo}`);
+        const sessao = await fetch(`${API_URL}/usuarios/sessao`, {
+            credentials: "include"
+        });
+
+        if (!sessao.ok) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const resposta = await fetch(`${API_URL}/movimentacoes/${codigo}`, {
+            credentials: "include"
+        });
 
         const corpo = await resposta.json();
 

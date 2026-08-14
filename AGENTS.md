@@ -37,6 +37,7 @@ mobile/
     _layout.tsx
     index.tsx
     conta.tsx
+    extrato.tsx
 Requisitos.md
 ```
 
@@ -58,7 +59,7 @@ cd backend
 ./mvnw spring-boot:run
 ```
 
-O frontend é aberto pelo Live Server. Em desenvolvimento, a API fica em `http://localhost:8080/api`.
+O frontend é aberto pelo Live Server. Em desenvolvimento, os scripts montam a API com o host atual e a porta 8080 para evitar misturar `localhost` e `127.0.0.1`.
 
 O aplicativo móvel fica em `mobile/` e é iniciado com:
 
@@ -73,24 +74,30 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 
 - Usuários: cadastro, listagem, consulta, atualização e desativação.
 - E-mail e CPF únicos; senha armazenada com BCrypt.
-- Login básico validado no navegador, ainda sem Spring Security.
+- Spring Security instalado e configurado com `SecurityFilterChain`.
+- Login web cria sessão no servidor e envia cookie `JSESSIONID` com `HttpOnly` e `SameSite=Lax`.
+- O frontend web consulta `/api/usuarios/sessao`, envia `credentials: "include"` e não armazena mais o usuário no `localStorage` ou `sessionStorage`.
+- Logout web invalida a sessão no servidor; a sessão expira após 30 minutos de inatividade.
+- As rotas ainda usam `permitAll()` e o CSRF permanece temporariamente desativado durante a migração. A autorização ainda não está concluída.
 - Erros padronizados: 400, 401, 404, 409, 422 e 500.
 - Conta individual por usuário, saldo em `BigDecimal`, status e `@Version`.
-- Criação e consulta de conta.
+- Criação e consulta de conta, com bloqueio, desbloqueio e encerramento condicionado ao saldo zerado.
 - Depósito, saque, transferência e Pix por chave de e-mail transacionais.
 - Extrato imutável e comprovante por UUID.
-- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato e comprovante.
+- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante e gerenciamento da conta.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
 - Painel mobile consulta ou cria a conta e exibe titular, saldo, agência e número.
-- Botões mobile de Pix, transferência e extrato são apenas visuais; as rotas ainda não foram implementadas.
+- Extrato mobile integrado à API; Pix e transferência mobile ainda não foram implementados.
 
 ## Rotas existentes
 
 ```text
 POST   /api/usuarios
 POST   /api/usuarios/login
+GET    /api/usuarios/sessao
+POST   /api/usuarios/logout
 GET    /api/usuarios
 GET    /api/usuarios/{id}
 PATCH  /api/usuarios/{id}
@@ -100,6 +107,9 @@ POST   /api/contas/usuario/{usuarioId}
 GET    /api/contas/{id}
 GET    /api/contas/usuario/{usuarioId}
 GET    /api/contas/buscar?agencia=0001&numero=...
+PATCH  /api/contas/{id}/bloqueio
+PATCH  /api/contas/{id}/desbloqueio
+PATCH  /api/contas/{id}/encerramento
 
 POST   /api/contas/{contaId}/depositos
 POST   /api/contas/{contaId}/saques
@@ -122,15 +132,17 @@ GET    /api/movimentacoes/{codigo}
 
 ## Segurança — situação e direção
 
-O armazenamento atual em `localStorage`/`sessionStorage` é provisório e serve apenas à interface. Ele não autentica requisições. A próxima evolução de segurança deve usar Spring Security, sessão no servidor e cookie com `HttpOnly`, `Secure` e `SameSite`, além de CSRF e autorização por proprietário do recurso.
+O frontend web já usa sessão opaca mantida no servidor. O cookie é `HttpOnly`, usa `SameSite=Lax` e aceita `Secure=true` pela variável `SESSION_COOKIE_SECURE` em produção. O usuário não é mais salvo no armazenamento web.
+
+A migração ainda não terminou: `SecurityConfig` usa `permitAll()` e desativa CSRF temporariamente. O próximo passo obrigatório é representar a sessão no `SecurityContext`, exigir autenticação nas rotas bancárias, validar o proprietário da conta e reativar CSRF. Não marcar “Autenticação com Spring Security” como concluída antes disso.
 
 Não confiar em `usuarioId` vindo do navegador para autorizar contas ou movimentações. Antes de publicar, todas as rotas bancárias devem identificar o usuário autenticado no backend.
 
 ## Próximos passos recomendados
 
-1. Criar a navegação e as telas funcionais de Pix, transferência e extrato no aplicativo móvel.
-2. Centralizar a URL da API mobile e remover o IPv4 fixo das telas.
-3. Adicionar Spring Security e substituir a autenticação provisória por uma sessão segura.
+1. Integrar a sessão ao `SecurityContext` e trocar `permitAll()` por regras de autorização.
+2. Proteger recursos por proprietário e reativar CSRF nas operações mutáveis.
+3. Criar as telas funcionais de Pix e transferência no aplicativo móvel.
 4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas
@@ -138,10 +150,10 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 - Não execute duas instâncias do Spring na porta 8080.
 - O banco H2 em arquivo aceita uma instância por vez; os testes já usam banco em memória separado.
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
-- Após cadastro, o fluxo ideal é direcionar para login ou criar uma sessão real; não tratar o objeto no storage como prova de autenticação.
+- Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
-- O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real deve ser feita no backend com uma sessão autenticada.
-- A URL da API está repetida nas telas mobile e usa o IPv4 local do computador; centralizar essa configuração antes de criar novas telas.
+- O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real ainda precisa ser integrada ao aplicativo.
+- A URL mobile é centralizada em `mobile/config/api.ts`; cada computador usa `mobile/.env.local`, que não deve entrar no Git.
 - Antes de escrever código dentro de `mobile/`, leia também `mobile/AGENTS.md` e consulte a documentação correspondente ao Expo SDK 54.
 
 ## Critério antes de commit

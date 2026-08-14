@@ -61,14 +61,16 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Respostas `400`, `401`, `404`, `409` e `500` padronizadas
 - [x] CORS separado em configuração própria para desenvolvimento
 - [x] Renderização segura de dados dinâmicos do extrato sem interpolação em `innerHTML`
+- [x] Spring Security integrado ao backend com `SecurityFilterChain`
 - [ ] Autenticação com Spring Security
-- [ ] Sessão autenticada por identificador opaco no servidor
-- [ ] Cookie de autenticação com `HttpOnly`, `Secure` e `SameSite`
-- [ ] Não armazenar token de autenticação no `localStorage`
+- [x] Sessão autenticada por identificador opaco no servidor
+- [x] Cookie de sessão com `HttpOnly`, `SameSite` e `Secure` configurável para produção
+- [x] Não armazenar usuário ou token de autenticação no `localStorage` ou `sessionStorage`
 - [ ] Proteção CSRF nas operações que alteram dados
-- [ ] Logout com invalidação da sessão e expiração do cookie
-- [ ] Expiração por inatividade e limite de duração da sessão
-- [ ] Renovação segura do identificador após o login
+- [x] Logout com invalidação da sessão no servidor
+- [x] Expiração da sessão após 30 minutos de inatividade
+- [ ] Limite absoluto de duração da sessão
+- [x] Renovação do identificador de sessão após o login
 - [ ] Rate limiting para login, Pix, transferências e recuperação de senha
 - [ ] Proteção contra tentativa de acesso a recursos de outro cliente
 - [ ] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência

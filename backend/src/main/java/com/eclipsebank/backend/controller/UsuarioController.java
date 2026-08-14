@@ -17,8 +17,11 @@ import com.eclipsebank.backend.dto.LoginRequisicao;
 import com.eclipsebank.backend.dto.UsuarioAtualizacao;
 import com.eclipsebank.backend.dto.UsuarioCadastro;
 import com.eclipsebank.backend.dto.UsuarioResposta;
+import com.eclipsebank.backend.exception.CredenciaisInvalidasException;
 import com.eclipsebank.backend.service.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @RestController
@@ -61,7 +64,36 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioResposta> login(@Valid @RequestBody LoginRequisicao dados) {
-        return ResponseEntity.ok(usuarioService.login(dados));
+    public ResponseEntity<UsuarioResposta> login(@Valid @RequestBody LoginRequisicao dados, HttpServletRequest requisicao) {
+        UsuarioResposta usuario = usuarioService.login(dados);
+
+        HttpSession sessionAnterior = requisicao.getSession(false);
+
+        if (sessionAnterior != null) {
+            sessionAnterior.invalidate();
+        }
+
+        HttpSession novaSessao = requisicao.getSession(true);
+        novaSessao.setAttribute("usuarioId", usuario.id());
+
+        return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping("/sessao")
+    public ResponseEntity<UsuarioResposta> buscarSessao(HttpSession sessao) {
+        Long usuarioId = (Long) sessao.getAttribute("usuarioId");
+
+        if (usuarioId == null) {
+            throw new CredenciaisInvalidasException();
+        }
+
+        return ResponseEntity.ok(usuarioService.buscarPorId(usuarioId));
+    }
+
+    @PostMapping("logout")
+    public ResponseEntity<Void> logout(HttpSession sessao) {
+        sessao.invalidate();
+
+        return ResponseEntity.noContent().build();
     }
 }

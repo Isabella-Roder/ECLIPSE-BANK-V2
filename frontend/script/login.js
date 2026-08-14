@@ -1,9 +1,8 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const formulario = document.querySelector("#form-login");
 const email = document.querySelector("#email");
 const senha = document.querySelector("#senha");
-const manterConectado = document.querySelector("#manter-conectado");
 const mensagem = document.querySelector(".mensagem-login");
 const btnLogin = document.querySelector(".botao-login");
 
@@ -27,6 +26,7 @@ formulario.addEventListener("submit", async (evento) => {
 
         const resposta = await fetch(`${API_URL}/usuarios/login`, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -43,12 +43,6 @@ formulario.addEventListener("submit", async (evento) => {
         }
 
         formulario.reset();
-
-        const armazenamento = manterConectado.checked
-            ? localStorage
-            : sessionStorage
-
-        armazenamento.setItem("clienteLogado", JSON.stringify(corpo));
 
         mensagem.className = "mensagem-login sucesso";
         mensagem.textContent = "Login realizado com sucesso.";

@@ -1,15 +1,4 @@
-const API_URL = "http://localhost:8080/api";
-
-const usuarioSalvo = 
-    sessionStorage.getItem("clienteLogado") ||
-    localStorage.getItem("clienteLogado");
-
-if (!usuarioSalvo) {
-    window.location.href = "login.html";
-    throw new Error("Usuário não encontrado");
-}
-
-const usuario = JSON.parse(usuarioSalvo);
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const nomeUsuario = document.getElementById("nome-usuario");
 const saldoAtual = document.getElementById("saldo-atual");
@@ -23,8 +12,6 @@ const mensagem = document.getElementById("mensagem-extrato");
 
 let movimentacoes = [];
 
-nomeUsuario.textContent = `Olá, ${usuario.nome}`;
-
 function formatarDinheiro(valor) {
     return Number(valor).toLocaleString("pt-BR", {
         style: "currency",
@@ -32,11 +19,13 @@ function formatarDinheiro(valor) {
     });
 }
 
-async function carregarConta() {
+async function carregarConta(usuarioId) {
     try {
         mensagem.textContent = "Carregando conta...";
 
-        const resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`);
+        const resposta = await fetch(`${API_URL}/contas/usuario/${usuarioId}`, {
+            credentials: "include"
+        });
 
         const corpo = await resposta.json();
 
@@ -56,7 +45,9 @@ async function carregarConta() {
 
 async function carregarExtrato(contaId) {
     try {
-        const resposta = await fetch(`${API_URL}/contas/${contaId}/extrato`);
+        const resposta = await fetch(`${API_URL}/contas/${contaId}/extrato`, {
+            credentials: "include"
+        });
 
         if (!resposta.ok) {
             const erro = await resposta.text();
@@ -185,4 +176,19 @@ botaoLimpar.addEventListener("click", () => {
     renderizarExtrato(movimentacoes);
 });
 
-carregarConta();
+async function iniciarPagina() {
+    const resposta = await fetch(`${API_URL}/usuarios/sessao`, {
+        credentials: "include"
+    });
+
+    if (!resposta.ok) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const usuario = await resposta.json();
+    nomeUsuario.textContent = `Olá, ${usuario.nome}`;
+    await carregarConta(usuario.id);
+}
+
+iniciarPagina();

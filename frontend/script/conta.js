@@ -1,15 +1,4 @@
-const API_URL = "http://localhost:8080/api";
-
-const usuarioSalvo = 
-    sessionStorage.getItem("clienteLogado") ||
-    localStorage.getItem("clienteLogado");
-
-if (!usuarioSalvo) {
-    window.location.href = "login.html";
-    throw new Error("Usuário não encontrado");
-}
-
-const usuario = JSON.parse(usuarioSalvo);
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const nomeUsuario = document.getElementById("nome-usuario");
 const saldoConta = document.getElementById("saldo-conta");
@@ -19,7 +8,7 @@ const listaMovimentacoes = document.getElementById("lista-movimentacoes");
 const mensagem = document.getElementById("mensagem-conta");
 const botaoSair = document.getElementById("botao-sair");
 
-nomeUsuario.textContent = `Olá, ${usuario.nome}`;
+let usuario;
 
 function formatarSaldo(saldo) {
     return Number(saldo).toLocaleString("pt-BR", {
@@ -28,15 +17,38 @@ function formatarSaldo(saldo) {
     });
 }
 
+async function carregarSessao() {
+    try {
+        const resposta = await fetch(`${API_URL}/usuarios/sessao`, {
+            credentials: "include"
+        });
+
+        if (!resposta.ok) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        usuario = await resposta.json();
+        nomeUsuario.textContent = `Olá, ${usuario.nome}`;
+        await carregarOuCriarConta();
+    } catch (erro) {
+        console.error(erro);
+        window.location.href = "login.html"
+    }
+}
+
 async function carregarOuCriarConta() {
     try {
         mensagem.textContent = "Carregando sua conta...";
 
-        let resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`);
+        let resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`, {
+            credentials: "include"
+        });
 
         if (resposta.status === 404) {
             resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`, {
-                method: "POST"
+                method: "POST",
+                credentials: "include"
             });
         }
 
@@ -58,7 +70,9 @@ async function carregarOuCriarConta() {
 
 async function carregarExtrato(contaId) {
     try {
-        const resposta = await fetch(`${API_URL}/contas/${contaId}/extrato`);
+        const resposta = await fetch(`${API_URL}/contas/${contaId}/extrato`, {
+            credentials: "include"
+        });
 
         const corpo = await resposta.json();
 
@@ -123,10 +137,20 @@ function preencherExtrato(movimentacoes) {
     });
 }
 
-botaoSair.addEventListener("click", () => {
-    sessionStorage.removeItem("clienteLogado");
-    localStorage.removeItem("clienteLogado");
-    window.location.href = "login.html";
-});
+botaoSair.addEventListener("click", async () => {
+    botaoSair.disabled = true;
+    botaoSair.textContent = "Saindo...";
 
-carregarOuCriarConta();
+    try {
+        await fetch(`${API_URL}/usuarios/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+    } catch (erro) {
+        console.error("Erro ao encerrar sessão:", erro);
+    } finally {
+        window.location.href = "login.html";
+    }
+})
+
+carregarSessao();

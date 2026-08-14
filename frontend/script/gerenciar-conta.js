@@ -1,15 +1,4 @@
-const API_URL = "http://localhost:8080/api";
-
-const usuarioSalvo = 
-    sessionStorage.getItem("clienteLogado") ||
-    localStorage.getItem("clienteLogado");
-
-if (!usuarioSalvo) {
-    window.location.href = "login.html";
-    throw new Error("Usuário não encontrado");
-}
-
-const usuario = JSON.parse(usuarioSalvo);
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const identificacaoConta = document.getElementById("identificacao-conta");
 const statusConta = document.getElementById("status-conta");
@@ -21,9 +10,11 @@ const mensagem = document.getElementById("mensagem-gerenciamento");
 
 let contaId;
 
-async function carregarConta() {
+async function carregarConta(usuarioId) {
     try {
-        const resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`);
+        const resposta = await fetch(`${API_URL}/contas/usuario/${usuarioId}`, {
+            credentials: "include"
+        });
 
         const corpo = await resposta.json();
 
@@ -54,7 +45,8 @@ async function bloquearConta() {
         botaoBloquear.textContent = "Bloqueando...";
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/bloqueio`, {
-            method: "PATCH"
+            method: "PATCH",
+            credentials: "include"
         });
 
         const corpo = await resposta.json();
@@ -85,7 +77,8 @@ async function desbloquearConta() {
         botaoDesbloquear.textContent = "Desbloqueando...";
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/desbloqueio`, {
-            method: "PATCH"
+            method: "PATCH",
+            credentials: "include"
         });
 
         const corpo = await resposta.json();
@@ -126,7 +119,8 @@ async function encerrarConta() {
         botaoEncerrar.textContent = "Encerrando...";
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/encerramento`, {
-            method: "PATCH"
+            method: "PATCH",
+            credentials: "include"
         });
 
         const corpo = await resposta.json();
@@ -154,4 +148,18 @@ confirmarEncerramento.addEventListener("change", verificarEncerramento);
 
 botaoEncerrar.addEventListener("click", encerrarConta);
 
-carregarConta();
+async function iniciarPagina() {
+    const resposta = await fetch(`${API_URL}/usuarios/sessao`, {
+        credentials: "include"
+    });
+
+    if (!resposta.ok) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const usuario = await resposta.json();
+    await carregarConta(usuario.id);
+}
+
+iniciarPagina();

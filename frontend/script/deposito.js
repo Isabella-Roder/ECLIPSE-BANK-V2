@@ -1,15 +1,4 @@
-const API_URL = "http://localhost:8080/api";
-
-const usuarioSalvo = 
-    sessionStorage.getItem("clienteLogado") ||
-    localStorage.getItem("clienteLogado");
-
-if (!usuarioSalvo) {
-    window.location.href = "login.html";
-    throw new Error("Usuário não encontrado");
-}
-
-const usuario = JSON.parse(usuarioSalvo);
+const API_URL = `http://${window.location.hostname}:8080/api`;
 
 const formulario = document.getElementById("form-deposito");
 const valor = document.getElementById("valor");
@@ -20,9 +9,11 @@ const btnConfirmar = document.getElementById("botao-confirmar");
 
 let contaId;
 
-async function carregarConta() {
+async function carregarConta(usuarioId) {
     try {
-        const resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`);
+        const resposta = await fetch(`${API_URL}/contas/usuario/${usuarioId}`, {
+            credentials: "include"
+        });
 
         const corpo = await resposta.json();
 
@@ -63,6 +54,7 @@ formulario.addEventListener("submit", async (evento) => {
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/depositos`, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -91,4 +83,18 @@ formulario.addEventListener("submit", async (evento) => {
     }
 });
 
-carregarConta();
+async function iniciarPagina() {
+    const resposta = await fetch(`${API_URL}/usuarios/sessao`, {
+        credentials: "include"
+    });
+
+    if (!resposta.ok) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const usuario = await resposta.json();
+    await carregarConta(usuario.id);
+}
+
+iniciarPagina();
