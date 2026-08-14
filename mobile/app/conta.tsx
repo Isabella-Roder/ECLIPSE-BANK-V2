@@ -122,7 +122,16 @@ export default function ContaScreen() {
             <Text style={estilos.tituloAcoes}>O que deseja fazer?</Text>
 
             <View style={estilos.acoes}>
-                <Pressable style={estilos.acao}>
+                <Pressable style={estilos.acao} onPress={() => {
+                    roteador.push({
+                        pathname: "/pix",
+                        params: {
+                            contaId: String(conta.id),
+                            saldo: String(conta.saldo),
+                            usuarioId: String(conta.usuarioId)
+                        }
+                    })
+                }}>
                     <Text style={estilos.icone}>↗</Text>
                     <Text style={estilos.textoAcao}>Pix</Text>
                 </Pressable>
