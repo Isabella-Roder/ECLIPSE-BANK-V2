@@ -3,6 +3,7 @@ package com.eclipsebank.backend.controller;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipsebank.backend.dto.ContaResposta;
+import com.eclipsebank.backend.security.UsuarioAutenticado;
 import com.eclipsebank.backend.service.ContaService;
 
 @RestController
@@ -19,9 +21,11 @@ import com.eclipsebank.backend.service.ContaService;
 public class ContaController {
     
     private final ContaService contaService;
+    private final UsuarioAutenticado usuarioAutenticado;
 
-    public ContaController(ContaService contaService) {
+    public ContaController(ContaService contaService, UsuarioAutenticado usuarioAutenticado) {
         this.contaService = contaService;
+        this.usuarioAutenticado = usuarioAutenticado;
     }
 
     @PostMapping("/usuario/{usuarioId}")
@@ -38,8 +42,18 @@ public class ContaController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<ContaResposta> buscarPorUsuario(@PathVariable Long usuarioId) {
-        return ResponseEntity.ok(contaService.buscarPorUsuario(usuarioId));
+    public ResponseEntity<ContaResposta> buscarPorUsuario(
+        @PathVariable Long usuarioId,
+        Authentication autenticacao
+    ) {
+        usuarioAutenticado.validarAcessoAoUsuario(
+            autenticacao,
+            usuarioId
+        );
+
+        return ResponseEntity.ok(
+            contaService.buscarPorUsuario(usuarioId)
+        );
     }
 
     @GetMapping("/buscar")

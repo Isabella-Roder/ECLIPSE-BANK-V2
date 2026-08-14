@@ -1,5 +1,6 @@
 package com.eclipsebank.backend.exception;
 
+import java.nio.file.AccessDeniedException;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -158,6 +159,20 @@ public class ManipuladorGlobalException {
             HttpStatus.UNPROCESSABLE_ENTITY,
             "Operação não permitida",
             exception.getMessage(),
+            request,
+            Map.of()
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErroResposta> tratarAcessoNegado(
+        AccessDeniedException exception,
+        HttpServletRequest request
+    ) {
+        return criarResposta(
+            HttpStatus.FORBIDDEN,
+            "Acesso negado",
+            "Você não possui permissão para acessar este recurso",
             request,
             Map.of()
         );
