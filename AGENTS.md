@@ -84,6 +84,8 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Criação e consulta de conta, com bloqueio, desbloqueio e encerramento condicionado ao saldo zerado.
 - Depósito, saque, transferência e Pix por chave de e-mail transacionais.
 - Extrato imutável e comprovante por UUID.
+- Investimentos iniciados no backend: enum de tipos, entidade persistente de produto, repository, DTOs de cadastro/resposta e service com cadastro e listagem de produtos ativos.
+- O catálogo de investimentos ainda não possui controller/endpoints nem testes específicos; carteira, aplicação e resgate ainda não foram iniciados.
 - Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante e gerenciamento da conta.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
@@ -140,9 +142,9 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 
 ## Próximos passos recomendados
 
-1. Integrar a sessão ao `SecurityContext` e trocar `permitAll()` por regras de autorização.
-2. Proteger recursos por proprietário e reativar CSRF nas operações mutáveis.
-3. Criar as telas funcionais de Pix e transferência no aplicativo móvel.
+1. Criar o controller e os testes do catálogo de produtos de investimento.
+2. Modelar a carteira e as aplicações, com débito transacional da conta corrente.
+3. Integrar a sessão ao `SecurityContext`, proteger recursos por proprietário e reativar CSRF.
 4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas

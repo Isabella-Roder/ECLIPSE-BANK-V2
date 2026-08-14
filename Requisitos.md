@@ -117,6 +117,12 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## 8. Investimentos e dados de mercado
 
 - [ ] Catálogo de ativos por tipo: renda fixa, fundos, ações, ETFs e criptomoedas
+  - [x] Enum com os tipos de investimento
+  - [x] Entidade persistente e repository de produtos
+  - [x] DTOs validados de cadastro e resposta
+  - [x] Service para cadastrar e listar produtos ativos em ordem alfabética
+  - [ ] Controller e endpoints do catálogo
+  - [ ] Testes específicos do catálogo
 - [ ] Carteira de investimentos separada da conta corrente
 - [ ] Aplicação e resgate simulados, sem executar ordens financeiras reais
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
