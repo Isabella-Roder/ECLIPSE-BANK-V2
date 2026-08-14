@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, TextInput, Pressable, Alert } from "rea
 import { useState } from "react";
 import { useRouter } from "expo-router";
 
-const API_URL = "http://192.168.0.104:8080/api";
+import { API_URL } from "../config/api";
 
 export default function Index() {
 

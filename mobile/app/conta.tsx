@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
-const API_URL = "http://192.168.0.104:8080/api";
+import { API_URL } from "../config/api";
 
 type Conta = {
     id: number;
