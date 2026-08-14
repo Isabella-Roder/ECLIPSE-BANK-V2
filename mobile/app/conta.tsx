@@ -132,7 +132,14 @@ export default function ContaScreen() {
                     <Text style={estilos.textoAcao}>Transferir</Text>
                 </Pressable>
 
-                <Pressable style={estilos.acao}>
+                <Pressable style={estilos.acao} onPress={() => {
+                    roteador.push({
+                        pathname: "/extrato",
+                        params: {
+                            contaId: String(conta.id)
+                        }
+                    });
+                }}>
                     <Text style={estilos.icone}>▤</Text>
                     <Text style={estilos.textoAcao}>Extrato</Text>
                 </Pressable>
