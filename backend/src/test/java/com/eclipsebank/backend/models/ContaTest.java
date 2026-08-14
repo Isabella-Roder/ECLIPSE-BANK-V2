@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 import com.eclipsebank.backend.enums.StatusConta;
+import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.ContaIndisponivelException;
 import com.eclipsebank.backend.exception.SaldoInsuficienteException;
 
@@ -90,6 +91,54 @@ public class ContaTest {
         assertThrows(ContaIndisponivelException.class, () -> conta.debitar(new BigDecimal("50.00")));
 
         assertEquals(new BigDecimal("100.00"), conta.getSaldo());
+    }
+
+    @Test
+    void deveBloquearContaAtiva() {
+        Conta conta = new Conta();
+
+        conta.bloquear();
+
+        assertEquals(StatusConta.BLOQUEADA, conta.getStatus());
+    }
+
+    @Test
+    void deveDesbloquearContaBloqueada() {
+        Conta conta = new Conta();
+        conta.bloquear();
+
+        conta.desbloquear();
+
+        assertEquals(StatusConta.ATIVA, conta.getStatus());
+    }
+
+    @Test
+    void deveEncerrarContaComSaldoZerado() {
+        Conta conta = new Conta();
+
+        conta.encerrar();
+
+        assertEquals(StatusConta.ENCERRADA, conta.getStatus());
+    }
+
+    @Test
+    void deveRecusarEncerramentoQuandoHouverSaldo() {
+        Conta conta = new Conta();
+        conta.creditar(new BigDecimal("100.00"));
+
+        assertThrows(ConflitoException.class, conta::encerrar);
+
+        assertEquals(StatusConta.ATIVA, conta.getStatus());
+    }
+
+    @Test
+    void deveRecusarDesbloqueioDeContaEncerrada() {
+        Conta conta = new Conta();
+        conta.encerrar();
+
+        assertThrows(ConflitoException.class, conta::desbloquear);
+
+        assertEquals(StatusConta.ENCERRADA, conta.getStatus());
     }
 
 }
