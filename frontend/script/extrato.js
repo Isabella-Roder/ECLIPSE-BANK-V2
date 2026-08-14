@@ -73,15 +73,14 @@ async function carregarExtrato(contaId) {
 }
 
 function renderizarExtrato(lista) {
-    listaExtrato.innerHTML = "";
+    listaExtrato.replaceChildren();
     quantidade.textContent = `${lista.length} Movimentação(ões)`;
 
     if (lista.length === 0) {
-        listaExtrato.innerHTML = `
-            <p class="estado-extrato">
-                Nenhuma movimentação encontrada.
-            </p>
-        `;
+        const estadoExtrato = document.createElement("p");
+        estadoExtrato.className = "estado-extrato";
+        estadoExtrato.textContent = "Nenhuma movimentação encontrada.";
+        listaExtrato.appendChild(estadoExtrato);
         return;
     }
 
@@ -98,35 +97,47 @@ function renderizarExtrato(lista) {
 
         linha.className = `linha-extrato ${classeTipo}`;
 
-        linha.innerHTML = `
-            <div class="dados-movimentacao">
-                <span class="tipo-movimentacao">
-                    ${movimentacao.tipo}
-                </span>
+        const dadosMovimentacao = document.createElement("div");
+        dadosMovimentacao.className = "dados-movimentacao";
 
-                <strong>
-                    ${movimentacao.descricao || "Sem descrição"}
-                </strong>
+        const tipoMovimentacao = document.createElement("span");
+        tipoMovimentacao.className = "tipo-movimentacao";
+        tipoMovimentacao.textContent = movimentacao.tipo;
 
-                <span>${data}</span>
-            </div>
+        const descricaoMovimentacao = document.createElement("strong");
+        descricaoMovimentacao.textContent = movimentacao.descricao || "Sem descrição";
 
-            <div class="valores-movimentacao">
-                <strong>
-                    ${sinal} ${formatarDinheiro(movimentacao.valor)}
-                </strong>
+        const dataMovimentacao = document.createElement("span");
+        dataMovimentacao.textContent = data;
 
-                <span>
-                    Saldo: ${formatarDinheiro(
-                        movimentacao.saldoResultante
-                    )}
-                </span>
+        dadosMovimentacao.append(
+            tipoMovimentacao,
+            descricaoMovimentacao,
+            dataMovimentacao
+        );
 
-                <a class="link-comprovante" href="comprovante.html?codigo=${movimentacao.codigo}">
-                    Ver comprovante
-                </a>
-            </div>
-        `;
+        const valoresMovimentacao = document.createElement("div");
+        valoresMovimentacao.className = "valores-movimentacao";
+
+        const valorMovimentacao = document.createElement("strong");
+        valorMovimentacao.textContent = `${sinal} ${formatarDinheiro(movimentacao.valor)}`;
+
+        const saldoResultante = document.createElement("span");
+        saldoResultante.textContent = `Saldo: ${formatarDinheiro(movimentacao.saldoResultante)}`;
+
+        const linkComprovante = document.createElement("a");
+        const parametros = new URLSearchParams({ codigo: movimentacao.codigo });
+        linkComprovante.className = "link-comprovante";
+        linkComprovante.href = `comprovante.html?${parametros.toString()}`;
+        linkComprovante.textContent = "Ver comprovante";
+
+        valoresMovimentacao.append(
+            valorMovimentacao,
+            saldoResultante,
+            linkComprovante
+        );
+
+        linha.append(dadosMovimentacao, valoresMovimentacao);
 
         listaExtrato.appendChild(linha);
     });

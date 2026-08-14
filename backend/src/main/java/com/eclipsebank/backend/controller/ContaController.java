@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,5 +48,20 @@ public class ContaController {
         @RequestParam String numero
     ) {
         return ResponseEntity.ok(contaService.buscarPorAgenciaENumero(agencia, numero));
+    }
+
+    @PatchMapping("/{id}/bloqueio")
+    public ResponseEntity<ContaResposta> bloquear(@PathVariable Long id) {
+        return ResponseEntity.ok(contaService.bloquear(id));
+    }
+
+    @PatchMapping("/{id}/desbloqueio")
+    public ResponseEntity<ContaResposta> desbloquear(@PathVariable Long id) {
+        return ResponseEntity.ok(contaService.desbloquear(id));
+    }
+
+    @PatchMapping("/{id}/encerramento")
+    public ResponseEntity<ContaResposta> encerrar(@PathVariable Long id) {
+        return ResponseEntity.ok(contaService.encerrar(id));
     }
 }

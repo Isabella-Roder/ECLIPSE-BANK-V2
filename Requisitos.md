@@ -30,10 +30,10 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 ## 2. Contas bancárias
 
-- [ ] Criação automática de conta para o cliente
+- [x] Criação automática de conta para o cliente no primeiro acesso ao painel
 - [x] Agência e número de conta únicos
 - [x] Consulta de saldo
-- [ ] Bloqueio e encerramento de conta
+- [x] Bloqueio, desbloqueio e encerramento de conta com validação de saldo
 - [x] Impedir saldo negativo fora das regras permitidas
 
 ## 3. Movimentações
@@ -49,7 +49,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## 4. Extrato e comprovantes
 
 - [x] Registrar toda movimentação em histórico
-- [ ] Listar extrato por período
+- [x] Listar extrato por período
 - [x] Identificar crédito, débito, data, descrição e saldo resultante
 - [x] Gerar comprovante com código único
 - [x] Não disponibilizar exclusão ou alteração de movimentação concluída pela API
@@ -60,6 +60,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Mensagem genérica para e-mail ou senha inválidos
 - [x] Respostas `400`, `401`, `404`, `409` e `500` padronizadas
 - [x] CORS separado em configuração própria para desenvolvimento
+- [x] Renderização segura de dados dinâmicos do extrato sem interpolação em `innerHTML`
 - [ ] Autenticação com Spring Security
 - [ ] Sessão autenticada por identificador opaco no servidor
 - [ ] Cookie de autenticação com `HttpOnly`, `Secure` e `SameSite`
@@ -90,6 +91,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Extrato com filtros
 - [x] Comprovante de operação
 - [x] Lista de movimentações recentes no painel
+- [x] Tela de gerenciamento para bloquear, desbloquear e encerrar conta
 - [x] Layout responsivo e identidade visual própria
 
 ## 7. Qualidade e portfólio
@@ -141,7 +143,9 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Carregamento, mensagens de erro e nova tentativa no painel mobile
 - [ ] Consumir a mesma API segura utilizada pelo frontend web
 - [ ] Cadastro mobile
-- [ ] Pix, transferências, extrato, cartões e investimentos
+- [ ] Pix e transferências mobile
+- [x] Extrato mobile integrado à API
+- [ ] Cartões e investimentos mobile
 - [ ] Interface adaptada para diferentes tamanhos de tela
 - [ ] Tema claro e escuro mantendo a identidade do Eclipse Bank
 - [ ] Armazenamento seguro de credenciais no Keychain/Keystore
@@ -172,7 +176,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## Ordem de entrega
 
 - [ ] Fase 1 — autenticação segura, conta, saldo e extrato
-- [ ] Fase 2 — depósito, saque, transferência e Pix
+- [x] Fase 2 — depósito, saque, transferência e Pix
 - [ ] Fase 3 — testes, documentação, Docker e PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
 - [ ] Fase 5 — carteira e simulador de investimentos

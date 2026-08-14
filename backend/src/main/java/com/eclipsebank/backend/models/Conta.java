@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.eclipsebank.backend.enums.StatusConta;
+import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.ContaIndisponivelException;
 import com.eclipsebank.backend.exception.SaldoInsuficienteException;
 
@@ -114,6 +115,42 @@ public class Conta {
         if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O valor deve ser maior que zero");
         }
+    }
+
+    public void bloquear() {
+        if (status == StatusConta.ENCERRADA) {
+            throw new ConflitoException("Uma conta encerrada não pode ser bloqueada");
+        }
+
+        if (status == StatusConta.BLOQUEADA) {
+            throw new ConflitoException("A conta já esta bloqueada");
+        }
+
+        status = StatusConta.BLOQUEADA;
+    }
+
+    public void desbloquear() {
+        if (status == StatusConta.ENCERRADA) {
+            throw new ConflitoException("Uma conta encerrada não pode ser desbloqueada");
+        }
+
+        if (status == StatusConta.ATIVA) {
+            throw new ConflitoException("A conta já está ativa");
+        }
+
+        status = StatusConta.ATIVA;
+    }
+
+    public void encerrar() {
+        if (status == StatusConta.ENCERRADA) {
+            throw new ConflitoException("A conta já está encerrada");
+        }
+
+        if (saldo.compareTo(BigDecimal.ZERO) != 0) {
+            throw new ConflitoException("A conta precisa estar com saldo zerado");
+        }
+
+        status = StatusConta.ENCERRADA;
     }
 
     public Long getId() {

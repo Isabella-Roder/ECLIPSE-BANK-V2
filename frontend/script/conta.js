@@ -80,7 +80,7 @@ function preencherConta(conta) {
 }
 
 function preencherExtrato(movimentacoes) {
-    listaMovimentacoes.innerHTML = "";
+    listaMovimentacoes.replaceChildren();
 
     if (movimentacoes.length === 0) {
         listaMovimentacoes.textContent = "Nenhuma movimentação recente.";
@@ -101,18 +101,23 @@ function preencherExtrato(movimentacoes) {
 
         item.className = "item-movimentacao";
 
-        item.innerHTML = `
-            <div>
-                <strong>${movimentacao.tipo}</strong>
-                <span>${movimentacao.descricao || "Sem descrição"}</span>
-            </div>
+        const dadosMovimentacao = document.createElement("div");
+        const tipoMovimentacao = document.createElement("strong");
+        const descricaoMovimentacao = document.createElement("span");
 
-            <div>
-                <strong>
-                    ${sinal} ${formatarSaldo(movimentacao.valor)}
-                </strong>
-                <span>${data}</span>
-        `;
+        tipoMovimentacao.textContent = movimentacao.tipo;
+        descricaoMovimentacao.textContent = movimentacao.descricao || "Sem descrição";
+        dadosMovimentacao.append(tipoMovimentacao, descricaoMovimentacao);
+
+        const valoresMovimentacao = document.createElement("div");
+        const valorMovimentacao = document.createElement("strong");
+        const dataMovimentacao = document.createElement("span");
+
+        valorMovimentacao.textContent = `${sinal} ${formatarSaldo(movimentacao.valor)}`;
+        dataMovimentacao.textContent = data;
+        valoresMovimentacao.append(valorMovimentacao, dataMovimentacao);
+
+        item.append(dadosMovimentacao, valoresMovimentacao);
 
         listaMovimentacoes.appendChild(item);
     });

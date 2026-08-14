@@ -558,6 +558,78 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
 .aviso-operacao strong { color: #d9d4e0; font-size: .82rem; }
 .aviso-operacao p { margin: 7px 0 0; font-size: .76rem; line-height: 1.55; }
 
+/* Gerenciamento da conta */
+.conteudo-gerenciamento {
+    display: grid;
+    width: min(900px,calc(100% - 40px));
+    margin: 0 auto;
+    gap: 25px;
+    padding: 60px 0 90px;
+}
+.titulo-gerenciamento h1 {
+    margin: 0;
+    font: 500 clamp(2.7rem,6vw,4.8rem) Georgia,serif;
+    letter-spacing: -.04em;
+}
+.titulo-gerenciamento > p:last-child { margin: 13px 0 0; color: #97919f; }
+.resumo-gerenciamento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 22px 25px;
+    border: 1px solid rgba(182,156,255,.18);
+    border-radius: 16px;
+    background: linear-gradient(135deg,#211d32,#13141e);
+}
+.resumo-gerenciamento > div { display: grid; gap: 7px; }
+.resumo-gerenciamento > div:last-child { text-align: right; }
+.resumo-gerenciamento span { color: #918b99; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; }
+.resumo-gerenciamento strong { color: #eeeaf3; }
+.selo-status { color: var(--violeta-claro) !important; font-size: .78rem; letter-spacing: .12em; }
+.grade-gerenciamento { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.cartao-gerenciamento {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 22px;
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    background: #12131d;
+}
+.cartao-gerenciamento.zona-perigo { border-color: rgba(240,107,140,.23); }
+.cartao-gerenciamento h2 { margin: 0; font: 500 1.6rem Georgia,serif; }
+.cartao-gerenciamento p:not(.etiqueta) { margin: 10px 0 0; color: #97919f; font-size: .84rem; line-height: 1.65; }
+.icone-gerenciamento {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 14px;
+    color: var(--violeta-claro);
+    background: rgba(139,92,246,.14);
+    font-size: 1.25rem;
+}
+.icone-gerenciamento.perigo { color: #ff93ad; background: rgba(201,54,92,.16); }
+.acoes-gerenciamento { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto; }
+.botao-conta {
+    min-height: 50px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 9px;
+    color: var(--branco);
+    background: var(--violeta);
+    font-weight: 750;
+    cursor: pointer;
+}
+.botao-conta.secundario { border: 1px solid rgba(255,255,255,.13); background: #191a26; }
+.botao-conta.perigo { margin-top: auto; background: #9f2948; }
+.botao-conta:hover:not(:disabled) { filter: brightness(1.1); }
+.botao-conta:disabled { cursor: not-allowed; opacity: .45; }
+.confirmacao-encerramento { display: flex; align-items: flex-start; gap: 10px; color: #bbb5c2; font-size: .78rem; line-height: 1.5; cursor: pointer; }
+.confirmacao-encerramento input { width: 17px; height: 17px; margin: 1px 0 0; accent-color: #b83258; }
+
 @media (max-width: 900px) {
     .pagina-autenticacao > main { grid-template-columns: 1fr; }
     .apresentacao, .painel-marca { position: relative; height: auto; min-height: 500px; }
@@ -565,6 +637,7 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
     .area-formulario, .area-login { min-height: auto; }
     .grade-acoes { grid-template-columns: repeat(2,1fr); }
     .grade-filtros { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .grade-gerenciamento { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
     .grade-campos { grid-template-columns: 1fr; }
@@ -588,6 +661,9 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
     .acoes-comprovante { grid-template-columns: 1fr; }
     .cabecalho-operacao { align-items: center; }
     .cabecalho-operacao > div { min-width: 0; }
+    .resumo-gerenciamento { align-items: flex-start; flex-direction: column; }
+    .resumo-gerenciamento > div:last-child { text-align: left; }
+    .acoes-gerenciamento { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: .01ms !important; }

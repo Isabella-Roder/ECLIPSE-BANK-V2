@@ -89,4 +89,31 @@ public class ContaService {
 
         return ContaResposta.from(conta);
     }
+
+    @Transactional
+    public ContaResposta bloquear(Long contaId) {
+        Conta conta = buscarEntidade(contaId);
+
+        conta.bloquear();
+
+        return ContaResposta.from(conta);
+    }
+
+    @Transactional
+    public ContaResposta desbloquear(Long contaId) {
+        Conta conta = buscarEntidade(contaId);
+
+        conta.desbloquear();
+
+        return ContaResposta.from(conta);
+    }
+
+    @Transactional
+    public ContaResposta encerrar(Long contaId) {
+        Conta conta = buscarEntidade(contaId);
+
+        conta.encerrar();
+
+        return ContaResposta.from(conta);
+    }
 }

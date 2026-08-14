@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Gerencie o bloqueio e o encerramento da sua conta Eclipse Bank."
+    >
+    <title>Gerenciar conta | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-gerenciamento">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-gerenciamento">
+        <header class="titulo-gerenciamento">
+            <p class="etiqueta">SEGURANÇA E CONTROLE</p>
+            <h1>Gerenciar conta</h1>
+            <p>Consulte o estado da conta e controle temporariamente suas movimentações.</p>
+        </header>
+
+        <section class="resumo-gerenciamento" aria-labelledby="titulo-resumo-conta">
+            <div>
+                <span id="titulo-resumo-conta">Conta</span>
+                <strong id="identificacao-conta">Carregando...</strong>
+            </div>
+
+            <div>
+                <span>Status atual</span>
+                <strong id="status-conta" class="selo-status">Carregando...</strong>
+            </div>
+        </section>
+
+        <section class="grade-gerenciamento" aria-label="Ações da conta">
+            <article class="cartao-gerenciamento">
+                <div class="icone-gerenciamento" aria-hidden="true">Ⅱ</div>
+
+                <div>
+                    <h2>Bloqueio temporário</h2>
+                    <p>
+                        Uma conta bloqueada não pode receber depósitos nem realizar
+                        saques, transferências ou Pix até ser desbloqueada.
+                    </p>
+                </div>
+
+                <div class="acoes-gerenciamento">
+                    <button id="botao-bloquear-conta" class="botao-conta" type="button">
+                        Bloquear conta
+                    </button>
+
+                    <button
+                        id="botao-desbloquear-conta"
+                        class="botao-conta secundario"
+                        type="button"
+                    >
+                        Desbloquear conta
+                    </button>
+                </div>
+            </article>
+
+            <article class="cartao-gerenciamento zona-perigo">
+                <div class="icone-gerenciamento perigo" aria-hidden="true">×</div>
+
+                <div>
+                    <p class="etiqueta">ZONA DE PERIGO</p>
+                    <h2>Encerrar conta</h2>
+                    <p>
+                        O encerramento é definitivo. Para continuar, a conta precisa
+                        estar com saldo zerado.
+                    </p>
+                </div>
+
+                <label class="confirmacao-encerramento">
+                    <input id="confirmar-encerramento" type="checkbox">
+                    <span>Entendo que não poderei reativar esta conta.</span>
+                </label>
+
+                <button
+                    id="botao-encerrar-conta"
+                    class="botao-conta perigo"
+                    type="button"
+                    disabled
+                >
+                    Encerrar conta definitivamente
+                </button>
+            </article>
+        </section>
+
+        <p
+            id="mensagem-gerenciamento"
+            class="mensagem-operacao"
+            role="status"
+            aria-live="polite"
+        ></p>
+    </main>
+
+    <script src="../script/gerenciar-conta.js"></script>
+</body>
+</html>
