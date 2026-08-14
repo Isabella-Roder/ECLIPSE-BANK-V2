@@ -136,7 +136,16 @@ export default function ContaScreen() {
                     <Text style={estilos.textoAcao}>Pix</Text>
                 </Pressable>
 
-                <Pressable style={estilos.acao}>
+                <Pressable style={estilos.acao} onPress={() => {
+                    roteador.push({
+                        pathname: "/transferencia",
+                        params: {
+                            contaId: String(conta.id),
+                            saldo: String(conta.saldo),
+                            usuarioId: String(conta.usuarioId)
+                        }
+                    });
+                }}>
                     <Text style={estilos.icone}>⇄</Text>
                     <Text style={estilos.textoAcao}>Transferir</Text>
                 </Pressable>

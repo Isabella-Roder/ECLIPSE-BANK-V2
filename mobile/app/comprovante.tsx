@@ -96,8 +96,10 @@ export default function ComprovanteScreen() {
       <ScrollView contentContainerStyle={estilos.conteudo}>
         <View style={estilos.cabecalho}>
           <View style={estilos.icone}><Text style={estilos.check}>✓</Text></View>
-          <Text style={estilos.etiqueta}>PIX REALIZADO</Text>
-          <Text style={estilos.titulo}>Transferência concluída</Text>
+          <Text style={estilos.etiqueta}>
+            {movimentacao.tipo.startsWith("PIX") ? "PIX REALIZADO" : "TRANSFERÊNCIA REALIZADA"}
+          </Text>
+          <Text style={estilos.titulo}>Operação concluída</Text>
           <Text style={estilos.valor}>{dinheiro(movimentacao.valor)}</Text>
         </View>
 
@@ -108,7 +110,7 @@ export default function ComprovanteScreen() {
           <View style={estilos.divisor} />
           <Dado rotulo="Data e hora" valor={new Date(movimentacao.criadaEm).toLocaleString("pt-BR")} />
           <View style={estilos.divisor} />
-          <Dado rotulo="Saldo após o Pix" valor={dinheiro(movimentacao.saldoResultante)} destaque />
+          <Dado rotulo="Saldo após a operação" valor={dinheiro(movimentacao.saldoResultante)} destaque />
         </View>
 
         <View style={estilos.codigoBox}>
