@@ -134,9 +134,13 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 ## 9. Aplicativo móvel
 
-- [ ] Definir a tecnologia após um protótipo: React Native ou Android nativo
+- [x] Tecnologia definida: React Native com Expo SDK 54 e Expo Router
+- [x] Estrutura inicial do aplicativo criada em `mobile/`
+- [x] Login mobile integrado à API de desenvolvimento
+- [x] Painel mobile com titular, saldo, agência e número da conta
+- [x] Carregamento, mensagens de erro e nova tentativa no painel mobile
 - [ ] Consumir a mesma API segura utilizada pelo frontend web
-- [ ] Cadastro, login e painel da conta
+- [ ] Cadastro mobile
 - [ ] Pix, transferências, extrato, cartões e investimentos
 - [ ] Interface adaptada para diferentes tamanhos de tela
 - [ ] Tema claro e escuro mantendo a identidade do Eclipse Bank
@@ -147,7 +151,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Notificações de login e movimentações
 - [ ] Ocultar valores quando o aplicativo entrar em segundo plano
 - [ ] Impedir informações sensíveis em logs e mensagens de erro
-- [ ] Testes em Android real e emulador
+- [x] Protótipo executado e testado em Android real com Expo Go
+- [ ] Testes em emulador Android
 - [ ] Pipeline de build separado para desenvolvimento e produção
 
 ## 10. Evolução do ecossistema bancário

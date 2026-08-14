@@ -32,6 +32,11 @@ frontend/
   html/
   css/eclipse-bank.css
   script/
+mobile/
+  app/
+    _layout.tsx
+    index.tsx
+    conta.tsx
 Requisitos.md
 ```
 
@@ -44,6 +49,8 @@ Pacote Java oficial: `com.eclipsebank.backend`. Não recriar o pacote antigo `co
 - Maven Wrapper
 - H2 persistente no desenvolvimento
 - H2 em memória isolado nos testes
+- React Native com Expo SDK 54 e Expo Router
+- Node.js 20.19.x para compatibilidade com o Expo SDK 54
 
 ```bash
 cd backend
@@ -52,6 +59,15 @@ cd backend
 ```
 
 O frontend é aberto pelo Live Server. Em desenvolvimento, a API fica em `http://localhost:8080/api`.
+
+O aplicativo móvel fica em `mobile/` e é iniciado com:
+
+```bash
+cd mobile
+npx expo start --lan
+```
+
+No celular, a URL da API deve usar o IPv4 do computador na rede local, não `localhost`. O backend precisa estar ligado e o celular deve estar na mesma rede Wi-Fi.
 
 ## Estado funcional atual
 
@@ -65,6 +81,10 @@ O frontend é aberto pelo Live Server. Em desenvolvimento, a API fica em `http:/
 - Extrato imutável e comprovante por UUID.
 - Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato e comprovante.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
+- Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
+- Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
+- Painel mobile consulta ou cria a conta e exibe titular, saldo, agência e número.
+- Botões mobile de Pix, transferência e extrato são apenas visuais; as rotas ainda não foram implementadas.
 
 ## Rotas existentes
 
@@ -108,10 +128,10 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 
 ## Próximos passos recomendados
 
-1. Criar testes automatizados de depósito, saque, transferência, Pix, rollback e saldo insuficiente.
-2. Adicionar Spring Security e substituir armazenamento provisório por cookie seguro.
-3. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
-4. Evoluir o Pix para aceitar outros tipos de chave além do e-mail.
+1. Criar a navegação e as telas funcionais de Pix, transferência e extrato no aplicativo móvel.
+2. Centralizar a URL da API mobile e remover o IPv4 fixo das telas.
+3. Adicionar Spring Security e substituir a autenticação provisória por uma sessão segura.
+4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas
 
@@ -120,6 +140,9 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, o fluxo ideal é direcionar para login ou criar uma sessão real; não tratar o objeto no storage como prova de autenticação.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
+- O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real deve ser feita no backend com uma sessão autenticada.
+- A URL da API está repetida nas telas mobile e usa o IPv4 local do computador; centralizar essa configuração antes de criar novas telas.
+- Antes de escrever código dentro de `mobile/`, leia também `mobile/AGENTS.md` e consulte a documentação correspondente ao Expo SDK 54.
 
 ## Critério antes de commit
 
