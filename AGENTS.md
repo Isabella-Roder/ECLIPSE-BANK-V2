@@ -78,15 +78,17 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Login web cria sessão no servidor e envia cookie `JSESSIONID` com `HttpOnly` e `SameSite=Lax`.
 - O frontend web consulta `/api/usuarios/sessao`, envia `credentials: "include"` e não armazena mais o usuário no `localStorage` ou `sessionStorage`.
 - Logout web invalida a sessão no servidor; a sessão expira após 30 minutos de inatividade.
-- As rotas ainda usam `permitAll()` e o CSRF permanece temporariamente desativado durante a migração. A autorização ainda não está concluída.
+- Cadastro e login são públicos; as demais rotas exigem sessão autenticada. O CSRF permanece temporariamente desativado e a autorização por proprietário ainda não está concluída.
 - Erros padronizados: 400, 401, 404, 409, 422 e 500.
 - Conta individual por usuário, saldo em `BigDecimal`, status e `@Version`.
 - Criação e consulta de conta, com bloqueio, desbloqueio e encerramento condicionado ao saldo zerado.
 - Depósito, saque, transferência e Pix por chave de e-mail transacionais.
 - Extrato imutável e comprovante por UUID.
-- Investimentos iniciados no backend: enum de tipos, entidade persistente de produto, repository, DTOs de cadastro/resposta e service com cadastro e listagem de produtos ativos.
-- O catálogo de investimentos ainda não possui controller/endpoints nem testes específicos; carteira, aplicação e resgate ainda não foram iniciados.
-- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante e gerenciamento da conta.
+- Catálogo de investimentos com produtos iniciais de renda fixa, fundo, ação, ETF e criptomoeda, além de endpoints de cadastro e listagem de produtos ativos.
+- Carteira de investimentos persistente com aplicação e resgate parcial ou total; débito/crédito da conta e registro no extrato ocorrem na mesma transação.
+- Tela web de investimentos integrada ao catálogo, aplicação, carteira e resgate. Os dados são simulados e exibem aviso educacional.
+- Testes específicos de catálogo, aplicação, resgate e rollback ainda não foram implementados.
+- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta e investimentos.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
@@ -119,6 +121,12 @@ POST   /api/contas/{contaId}/transferencias
 POST   /api/contas/{contaId}/pix
 GET    /api/contas/{contaId}/extrato
 GET    /api/movimentacoes/{codigo}
+
+POST   /api/investimentos/produtos
+GET    /api/investimentos/produtos
+POST   /api/contas/{contaId}/investimentos/aplicacoes
+GET    /api/contas/{contaId}/investimentos/carteira
+POST   /api/contas/{contaId}/investimentos/{aplicacaoId}/resgates
 ```
 
 ## Regras arquiteturais
@@ -136,21 +144,23 @@ GET    /api/movimentacoes/{codigo}
 
 O frontend web já usa sessão opaca mantida no servidor. O cookie é `HttpOnly`, usa `SameSite=Lax` e aceita `Secure=true` pela variável `SESSION_COOKIE_SECURE` em produção. O usuário não é mais salvo no armazenamento web.
 
-A migração ainda não terminou: `SecurityConfig` usa `permitAll()` e desativa CSRF temporariamente. O próximo passo obrigatório é representar a sessão no `SecurityContext`, exigir autenticação nas rotas bancárias, validar o proprietário da conta e reativar CSRF. Não marcar “Autenticação com Spring Security” como concluída antes disso.
+A migração ainda não terminou: a sessão já é representada no `SecurityContext` e as rotas não públicas exigem autenticação, mas o CSRF continua temporariamente desativado. Os próximos passos obrigatórios são validar o proprietário da conta em todas as rotas bancárias e reativar CSRF. Não marcar “Autenticação com Spring Security” como concluída antes disso.
 
 Não confiar em `usuarioId` vindo do navegador para autorizar contas ou movimentações. Antes de publicar, todas as rotas bancárias devem identificar o usuário autenticado no backend.
 
 ## Próximos passos recomendados
 
-1. Criar o controller e os testes do catálogo de produtos de investimento.
-2. Modelar a carteira e as aplicações, com débito transacional da conta corrente.
-3. Integrar a sessão ao `SecurityContext`, proteger recursos por proprietário e reativar CSRF.
-4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+1. Criar testes de catálogo, aplicação, resgate, saldo insuficiente e rollback.
+2. Proteger recursos bancários e investimentos por proprietário e restringir o cadastro de produtos a administradores.
+3. Reativar CSRF nas operações mutáveis.
+4. Evoluir investimentos com posição consolidada, rentabilidade e simulador.
+5. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas
 
 - Não execute duas instâncias do Spring na porta 8080.
 - O banco H2 em arquivo aceita uma instância por vez; os testes já usam banco em memória separado.
+- O enum persistente de `movimentacoes.tipo` no H2 local foi atualizado manualmente para aceitar `APLICACAO_INVESTIMENTO` e `RESGATE_INVESTIMENTO`; futuras mudanças de esquema devem usar migrations.
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.

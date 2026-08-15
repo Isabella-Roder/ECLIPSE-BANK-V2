@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça os investimentos simulados do Eclipse Bank.">
+    <title>Investimentos | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-investimentos">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-investimentos">
+        <header class="apresentacao-investimentos">
+            <div>
+                <p class="etiqueta">INVESTIMENTOS</p>
+                <h1>Encontre uma opção para cada objetivo.</h1>
+                <p>Conheça os produtos disponíveis e escolha uma opção para começar sua carteira.</p>
+            </div>
+
+            <aside class="aviso-investimentos">
+                <strong>Ambiente educacional</strong>
+                <p>Os produtos e valores exibidos são simulados e não representam recomendação financeira.</p>
+            </aside>
+        </header>
+
+        <section class="secao-painel carteira-investimentos" aria-labelledby="titulo-carteira">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">MINHA CARTEIRA</p>
+                    <h2 id="titulo-carteira">Seus investimentos</h2>
+                </div>
+
+                <span id="quantidade-aplicacoes">0 aplicações</span>
+            </header>
+
+            <div id="lista-carteira-investimentos" class="grade-carteira" aria-live="polite">
+                <p id="estado-carteira">Carregando carteira...</p>
+            </div>
+        </section>
+
+        <section class="secao-painel catalogo-investimentos" aria-labelledby="titulo-catalogo">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">PRODUTOS DISPONÍVEIS</p>
+                    <h2 id="titulo-catalogo">Catálogo</h2>
+                </div>
+
+                <span id="quantidade-produtos">0 produtos</span>
+            </header>
+
+            <div id="lista-produtos-investimento" class="grade-investimentos" aria-live="polite">
+                <p id="estado-catalogo">Carregando produtos...</p>
+            </div>
+
+            <p id="mensagem-investimentos" class="mensagem-operacao" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <dialog id="dialog-aplicacao" class="dialog-investimento">
+        <form id="form-aplicacao-investimento" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">NOVA APLICAÇÃO</p>
+                    <h2>Quanto você quer investir?</h2>
+                </div>
+
+                <button id="botao-fechar-aplicacao" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <input id="produto-id-aplicacao" name="produtoId" type="hidden">
+
+            <div class="produto-selecionado">
+                <span>Produto selecionado</span>
+                <strong id="nome-produto-aplicacao">—</strong>
+                <small id="minimo-produto-aplicacao">Aplicação mínima: —</small>
+            </div>
+
+            <div class="campo campo-valor-aplicacao">
+                <label for="valor-aplicacao">Valor da aplicação</label>
+                <div class="entrada-monetaria">
+                    <span>R$</span>
+                    <input
+                        id="valor-aplicacao"
+                        name="valor"
+                        type="number"
+                        inputmode="decimal"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+                </div>
+            </div>
+
+            <p id="mensagem-aplicacao" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-aplicacao" class="botao-confirmar" type="submit">
+                Confirmar aplicação <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-resgate" class="dialog-investimento">
+        <form id="form-resgate-investimento" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">RESGATE</p>
+                    <h2>Quanto você quer resgatar?</h2>
+                </div>
+
+                <button id="botao-fechar-resgate" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <input id="aplicacao-id-resgate" name="aplicacaoId" type="hidden">
+
+            <div class="produto-selecionado">
+                <span>Investimento selecionado</span>
+                <strong id="nome-produto-resgate">—</strong>
+                <small id="saldo-produto-resgate">Saldo investido: —</small>
+            </div>
+
+            <div class="campo campo-valor-aplicacao">
+                <label for="valor-resgate">Valor do resgate</label>
+                <div class="entrada-monetaria">
+                    <span>R$</span>
+                    <input
+                        id="valor-resgate"
+                        name="valor"
+                        type="number"
+                        inputmode="decimal"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+                </div>
+            </div>
+
+            <p id="mensagem-resgate" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-resgate" class="botao-confirmar botao-confirmar-resgate" type="submit">
+                Confirmar resgate <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <script src="../script/investimentos.js"></script>
+</body>
+</html>

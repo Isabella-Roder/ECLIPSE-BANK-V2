@@ -107,7 +107,8 @@ function preencherExtrato(movimentacoes) {
         const credito = 
             movimentacao.tipo === "DEPOSITO" ||
             movimentacao.tipo === "TRANSFERENCIA_RECEBIDA" ||
-            movimentacao.tipo === "PIX_RECEBIDO";
+            movimentacao.tipo === "PIX_RECEBIDO" ||
+            movimentacao.tipo === "RESGATE_INVESTIMENTO";
 
         const sinal = credito ? "+" : "-";
 

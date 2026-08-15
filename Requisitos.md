@@ -94,6 +94,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Comprovante de operação
 - [x] Lista de movimentações recentes no painel
 - [x] Tela de gerenciamento para bloquear, desbloquear e encerrar conta
+- [x] Tela de investimentos com catálogo, aplicação, carteira e resgate
 - [x] Layout responsivo e identidade visual própria
 
 ## 7. Qualidade e portfólio
@@ -116,15 +117,19 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 ## 8. Investimentos e dados de mercado
 
-- [ ] Catálogo de ativos por tipo: renda fixa, fundos, ações, ETFs e criptomoedas
+- [x] Catálogo de ativos por tipo: renda fixa, fundos, ações, ETFs e criptomoedas
   - [x] Enum com os tipos de investimento
   - [x] Entidade persistente e repository de produtos
   - [x] DTOs validados de cadastro e resposta
   - [x] Service para cadastrar e listar produtos ativos em ordem alfabética
-  - [ ] Controller e endpoints do catálogo
+  - [x] Controller e endpoints do catálogo
   - [ ] Testes específicos do catálogo
-- [ ] Carteira de investimentos separada da conta corrente
-- [ ] Aplicação e resgate simulados, sem executar ordens financeiras reais
+- [x] Carteira de investimentos separada da conta corrente
+- [x] Aplicação e resgate simulados, sem executar ordens financeiras reais
+  - [x] Débito da conta e registro da aplicação na mesma transação
+  - [x] Resgate parcial ou total com crédito na conta
+  - [x] Registro de aplicação e resgate no extrato bancário
+  - [ ] Testes de saldo insuficiente, resgate inválido e rollback
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
 - [ ] Cálculo de rentabilidade nominal e percentual
 - [ ] Histórico de aportes, resgates, proventos e rendimentos
@@ -139,7 +144,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Camada própria de integração para permitir a troca do provedor de dados
 - [ ] Chaves das APIs externas armazenadas somente no backend
 - [ ] Dados simulados como alternativa quando o provedor estiver indisponível
-- [ ] Aviso claro de caráter educacional e ausência de recomendação financeira
+- [x] Aviso claro de caráter educacional e ausência de recomendação financeira
 - [ ] Verificação dos termos de uso e licença dos dados antes da publicação
 
 ## 9. Aplicativo móvel

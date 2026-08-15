@@ -79,7 +79,9 @@ function renderizarExtrato(lista) {
         const linha = document.createElement("article");
 
         const credito = movimentacao.tipo === "DEPOSITO" ||
-            movimentacao.tipo === "TRANSFERENCIA_RECEBIDA";
+            movimentacao.tipo === "TRANSFERENCIA_RECEBIDA"||
+            movimentacao.tipo === "PIX_RECEBIDO"||
+            movimentacao.tipo === "RESGATE_INVESTIMENTO";
 
         const sinal = credito ? "+" : "-";
         const classeTipo = credito ? "credito" : "debito";
