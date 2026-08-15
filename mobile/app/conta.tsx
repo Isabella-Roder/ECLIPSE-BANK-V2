@@ -161,6 +161,18 @@ export default function ContaScreen() {
                     <Text style={estilos.icone}>▤</Text>
                     <Text style={estilos.textoAcao}>Extrato</Text>
                 </Pressable>
+
+                <Pressable style={estilos.acao} onPress={() => {
+                    roteador.push({
+                        pathname: "/investimentos",
+                        params: {
+                            contaId: String(conta.id)
+                        }
+                    });
+                }}>
+                    <Text style={estilos.icone}>◈</Text>
+                    <Text style={estilos.textoAcao}>Investir</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
     )

@@ -34,7 +34,9 @@ export default function ExtratoScreen() {
     }
 
     function movimentacoesEhCredito(tipo:string) {
-        return tipo === "DEPOSITO" || tipo.endsWith("_RECEBIDA");
+        return tipo === "DEPOSITO" ||
+        tipo === "RESGATE_INVESTIMENTO" ||
+        tipo.endsWith("_RECEBIDA");
     }
 
     function renderizarMovimentacao({
