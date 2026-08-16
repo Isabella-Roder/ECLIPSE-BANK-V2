@@ -123,7 +123,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] DTOs validados de cadastro e resposta
   - [x] Service para cadastrar e listar produtos ativos em ordem alfabética
   - [x] Controller e endpoints do catálogo
-  - [ ] Testes específicos do catálogo
+  - [x] Testes específicos do catálogo
 - [x] Carteira de investimentos separada da conta corrente
 - [x] Aplicação e resgate simulados, sem executar ordens financeiras reais
   - [x] Débito da conta e registro da aplicação na mesma transação
@@ -132,6 +132,9 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [ ] Testes de saldo insuficiente, resgate inválido e rollback
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
 - [ ] Cálculo de rentabilidade nominal e percentual
+- [ ] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
+- [ ] Fundos imobiliários com quantidade de cotas e preço médio
+- [ ] Proventos simulados de fundos imobiliários com histórico próprio
 - [ ] Histórico de aportes, resgates, proventos e rendimentos
 - [ ] Lista de ativos favoritos
 - [ ] Simulador de investimento por prazo e rentabilidade
@@ -158,7 +161,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Cadastro mobile
 - [ ] Pix e transferências mobile
 - [x] Extrato mobile integrado à API
-- [ ] Cartões e investimentos mobile
+- [ ] Cartões mobile
+- [x] Investimentos mobile com catálogo, carteira, aplicação e resgate
 - [ ] Interface adaptada para diferentes tamanhos de tela
 - [ ] Tema claro e escuro mantendo a identidade do Eclipse Bank
 - [ ] Armazenamento seguro de credenciais no Keychain/Keystore

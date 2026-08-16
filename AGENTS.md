@@ -87,13 +87,16 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Catálogo de investimentos com produtos iniciais de renda fixa, fundo, ação, ETF e criptomoeda, além de endpoints de cadastro e listagem de produtos ativos.
 - Carteira de investimentos persistente com aplicação e resgate parcial ou total; débito/crédito da conta e registro no extrato ocorrem na mesma transação.
 - Tela web de investimentos integrada ao catálogo, aplicação, carteira e resgate. Os dados são simulados e exibem aviso educacional.
-- Testes específicos de catálogo, aplicação, resgate e rollback ainda não foram implementados.
+- O catálogo possui testes unitários de cadastro válido, código duplicado e listagem de produtos ativos.
+- Testes de aplicação, resgate, saldo insuficiente e rollback ainda não foram implementados.
 - Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta e investimentos.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
 - Painel mobile consulta ou cria a conta e exibe titular, saldo, agência e número.
 - Extrato mobile integrado à API; Pix e transferência mobile ainda não foram implementados.
+- Investimentos mobile integrados à mesma API: catálogo, carteira, aplicação e resgate parcial ou total.
+- O extrato mobile reconhece aplicação como débito e resgate de investimento como crédito.
 
 ## Rotas existentes
 
@@ -150,11 +153,12 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 
 ## Próximos passos recomendados
 
-1. Criar testes de catálogo, aplicação, resgate, saldo insuficiente e rollback.
+1. Criar testes de aplicação, resgate, saldo insuficiente e rollback.
 2. Proteger recursos bancários e investimentos por proprietário e restringir o cadastro de produtos a administradores.
 3. Reativar CSRF nas operações mutáveis.
-4. Evoluir investimentos com posição consolidada, rentabilidade e simulador.
-5. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+4. Atualizar o saldo da conta mobile quando a tela voltar ao foco.
+5. Evoluir investimentos com posição consolidada, rentabilidade por período, FIIs, proventos e simulador.
+6. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas
 
@@ -165,6 +169,7 @@ Não confiar em `usuarioId` vindo do navegador para autorizar contas ou moviment
 - Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
 - O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real ainda precisa ser integrada ao aplicativo.
+- `mobile/app/conta.tsx` carrega o saldo apenas na montagem; ao voltar de aplicação ou resgate, o valor pode ficar visualmente desatualizado até a tela ser recarregada. Usar `useFocusEffect` como próximo ajuste.
 - A URL mobile é centralizada em `mobile/config/api.ts`; cada computador usa `mobile/.env.local`, que não deve entrar no Git.
 - Antes de escrever código dentro de `mobile/`, leia também `mobile/AGENTS.md` e consulte a documentação correspondente ao Expo SDK 54.
 
