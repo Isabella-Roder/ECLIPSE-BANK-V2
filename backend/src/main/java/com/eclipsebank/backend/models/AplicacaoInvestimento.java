@@ -49,6 +49,9 @@ public class AplicacaoInvestimento {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal saldoInvestido;
 
+    @Column(precision = 19, scale = 6)
+    private BigDecimal quantidadeCotas;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatusAplicacaoInvestimento status = StatusAplicacaoInvestimento.ATIVA;
@@ -147,6 +150,14 @@ public class AplicacaoInvestimento {
         saldoInvestido = novoSaldo;
     }
 
+    public void definirQuantidadeCotas(BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ConflitoException("A Quantidade de cotas deve ser positiva.");
+        }
+
+        quantidadeCotas = valor;
+    }
+
     public Long getId() {
         return id;
     }
@@ -165,6 +176,10 @@ public class AplicacaoInvestimento {
 
     public BigDecimal getSaldoInvestido() {
         return saldoInvestido;
+    }
+
+    public BigDecimal getQuantidadeCotas() {
+        return quantidadeCotas;
     }
 
     public StatusAplicacaoInvestimento getStatus() {

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eclipsebank.backend.dto.ProdutoInvestimentoCadastro;
 import com.eclipsebank.backend.dto.ProdutoInvestimentoResposta;
+import com.eclipsebank.backend.enums.TipoInvestimento;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.models.ProdutoInvestimento;
 import com.eclipsebank.backend.repository.ProdutoInvestimentoRepository;
@@ -31,9 +32,21 @@ public class ProdutoInvestimentoService {
         }
     }
 
+    private void validarDadosFundoImobiliario(ProdutoInvestimentoCadastro dados) {
+        if (dados.tipo() == TipoInvestimento.FUNDO_IMOBILIARIO && dados.precoCota() == null) {
+            throw new IllegalArgumentException("O preço da cota é obrigatório para fundos imobiliários.");
+        }
+
+        if (dados.tipo() == TipoInvestimento.FUNDO_IMOBILIARIO && dados.proventoMensalPorCota() == null) {
+            throw new IllegalArgumentException("O valor mensal da cota é obrigatório para fundos imobiliarios.");
+        }
+    }
+
     @Transactional
     public ProdutoInvestimentoResposta cadastrar(ProdutoInvestimentoCadastro dados) {
         String codigo = normalizarCodigo(dados.codigo());
+
+        validarDadosFundoImobiliario(dados);
 
         validarCodigoDisponivel(codigo);
 
@@ -43,6 +56,8 @@ public class ProdutoInvestimentoService {
         produto.setTipo(dados.tipo());
         produto.setValorMinimo(dados.valorMinimo());
         produto.setRentabilidadeAnualEstimada(dados.rentabilidadeAnualEstimada());
+        produto.setPrecoCota(dados.precoCota());
+        produto.setProventoMensalPorCota(dados.proventoMensalPorCota());
 
         ProdutoInvestimento produtoSalvo = produtoInvestimentoRepository.save(produto);
 

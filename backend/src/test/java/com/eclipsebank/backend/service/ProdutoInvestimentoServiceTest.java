@@ -44,7 +44,9 @@ class ProdutoInvestimentoServiceTest {
             " cdb01 ",
             TipoInvestimento.RENDA_FIXA,
             new BigDecimal("100.00"),
-            new BigDecimal("12.50")
+            new BigDecimal("12.50"),
+            null,
+            null
         );
 
         when(produtoInvestimentoRepository.existsByCodigoIgnoreCase("CDB01")).thenReturn(true);
@@ -64,7 +66,9 @@ class ProdutoInvestimentoServiceTest {
             " cdb01 ",
             TipoInvestimento.RENDA_FIXA,
             new BigDecimal("100.00"),
-            new BigDecimal("12.50")
+            new BigDecimal("12.50"),
+            null,
+            null
         );
 
         when(produtoInvestimentoRepository.save(any(ProdutoInvestimento.class))).thenAnswer(invocacao -> invocacao.getArgument(0));
@@ -108,5 +112,25 @@ class ProdutoInvestimentoServiceTest {
         assertEquals("ETF Global", resposta.get(1).nome());
 
         verify(produtoInvestimentoRepository).findByAtivoTrueOrderByNomeAsc();
+    }
+
+    @Test
+    void deveRecusarFundImobiliarioSemPrecoDeCota() {
+        ProdutoInvestimentoCadastro dados = new ProdutoInvestimentoCadastro(
+            "FII Eclipse",
+            "FII01",
+            TipoInvestimento.FUNDO_IMOBILIARIO,
+            new BigDecimal("100.00"),
+            new BigDecimal("8.00"),
+            null,
+            null
+        );
+
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> produtoInvestimentoService.cadastrar(dados));
+
+        verify(produtoInvestimentoRepository, never()).save(any(ProdutoInvestimento.class));
+
     }
 }

@@ -39,6 +39,12 @@ public class ProdutoInvestimento {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal rentabilidadeAnualEstimada;
 
+    @Column(precision = 19, scale = 2)
+    private BigDecimal precoCota;
+
+    @Column(precision = 19, scale = 2)
+    private BigDecimal proventoMensalPorCota;
+
     @Column(nullable = false)
     private boolean ativo = true;
 
@@ -78,6 +84,14 @@ public class ProdutoInvestimento {
         return rentabilidadeAnualEstimada;
     }
 
+    public BigDecimal getPrecoCota() {
+        return precoCota;
+    }
+
+    public BigDecimal getProventoMensalPorCota() {
+        return proventoMensalPorCota;
+    }
+
     public boolean getAtivo() {
         return ativo;
     }
@@ -104,6 +118,14 @@ public class ProdutoInvestimento {
 
     public void setRentabilidadeAnualEstimada(BigDecimal rentabilidadeAnualEstimada) {
         this.rentabilidadeAnualEstimada = rentabilidadeAnualEstimada;
+    }
+
+    public void setPrecoCota(BigDecimal precoCota) {
+        this.precoCota = precoCota;
+    }
+
+    public void setProventoMensalPorCota(BigDecimal proventoMensalPorCota) {
+        this.proventoMensalPorCota = proventoMensalPorCota;
     }
 
     public void setAtivo(boolean ativo) {

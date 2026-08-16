@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoResposta;
 import com.eclipsebank.backend.dto.ResgateInvestimentoRequisicao;
+import com.eclipsebank.backend.enums.TipoInvestimento;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
@@ -105,6 +107,12 @@ public class AplicacaoInvestimentoService {
         aplicacao.setConta(conta);
         aplicacao.setProduto(produto);
         aplicacao.aplicar(dados.valor());
+
+        if (aplicacao.getProduto().getTipo() == TipoInvestimento.FUNDO_IMOBILIARIO) {
+            BigDecimal quantidadeCotas = dados.valor().divide(produto.getPrecoCota(), 6, RoundingMode.HALF_UP);
+
+            aplicacao.definirQuantidadeCotas(quantidadeCotas);
+        }
 
         AplicacaoInvestimento aplicacaoSalva = aplicacaoInvestimentoRepository.save(aplicacao);
 

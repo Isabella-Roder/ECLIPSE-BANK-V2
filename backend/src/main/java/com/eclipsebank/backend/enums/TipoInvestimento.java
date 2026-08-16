@@ -5,5 +5,6 @@ public enum TipoInvestimento {
     FUNDO,
     ACAO,
     ETF,
-    CRIPTOMOEDA
+    CRIPTOMOEDA,
+    FUNDO_IMOBILIARIO
 }

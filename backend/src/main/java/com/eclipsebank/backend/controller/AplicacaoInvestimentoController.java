@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoResposta;
 import com.eclipsebank.backend.dto.ResgateInvestimentoRequisicao;
+import com.eclipsebank.backend.dto.ProventoFiiResposta;
 import com.eclipsebank.backend.service.AplicacaoInvestimentoService;
+import com.eclipsebank.backend.service.ProventoFiiService;
 
 import jakarta.validation.Valid;
 
@@ -23,9 +25,14 @@ import jakarta.validation.Valid;
 public class AplicacaoInvestimentoController {
     
     private final AplicacaoInvestimentoService aplicacaoInvestimentoService;
+    private final ProventoFiiService proventoFiiService;
 
-    public AplicacaoInvestimentoController(AplicacaoInvestimentoService aplicacaoInvestimentoService) {
+    public AplicacaoInvestimentoController(
+        AplicacaoInvestimentoService aplicacaoInvestimentoService,
+        ProventoFiiService proventoFiiService
+    ) {
         this.aplicacaoInvestimentoService = aplicacaoInvestimentoService;
+        this.proventoFiiService = proventoFiiService;
     }
 
     @PostMapping("/aplicacoes")
@@ -49,5 +56,13 @@ public class AplicacaoInvestimentoController {
         @Valid @RequestBody ResgateInvestimentoRequisicao dados
     ) {
         return ResponseEntity.ok(aplicacaoInvestimentoService.resgatar(contaId, aplicacaoId, dados));
+    }
+
+    @PostMapping("/{aplicacaoId}/proventos")
+    public ResponseEntity<ProventoFiiResposta> pagarProvento(
+        @PathVariable Long contaId,
+        @PathVariable Long aplicacaoId
+    ) {
+        return ResponseEntity.ok(proventoFiiService.pagar(contaId, aplicacaoId));
     }
 }

@@ -50,7 +50,29 @@ public record ProdutoInvestimentoCadastro(
         fraction = 2,
         message = "A rentabilidade deve possuir no máximo duas casas decimais"
     )
-    BigDecimal rentabilidadeAnualEstimada
+    BigDecimal rentabilidadeAnualEstimada,
+
+    @DecimalMin(
+        value = "0.01",
+        message = "O valor da cota deve ser maior que zero"
+    )
+    @Digits(
+        integer = 17,
+        fraction = 2,
+        message = "O valor da cota deve possuir no máximo duas casas decimais"
+    )
+    BigDecimal precoCota,
+
+    @DecimalMin(
+        value = "0.01",
+        message = "O valor mensal por cota deve ser maior que zero"
+    )
+    @Digits(
+        integer = 17,
+        fraction = 2,
+        message = "O valor mensal por cota deve possuir no maximo duas casas decimais"
+    )
+    BigDecimal proventoMensalPorCota
     
 ) {
     

@@ -260,8 +260,60 @@ function renderizarCarteira(aplicacoes) {
             cartao.appendChild(botaoResgatar);
         }
 
+        if (aplicacao.produtoTipo === "FUNDO_IMOBILIARIO" && aplicacao.status === "ATIVA") {
+            const botaoProvento = document.createElement("button");
+            botaoProvento.type = "button";
+            botaoProvento.className = "botao-provento";
+            botaoProvento.textContent = "Receber provento";
+
+            botaoProvento.addEventListener("click", () => {
+                receberProvento(aplicacao, botaoProvento);
+            });
+
+            cartao.appendChild(botaoProvento);
+        }
+
         listaCarteira.appendChild(cartao);
     });
+}
+
+async function receberProvento(aplicacao, botao) {
+    if (!confirm(`Receber o provento mensal de ${aplicacao.produtoNome}?`)) {
+        return;
+    }
+
+    try {
+        botao.disabled = true;
+        botao.textContent = "Recebendo...";
+
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/investimentos/${aplicacao.id}/proventos`, {
+            method: "POST",
+            credentials: "include"
+        });
+
+        if (resposta.status === 401) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const provento = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(provento.mensagem || "Não foi possivel receber o provento.");
+        }
+
+        mensagem.className = "mensagem-operacao sucesso";
+        mensagem.textContent = `Provento de ${formatarDinheiro(provento.valor)} recebido com sucesso.`;
+
+        await carregarCarteira();
+    } catch (erro) {
+        console.error(erro);
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Erro: " + erro.message;
+    } finally {
+        botao.disabled = false;
+        botao.textContent = "Receber provento";
+    }
 }
 
 function abrirResgate(aplicacao) {
@@ -391,7 +443,7 @@ formularioResgate.addEventListener("submit", async (evento) => {
         dialogoResgate.close();
 
         mensagem.className = "mensagem-operacao sucesso";
-        mensagem.textContent `Resgate de ${aplicacao.produtoNome} realizado com sucesso.`;
+        mensagem.textContent = `Resgate de ${aplicacao.produtoNome} realizado com sucesso.`;
 
         await carregarCarteira();
     } catch (erro) {

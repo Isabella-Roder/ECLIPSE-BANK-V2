@@ -13,6 +13,8 @@ public record ProdutoInvestimentoResposta(
     TipoInvestimento tipo,
     BigDecimal valorMinimo,
     BigDecimal rentabilidadeAnualEstimada,
+    BigDecimal precoCota,
+    BigDecimal proventoMensalPorCota,
     boolean ativo,
     LocalDateTime criadoEm
 ) {
@@ -24,6 +26,8 @@ public record ProdutoInvestimentoResposta(
             produto.getTipo(),
             produto.getValorMinimo(),
             produto.getRentabilidadeAnualEstimada(),
+            produto.getPrecoCota(),
+            produto.getProventoMensalPorCota(),
             produto.getAtivo(),
             produto.getCriadoEm()
         );

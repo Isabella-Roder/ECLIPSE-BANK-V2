@@ -133,8 +133,14 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
 - [ ] Cálculo de rentabilidade nominal e percentual
 - [x] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
-- [ ] Fundos imobiliários com quantidade de cotas e preço médio
-- [ ] Proventos simulados de fundos imobiliários com histórico próprio
+- [x] Fundos imobiliários com preço da cota e quantidade de cotas adquiridas
+- [ ] Cálculo e manutenção do preço médio dos fundos imobiliários
+- [x] Proventos simulados de fundos imobiliários com histórico próprio
+  - [x] Cálculo mensal do provento pela quantidade de cotas
+  - [x] Crédito do provento na conta e registro no extrato
+  - [x] Proteção contra pagamento duplicado para a mesma aplicação no mesmo mês
+  - [x] Testes do cálculo, pagamento e duplicidade mensal
+  - [x] Recebimento de provento pela carteira no frontend web
 - [ ] Histórico de aportes, resgates, proventos e rendimentos
 - [ ] Lista de ativos favoritos
 - [ ] Simulador de investimento por prazo e rentabilidade

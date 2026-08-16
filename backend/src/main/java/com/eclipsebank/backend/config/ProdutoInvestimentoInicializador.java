@@ -40,7 +40,9 @@ public class ProdutoInvestimentoInicializador implements CommandLineRunner{
             codigo,
             tipo,
             new BigDecimal(valorMinimo),
-            new BigDecimal(rentabilidade)
+            new BigDecimal(rentabilidade),
+            null,
+            null
         );
 
         produtoInvestimentoService.cadastrar(dados);
