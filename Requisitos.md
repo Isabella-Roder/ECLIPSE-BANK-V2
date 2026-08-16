@@ -73,7 +73,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Renovação do identificador de sessão após o login
 - [ ] Rate limiting para login, Pix, transferências e recuperação de senha
 - [ ] Proteção contra tentativa de acesso a recursos de outro cliente
-- [ ] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência
+- [x] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência
 - [ ] HTTPS obrigatório em produção
 - [ ] Segredos e credenciais somente em variáveis de ambiente
 - [ ] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis
