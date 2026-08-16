@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
@@ -28,17 +30,20 @@ public class AplicacaoInvestimentoService {
     private final ContaRepository contaRepository;
     private final ProdutoInvestimentoRepository produtoInvestimentoRepository;
     private final MovimentacaoRepository movimentacaoRepository;
+    private final CalculadoraRentabilidade calculadoraRentabilidade;
 
     public AplicacaoInvestimentoService(
         AplicacaoInvestimentoRepository aplicacaoInvestimentoRepository,
         ContaRepository contaRepository,
         ProdutoInvestimentoRepository produtoInvestimentoRepository,
-        MovimentacaoRepository movimentacaoRepository
+        MovimentacaoRepository movimentacaoRepository,
+        CalculadoraRentabilidade calculadoraRentabilidade
     ) {
         this.aplicacaoInvestimentoRepository = aplicacaoInvestimentoRepository;
         this.contaRepository = contaRepository;
         this.produtoInvestimentoRepository = produtoInvestimentoRepository;
         this.movimentacaoRepository = movimentacaoRepository;
+        this.calculadoraRentabilidade = calculadoraRentabilidade;
     }
 
     private Conta buscarConta(Long contaId) {
@@ -66,6 +71,22 @@ public class AplicacaoInvestimentoService {
     private AplicacaoInvestimento buscarAplicacaoDaConta(Long aplicacaoId, Long contaId) {
         return aplicacaoInvestimentoRepository.findByIdAndContaId(aplicacaoId, contaId)
             .orElseThrow(() -> new RecursoNaoEncontradoException("Aplicação de investimentos não encontrada para esta conta."));
+    }
+
+    private long quantosDiasAplicacaoDinheiro(AplicacaoInvestimento dados) {
+        LocalDateTime dataInical = dados.getAtualizadaEm();
+        
+        LocalDateTime dataAtual = LocalDateTime.now();
+
+        return ChronoUnit.DAYS.between(dataInical, dataAtual);
+    }
+
+    private BigDecimal calcularSaldoAtualEstimado(AplicacaoInvestimento aplicacao) {
+        long dias = quantosDiasAplicacaoDinheiro(aplicacao);
+
+        BigDecimal calculando = calculadoraRentabilidade.calcularSaldoAtual(aplicacao.getSaldoInvestido(), aplicacao.getProduto().getRentabilidadeAnualEstimada(), dias);
+
+        return calculando;
     }
 
     @Transactional
@@ -96,7 +117,7 @@ public class AplicacaoInvestimentoService {
 
         movimentacaoRepository.save(movimentacao);
 
-        return AplicacaoInvestimentoResposta.from(aplicacaoSalva);
+        return AplicacaoInvestimentoResposta.from(aplicacaoSalva, aplicacaoSalva.getSaldoInvestido());
     }
 
     @Transactional
@@ -104,6 +125,10 @@ public class AplicacaoInvestimentoService {
         Conta conta = buscarConta(contaId);
 
         AplicacaoInvestimento aplicacao = buscarAplicacaoDaConta(aplicacaoId, contaId);
+
+        BigDecimal saldoAtual = calcularSaldoAtualEstimado(aplicacao);
+
+        aplicacao.atualizarSaldoInvestido(saldoAtual);
 
         aplicacao.resgatar(dados.valor());
 
@@ -118,7 +143,7 @@ public class AplicacaoInvestimentoService {
 
         movimentacaoRepository.save(movimentacao);
 
-        return AplicacaoInvestimentoResposta.from(aplicacao);
+        return AplicacaoInvestimentoResposta.from(aplicacao, aplicacao.getSaldoInvestido());
     }
 
     @Transactional(readOnly = true)
@@ -126,6 +151,6 @@ public class AplicacaoInvestimentoService {
         Conta conta = buscarConta(contaId);
 
         return aplicacaoInvestimentoRepository.findByContaIdOrderByAplicadaEmDesc(conta.getId())
-            .stream().map(AplicacaoInvestimentoResposta::from).toList();
+            .stream().map(aplicacao -> AplicacaoInvestimentoResposta.from(aplicacao, calcularSaldoAtualEstimado(aplicacao))).toList();
     }
 }

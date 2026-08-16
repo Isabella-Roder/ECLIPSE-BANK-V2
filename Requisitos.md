@@ -132,7 +132,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [ ] Testes de saldo insuficiente, resgate inválido e rollback
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
 - [ ] Cálculo de rentabilidade nominal e percentual
-- [ ] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
+- [x] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
 - [ ] Fundos imobiliários com quantidade de cotas e preço médio
 - [ ] Proventos simulados de fundos imobiliários com histórico próprio
 - [ ] Histórico de aportes, resgates, proventos e rendimentos

@@ -137,6 +137,16 @@ public class AplicacaoInvestimento {
         }
     }
 
+    public void atualizarSaldoInvestido(BigDecimal novoSaldo) {
+        if (status != StatusAplicacaoInvestimento.ATIVA) {
+            throw new ConflitoException("A aplicação já foi resgatada.");
+        }
+
+        validarValorPositivo(novoSaldo);
+
+        saldoInvestido = novoSaldo;
+    }
+
     public Long getId() {
         return id;
     }

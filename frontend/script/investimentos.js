@@ -228,7 +228,7 @@ function renderizarCarteira(aplicacoes) {
 
         const saldo = document.createElement("strong");
         saldo.className = "saldo-investido";
-        saldo.textContent = formatarDinheiro(aplicacao.saldoInvestido);
+        saldo.textContent = formatarDinheiro(aplicacao.saldoAtualEstimado);
 
         const valorOriginal = document.createElement("span");
         valorOriginal.className = "valor-original-aplicacao";
@@ -268,9 +268,9 @@ function abrirResgate(aplicacao) {
     aplicacaoIdResgate.value = aplicacao.id;
     nomeProdutoResgate.textContent = aplicacao.produtoNome;
 
-    saldoProdutoResgate.textContent = `Saldo investido: ${formatarDinheiro(aplicacao.saldoInvestido)}`;
+    saldoProdutoResgate.textContent = `Saldo investido: ${formatarDinheiro(aplicacao.saldoAtualEstimado)}`;
 
-    valorResgate.max = aplicacao.saldoInvestido;
+    valorResgate.max = aplicacao.saldoAtualEstimado;
     valorResgate.value = "";
     mensagemResgate.textContent = "";
 
