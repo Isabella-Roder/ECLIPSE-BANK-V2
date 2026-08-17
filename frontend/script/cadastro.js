@@ -12,6 +12,14 @@ const termos = document.querySelector("#termos");
 const mensagem = document.querySelector("#mensagem-formulario");
 const btnCriar = document.querySelector(".botao-principal");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
+fetch(`${API_URL}/usuarios/sessao`, { credentials: "include" });
+
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
@@ -43,7 +51,8 @@ formulario.addEventListener("submit", async (evento) => {
         const resposta = await fetch(`${API_URL}/usuarios`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
             },
             body: JSON.stringify(dados)
         });

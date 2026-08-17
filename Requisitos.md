@@ -26,7 +26,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Bloqueio de login para usuário desativado
 - [x] Perfis de cliente e administrador definidos
 - [x] Consulta, atualização e desativação de usuário
-- [ ] Autenticação e autorização com Spring Security
+- [x] Autenticação e autorização com Spring Security
 
 ## 2. Contas bancárias
 
@@ -62,11 +62,11 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] CORS separado em configuração própria para desenvolvimento
 - [x] Renderização segura de dados dinâmicos do extrato sem interpolação em `innerHTML`
 - [x] Spring Security integrado ao backend com `SecurityFilterChain`
-- [ ] Autenticação com Spring Security
+- [x] Autenticação com Spring Security
 - [x] Sessão autenticada por identificador opaco no servidor
 - [x] Cookie de sessão com `HttpOnly`, `SameSite` e `Secure` configurável para produção
 - [x] Não armazenar usuário ou token de autenticação no `localStorage` ou `sessionStorage`
-- [ ] Proteção CSRF nas operações que alteram dados
+- [x] Proteção CSRF nas operações que alteram dados
 - [x] Logout com invalidação da sessão no servidor
 - [x] Expiração da sessão após 30 minutos de inatividade
 - [ ] Limite absoluto de duração da sessão

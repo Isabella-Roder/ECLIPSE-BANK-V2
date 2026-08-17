@@ -8,6 +8,12 @@ const confirmarEncerramento = document.getElementById("confirmar-encerramento");
 const botaoEncerrar = document.getElementById("botao-encerrar-conta");
 const mensagem = document.getElementById("mensagem-gerenciamento");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
 let contaId;
 
 async function carregarConta(usuarioId) {
@@ -46,7 +52,10 @@ async function bloquearConta() {
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/bloqueio`, {
             method: "PATCH",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+            }
         });
 
         const corpo = await resposta.json();
@@ -78,7 +87,10 @@ async function desbloquearConta() {
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/desbloqueio`, {
             method: "PATCH",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+            }
         });
 
         const corpo = await resposta.json();
@@ -120,7 +132,10 @@ async function encerrarConta() {
 
         const resposta = await fetch(`${API_URL}/contas/${contaId}/encerramento`, {
             method: "PATCH",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+            }
         });
 
         const corpo = await resposta.json();

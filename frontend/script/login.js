@@ -6,6 +6,14 @@ const senha = document.querySelector("#senha");
 const mensagem = document.querySelector(".mensagem-login");
 const btnLogin = document.querySelector(".botao-login");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
+fetch(`${API_URL}/usuarios/sessao`, { credentials: "include" });
+
 formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
     
@@ -28,7 +36,8 @@ formulario.addEventListener("submit", async (evento) => {
             method: "POST",
             credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
             },
             body: JSON.stringify(dados)
         });

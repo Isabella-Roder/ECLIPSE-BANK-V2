@@ -8,6 +8,12 @@ const listaMovimentacoes = document.getElementById("lista-movimentacoes");
 const mensagem = document.getElementById("mensagem-conta");
 const botaoSair = document.getElementById("botao-sair");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
 let usuario;
 
 function formatarSaldo(saldo) {
@@ -48,7 +54,10 @@ async function carregarOuCriarConta() {
         if (resposta.status === 404) {
             resposta = await fetch(`${API_URL}/contas/usuario/${usuario.id}`, {
                 method: "POST",
-                credentials: "include"
+                credentials: "include",
+                headers: {
+                    "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+                }
             });
         }
 
@@ -145,7 +154,10 @@ botaoSair.addEventListener("click", async () => {
     try {
         await fetch(`${API_URL}/usuarios/logout`, {
             method: "POST",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+            }
         });
     } catch (erro) {
         console.error("Erro ao encerrar sessão:", erro);

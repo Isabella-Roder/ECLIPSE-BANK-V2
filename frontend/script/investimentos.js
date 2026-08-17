@@ -28,6 +28,12 @@ const mensagemResgate = document.getElementById("mensagem-resgate");
 const botaoFecharResgate = document.getElementById("botao-fechar-resgate");
 const botaoConfirmarResgate = document.getElementById("botao-confirmar-resgate");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
 let contaAtual;
 
 function formatarDinheiro(valor) {
@@ -288,7 +294,10 @@ async function receberProvento(aplicacao, botao) {
 
         const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/investimentos/${aplicacao.id}/proventos`, {
             method: "POST",
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
+            }
         });
 
         if (resposta.status === 401) {
@@ -369,7 +378,8 @@ formularioAplicacao.addEventListener("submit", async (evento) => {
             method: "POST",
             credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
             },
             body: JSON.stringify(dados)
         });
@@ -424,7 +434,8 @@ formularioResgate.addEventListener("submit", async (evento) => {
             method: "POST",
             credentials: "include",
             headers: {
-                "content-Type": "application/json"
+                "content-Type": "application/json",
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
             },
             body: JSON.stringify(dados)
         });

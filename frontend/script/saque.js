@@ -6,6 +6,12 @@ const descricao = document.getElementById("descricao");
 const mensagem = document.getElementById("mensagem-operacao");
 const btnConfirmar = document.getElementById("botao-confirmar");
 
+function lerCookie(nome) {
+    const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
+
+    return valor ? decodeURIComponent(valor.split("=")[1]) : null;
+}
+
 let contaId;
 
 function formatarValor(valor) {
@@ -70,7 +76,8 @@ formulario.addEventListener("submit", async (evento) => {
             method: "POST",
             credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
             },
             body: JSON.stringify(dados)
         });
