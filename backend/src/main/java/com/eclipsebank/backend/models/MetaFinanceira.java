@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.eclipsebank.backend.enums.StatusMetaFinanceira;
+import com.eclipsebank.backend.exception.ConflitoException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -90,6 +91,51 @@ public class MetaFinanceira {
         atualizadaEm = LocalDateTime.now();
     }
 
+    public void aportar(BigDecimal valor) {
+        validarValorPositivo(valor);
+
+        if (status != StatusMetaFinanceira.EM_ANDAMENTO) {
+            throw new ConflitoException("Meta financeira já concluida ou resgatada.");
+        }
+
+        valorAtual = valorAtual.add(valor);
+
+        if (valorAtual.compareTo(valorAlvo) >= 0) {
+            status = StatusMetaFinanceira.CONCLUIDA;
+            concluidaEm = LocalDateTime.now();
+        }
+    }
+
+    public void resgatar(BigDecimal valor) {
+        validarValorPositivo(valor);
+
+        if (status != StatusMetaFinanceira.EM_ANDAMENTO) {
+            throw new ConflitoException("Meta financeira já concluida ou resgatada.");
+        }
+
+        if (valorAtual.compareTo(valor) < 0) {
+            throw new ConflitoException("Esta meta não tem valor para resgatar.");
+        }
+
+        valorAtual = valorAtual.subtract(valor);
+    }
+
+    private void validarValorPositivo(BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+        }
+    }
+
+    public void atualizarMeta(BigDecimal valorAtualizado) {
+        if (status != StatusMetaFinanceira.EM_ANDAMENTO) {
+            throw new ConflitoException("Meta financeira já concluida ou resgatada");
+        }
+
+        validarValorPositivo(valorAtualizado);
+
+        valorAlvo = valorAtualizado;
+    }
+
     public Long getId() {
         return id;
     }
@@ -122,6 +168,10 @@ public class MetaFinanceira {
         return criadaEm;
     }
 
+    public LocalDateTime getAtualizadaEm() {
+        return atualizadaEm;
+    }
+
     public LocalDateTime getConcluidaEm() {
         return concluidaEm;
     }
@@ -148,6 +198,10 @@ public class MetaFinanceira {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public void setAtualizadaEm(LocalDateTime atualizadaEm) {
+        this.atualizadaEm = atualizadaEm;
     }
 
     public void setConcluidaEm(LocalDateTime concluidaEm) {

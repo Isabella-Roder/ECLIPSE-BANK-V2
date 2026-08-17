@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Acompanhe suas metas financeiras no Eclipse Bank.">
+    <title>Metas financeiras | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-metas-financeiras">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-metas-financeiras">
+        <header class="apresentacao-metas-financeiras">
+            <div>
+                <p class="etiqueta">METAS FINANCEIRAS</p>
+                <h1>Guarde dinheiro para os seus objetivos.</h1>
+                <p>Crie metas, acompanhe o progresso e faça aportes ou resgates quando precisar.</p>
+            </div>
+
+            <button id="botao-nova-meta" class="botao-confirmar" type="button">
+                Nova meta <span aria-hidden="true">→</span>
+            </button>
+        </header>
+
+        <section class="secao-painel lista-metas-financeiras" aria-labelledby="titulo-metas">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">SUAS METAS</p>
+                    <h2 id="titulo-metas">Metas em andamento</h2>
+                </div>
+
+                <span id="quantidade-metas">0 metas</span>
+            </header>
+
+            <div id="lista-metas-financeiras" class="grade-metas-financeiras" aria-live="polite">
+                <p id="estado-metas">Carregando metas...</p>
+            </div>
+
+            <p id="mensagem-metas" class="mensagem-operacao" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <dialog id="dialog-nova-meta" class="dialog-investimento">
+        <form id="form-nova-meta" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">NOVA META</p>
+                    <h2>Qual é o seu objetivo?</h2>
+                </div>
+
+                <button id="botao-fechar-nova-meta" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <div class="campo">
+                <label for="nome-nova-meta">Nome da meta</label>
+                <input
+                    id="nome-nova-meta"
+                    name="nome"
+                    type="text"
+                    maxlength="80"
+                    placeholder="Ex: Viagem, reserva de emergência..."
+                    required
+                >
+            </div>
+
+            <div class="campo campo-valor-aplicacao">
+                <label for="valor-alvo-nova-meta">Valor alvo</label>
+                <div class="entrada-monetaria">
+                    <span>R$</span>
+                    <input
+                        id="valor-alvo-nova-meta"
+                        name="valorAlvo"
+                        type="number"
+                        inputmode="decimal"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="prazo-nova-meta">Prazo</label>
+                <input
+                    id="prazo-nova-meta"
+                    name="prazo"
+                    type="date"
+                    required
+                >
+            </div>
+
+            <p id="mensagem-nova-meta" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-nova-meta" class="botao-confirmar" type="submit">
+                Criar meta <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-aporte-meta" class="dialog-investimento">
+        <form id="form-aporte-meta" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">APORTE</p>
+                    <h2>Quanto você quer guardar?</h2>
+                </div>
+
+                <button id="botao-fechar-aporte-meta" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <input id="meta-id-aporte" name="metaId" type="hidden">
+
+            <div class="produto-selecionado">
+                <span>Meta selecionada</span>
+                <strong id="nome-meta-aporte">—</strong>
+                <small id="progresso-meta-aporte">Guardado até agora: —</small>
+            </div>
+
+            <div class="campo campo-valor-aplicacao">
+                <label for="valor-aporte-meta">Valor do aporte</label>
+                <div class="entrada-monetaria">
+                    <span>R$</span>
+                    <input
+                        id="valor-aporte-meta"
+                        name="valor"
+                        type="number"
+                        inputmode="decimal"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+                </div>
+            </div>
+
+            <p id="mensagem-aporte-meta" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-aporte-meta" class="botao-confirmar" type="submit">
+                Confirmar aporte <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <dialog id="dialog-resgate-meta" class="dialog-investimento">
+        <form id="form-resgate-meta" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">RESGATE</p>
+                    <h2>Quanto você quer resgatar?</h2>
+                </div>
+
+                <button id="botao-fechar-resgate-meta" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <input id="meta-id-resgate" name="metaId" type="hidden">
+
+            <div class="produto-selecionado">
+                <span>Meta selecionada</span>
+                <strong id="nome-meta-resgate">—</strong>
+                <small id="progresso-meta-resgate">Guardado até agora: —</small>
+            </div>
+
+            <div class="campo campo-valor-aplicacao">
+                <label for="valor-resgate-meta">Valor do resgate</label>
+                <div class="entrada-monetaria">
+                    <span>R$</span>
+                    <input
+                        id="valor-resgate-meta"
+                        name="valor"
+                        type="number"
+                        inputmode="decimal"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0,00"
+                        required
+                    >
+                </div>
+            </div>
+
+            <p id="mensagem-resgate-meta" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-resgate-meta" class="botao-confirmar botao-confirmar-resgate" type="submit">
+                Confirmar resgate <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <script src="../script/metas-financeiras.js"></script>
+</body>
+</html>
