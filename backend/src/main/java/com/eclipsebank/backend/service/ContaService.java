@@ -48,6 +48,12 @@ public class ContaService {
             .orElseThrow(() -> new RecursoNaoEncontradoException("Conta não encontrada com o ID:" + id));
     }
 
+    @Transactional(readOnly = true)
+    public Long obterUsuarioIdDono(Long contaId) {
+        return contaRepository.buscarUsuarioIdPelaContaId(contaId)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Conta não encontrada com o ID: " + contaId));
+    }
+
     @Transactional
     public ContaResposta criarParaUsuario(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId)

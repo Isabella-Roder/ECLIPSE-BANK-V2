@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,9 @@ import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoResposta;
 import com.eclipsebank.backend.dto.ResgateInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.ProventoFiiResposta;
+import com.eclipsebank.backend.security.UsuarioAutenticado;
 import com.eclipsebank.backend.service.AplicacaoInvestimentoService;
+import com.eclipsebank.backend.service.ContaService;
 import com.eclipsebank.backend.service.ProventoFiiService;
 
 import jakarta.validation.Valid;
@@ -26,26 +29,42 @@ public class AplicacaoInvestimentoController {
     
     private final AplicacaoInvestimentoService aplicacaoInvestimentoService;
     private final ProventoFiiService proventoFiiService;
+    private final ContaService contaService;
+    private final UsuarioAutenticado usuarioAutenticado;
 
     public AplicacaoInvestimentoController(
         AplicacaoInvestimentoService aplicacaoInvestimentoService,
-        ProventoFiiService proventoFiiService
+        ProventoFiiService proventoFiiService,
+        ContaService contaService,
+        UsuarioAutenticado usuarioAutenticado
     ) {
         this.aplicacaoInvestimentoService = aplicacaoInvestimentoService;
         this.proventoFiiService = proventoFiiService;
+        this.contaService = contaService;
+        this.usuarioAutenticado = usuarioAutenticado;
     }
 
     @PostMapping("/aplicacoes")
-    public ResponseEntity<AplicacaoInvestimentoResposta> aplicar(@PathVariable Long contaId, @Valid @RequestBody AplicacaoInvestimentoRequisicao dados) {
-        AplicacaoInvestimentoResposta aplicacao = aplicacaoInvestimentoService.aplicar(contaId, dados);
+    public ResponseEntity<AplicacaoInvestimentoResposta> aplicar(
+        @PathVariable Long contaId,
+        @Valid @RequestBody AplicacaoInvestimentoRequisicao dados,
+        Authentication autenticacao
+    ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
 
+        AplicacaoInvestimentoResposta aplicacao = aplicacaoInvestimentoService.aplicar(contaId, dados);
         URI localizacao = URI.create("/api/contas/" + contaId + "/investimentos/carteira");
 
         return ResponseEntity.created(localizacao).body(aplicacao);
     }
 
     @GetMapping("/carteira")
-    public ResponseEntity<List<AplicacaoInvestimentoResposta>> listarCarteira(@PathVariable Long contaId) {
+    public ResponseEntity<List<AplicacaoInvestimentoResposta>> listarCarteira(
+        @PathVariable Long contaId,
+        Authentication autenticacao
+    ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
+
         return ResponseEntity.ok(aplicacaoInvestimentoService.listarPorConta(contaId));
     }
 
@@ -53,16 +72,22 @@ public class AplicacaoInvestimentoController {
     public ResponseEntity<AplicacaoInvestimentoResposta> resgatar(
         @PathVariable Long contaId,
         @PathVariable Long aplicacaoId,
-        @Valid @RequestBody ResgateInvestimentoRequisicao dados
+        @Valid @RequestBody ResgateInvestimentoRequisicao dados,
+        Authentication autenticacao
     ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
+
         return ResponseEntity.ok(aplicacaoInvestimentoService.resgatar(contaId, aplicacaoId, dados));
     }
 
     @PostMapping("/{aplicacaoId}/proventos")
     public ResponseEntity<ProventoFiiResposta> pagarProvento(
         @PathVariable Long contaId,
-        @PathVariable Long aplicacaoId
+        @PathVariable Long aplicacaoId,
+        Authentication autenticacao
     ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
+
         return ResponseEntity.ok(proventoFiiService.pagar(contaId, aplicacaoId));
     }
 }

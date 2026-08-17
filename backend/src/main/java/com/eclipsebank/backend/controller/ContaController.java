@@ -29,7 +29,9 @@ public class ContaController {
     }
 
     @PostMapping("/usuario/{usuarioId}")
-    public ResponseEntity<ContaResposta> criarParaUsuario(@PathVariable Long usuarioId) {
+    public ResponseEntity<ContaResposta> criarParaUsuario(@PathVariable Long usuarioId, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, usuarioId);
+        
         ContaResposta conta = contaService.criarParaUsuario(usuarioId);
         URI localizacao = URI.create("/api/contas/" + conta.id());
 
@@ -37,7 +39,9 @@ public class ContaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContaResposta> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ContaResposta> buscarPorId(@PathVariable Long id, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(id));
+        
         return ResponseEntity.ok(contaService.buscarPorId(id));
     }
 
@@ -65,17 +69,23 @@ public class ContaController {
     }
 
     @PatchMapping("/{id}/bloqueio")
-    public ResponseEntity<ContaResposta> bloquear(@PathVariable Long id) {
+    public ResponseEntity<ContaResposta> bloquear(@PathVariable Long id, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(id));
+        
         return ResponseEntity.ok(contaService.bloquear(id));
     }
 
     @PatchMapping("/{id}/desbloqueio")
-    public ResponseEntity<ContaResposta> desbloquear(@PathVariable Long id) {
+    public ResponseEntity<ContaResposta> desbloquear(@PathVariable Long id, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(id));
+        
         return ResponseEntity.ok(contaService.desbloquear(id));
     }
 
     @PatchMapping("/{id}/encerramento")
-    public ResponseEntity<ContaResposta> encerrar(@PathVariable Long id) {
+    public ResponseEntity<ContaResposta> encerrar(@PathVariable Long id, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(id));
+        
         return ResponseEntity.ok(contaService.encerrar(id));
     }
 }
