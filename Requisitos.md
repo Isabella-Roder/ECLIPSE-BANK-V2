@@ -109,7 +109,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## Funcionalidades futuras
 
 - [ ] Cartões e faturas
-- [ ] Metas financeiras
+- [x] Metas financeiras (criação, aporte e resgate manuais)
 - [ ] Empréstimos
 - [ ] Investimentos
 - [ ] Contas empresariais
