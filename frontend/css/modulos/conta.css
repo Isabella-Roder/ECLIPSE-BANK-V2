@@ -1,0 +1,90 @@
+/* Painel da conta */
+.pagina-painel { background: #0c0d15; color: var(--branco); }
+.cabecalho-painel {
+    display: flex;
+    min-height: 82px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px clamp(22px,6vw,90px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(12,13,21,.9);
+}
+.cabecalho-painel > div { display: flex; align-items: center; gap: 18px; color: #cbc7d3; }
+#botao-sair, #botao-ocultar-saldo {
+    border: 1px solid rgba(255,255,255,.16); border-radius: 8px; color: var(--branco);
+    background: transparent; padding: 9px 14px; cursor: pointer;
+}
+.conteudo-painel { display: grid; width: min(1180px,calc(100% - 40px)); margin: 0 auto; gap: 30px; padding: 55px 0 80px; }
+.resumo-conta h1 { margin: 0 0 25px; font: 500 clamp(2.4rem,5vw,4.5rem) Georgia,serif; }
+.cartao-saldo {
+    position: relative; overflow: hidden; padding: clamp(25px,4vw,42px); border: 1px solid rgba(182,156,255,.2);
+    border-radius: 22px; background: radial-gradient(circle at 90% 10%,rgba(139,92,246,.35),transparent 35%), linear-gradient(135deg,#242038,#141520);
+    box-shadow: 0 28px 70px rgba(0,0,0,.25);
+}
+.topo-saldo { display: flex; justify-content: space-between; color: #bdb8c7; }
+#saldo-conta { display: block; margin: 18px 0 35px; font: 500 clamp(2.8rem,7vw,5rem) Georgia,serif; }
+.cartao-saldo dl { display: flex; gap: 45px; margin: 0; }
+.cartao-saldo dl div { display: grid; gap: 6px; }
+.cartao-saldo dt { color: #8f8998; font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; }
+.cartao-saldo dd { margin: 0; font-weight: 700; letter-spacing: .08em; }
+.secao-painel { padding: 28px; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; background: #12131d; }
+.secao-painel h2 { margin: 0 0 20px; font: 500 1.55rem Georgia,serif; }
+.grade-acoes { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+.grade-acoes a {
+    padding: 25px 16px; border: 1px solid rgba(255,255,255,.09); border-radius: 13px;
+    color: #ded9e7; background: #191a26; font-weight: 700; text-align: center; text-decoration: none;
+}
+.grade-acoes a:hover { border-color: var(--violeta); background: #211d32; }
+.cabecalho-secao { display: flex; align-items: center; justify-content: space-between; }
+.cabecalho-secao h2 { margin: 0; }
+.cabecalho-secao a { color: var(--violeta-claro); font-size: .82rem; }
+#lista-movimentacoes {
+    display: grid;
+    margin-top: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    color: #8f8998;
+    background: #0e0f17;
+}
+.item-movimentacao {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 19px 21px;
+    text-align: left;
+    transition: background .16s;
+}
+.item-movimentacao + .item-movimentacao {
+    border-top: 1px solid rgba(255,255,255,.07);
+}
+.item-movimentacao:hover { background: rgba(139,92,246,.06); }
+.item-movimentacao > div {
+    display: grid;
+    min-width: 0;
+    gap: 6px;
+}
+.item-movimentacao > div:last-child {
+    flex: 0 0 auto;
+    text-align: right;
+}
+.item-movimentacao strong {
+    color: #eeeaf3;
+    font-size: .9rem;
+    letter-spacing: .025em;
+}
+.item-movimentacao > div:first-child strong {
+    color: var(--violeta-claro);
+    font-size: .69rem;
+    letter-spacing: .13em;
+}
+.item-movimentacao span {
+    overflow: hidden;
+    color: #8f8998;
+    font-size: .75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+

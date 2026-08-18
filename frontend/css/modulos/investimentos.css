@@ -1,0 +1,397 @@
+/* Investimentos */
+.conteudo-investimentos { gap: 25px; }
+.apresentacao-investimentos {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 45px;
+    padding: 18px 0 15px;
+}
+.apresentacao-investimentos > div { max-width: 720px; }
+.apresentacao-investimentos h1 {
+    max-width: 700px;
+    margin: 0;
+    font: 500 clamp(2.8rem,6vw,5.2rem)/1.02 Georgia,serif;
+    letter-spacing: -.045em;
+}
+.apresentacao-investimentos > div > p:last-child {
+    max-width: 590px;
+    margin: 19px 0 0;
+    color: #97919f;
+    line-height: 1.65;
+}
+.aviso-investimentos {
+    max-width: 330px;
+    flex: 0 0 300px;
+    padding: 20px 22px;
+    border: 1px solid rgba(182,156,255,.18);
+    border-radius: 15px;
+    color: #918b99;
+    background: linear-gradient(145deg,rgba(139,92,246,.1),rgba(18,19,29,.88));
+}
+.aviso-investimentos strong { color: var(--violeta-claro); font-size: .8rem; }
+.aviso-investimentos p { margin: 8px 0 0; font-size: .76rem; line-height: 1.55; }
+.catalogo-investimentos, .carteira-investimentos { padding: clamp(24px,4vw,35px); }
+.catalogo-investimentos .cabecalho-secao,
+.carteira-investimentos .cabecalho-secao { align-items: flex-end; }
+.catalogo-investimentos .cabecalho-secao .etiqueta,
+.carteira-investimentos .cabecalho-secao .etiqueta { margin-bottom: 8px; }
+.catalogo-investimentos .cabecalho-secao h2,
+.carteira-investimentos .cabecalho-secao h2 { margin: 0; }
+#quantidade-produtos, #quantidade-aplicacoes {
+    color: #918b99;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+.grade-investimentos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 16px;
+    margin-top: 27px;
+}
+#estado-catalogo {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 42px 20px;
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 14px;
+    color: #817b89;
+    text-align: center;
+}
+.cartao-investimento {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 245px;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    background: radial-gradient(circle at 100% 0,rgba(139,92,246,.16),transparent 42%),#0e0f17;
+    transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+.cartao-investimento::after {
+    position: absolute;
+    right: -28px;
+    bottom: -34px;
+    width: 105px;
+    height: 105px;
+    border: 1px solid rgba(182,156,255,.12);
+    border-radius: 50%;
+    content: "";
+}
+.cartao-investimento:hover {
+    transform: translateY(-3px);
+    border-color: rgba(182,156,255,.35);
+    box-shadow: 0 18px 38px rgba(0,0,0,.2);
+}
+.tipo-investimento {
+    padding: 7px 9px;
+    border: 1px solid rgba(182,156,255,.18);
+    border-radius: 999px;
+    color: var(--violeta-claro);
+    background: rgba(139,92,246,.09);
+    font-size: .61rem;
+    font-weight: 850;
+    letter-spacing: .11em;
+}
+.cartao-investimento h3 {
+    margin: 22px 0 5px;
+    color: #f1edf5;
+    font: 500 1.45rem Georgia,serif;
+}
+.codigo-investimento {
+    margin: 0 0 28px;
+    color: #706a78;
+    font: 700 .68rem monospace;
+    letter-spacing: .1em;
+}
+.cartao-investimento > strong {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    color: #e4dff0;
+    font-size: .85rem;
+}
+.rentabilidade-investimento {
+    position: relative;
+    z-index: 1;
+    margin-top: 7px;
+    color: #76ddb7;
+    font-size: .76rem;
+    font-weight: 750;
+}
+.catalogo-investimentos .mensagem-operacao { margin-top: 18px; }
+.posicao-consolidada { padding: clamp(24px,4vw,35px); }
+.posicao-consolidada .cabecalho-secao { align-items: flex-end; }
+.posicao-consolidada .cabecalho-secao .etiqueta { margin-bottom: 8px; }
+.posicao-consolidada .cabecalho-secao h2 { margin: 0; }
+#quantidade-posicoes {
+    color: #918b99;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+.grade-posicao {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 16px;
+    margin-top: 27px;
+}
+#estado-posicao {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 36px 20px;
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 14px;
+    color: #817b89;
+    text-align: center;
+}
+.cartao-posicao {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    background: linear-gradient(150deg,#181925,#0d0e16);
+    box-shadow: 0 18px 38px rgba(0,0,0,.14);
+}
+.cartao-posicao h3 {
+    margin: 0 0 5px;
+    color: #f1edf5;
+    font: 500 1.3rem Georgia,serif;
+}
+.cartao-posicao .codigo-investimento { margin-bottom: 18px; }
+.cartao-posicao dl {
+    display: grid;
+    width: 100%;
+    gap: 8px;
+    margin: 0;
+}
+.cartao-posicao dl div { display: flex; justify-content: space-between; gap: 10px; }
+.cartao-posicao dt { color: #817b89; font-size: .72rem; }
+.cartao-posicao dd { margin: 0; color: #e4dff0; font-size: .82rem; font-weight: 700; }
+.grade-carteira {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 16px;
+    margin-top: 27px;
+}
+#estado-carteira {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 36px 20px;
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 14px;
+    color: #817b89;
+    text-align: center;
+}
+.carteira-investimentos {
+    border-color: rgba(182,156,255,.14);
+    background: radial-gradient(circle at 100% 0,rgba(139,92,246,.09),transparent 34%),#12131d;
+}
+.cartao-aplicacao {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 255px;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    background: linear-gradient(150deg,#181925,#0d0e16);
+    box-shadow: 0 18px 38px rgba(0,0,0,.14);
+    transition: border-color .18s, transform .18s, box-shadow .18s;
+}
+.cartao-aplicacao::after {
+    position: absolute;
+    right: -50px;
+    bottom: -65px;
+    width: 160px;
+    height: 160px;
+    border: 1px solid rgba(182,156,255,.1);
+    border-radius: 50%;
+    box-shadow: 0 0 0 25px rgba(139,92,246,.025);
+    content: "";
+    pointer-events: none;
+}
+.cartao-aplicacao:hover {
+    transform: translateY(-3px);
+    border-color: rgba(182,156,255,.28);
+    box-shadow: 0 22px 48px rgba(0,0,0,.22);
+}
+.status-aplicacao {
+    padding: 6px 9px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 999px;
+    font-size: .6rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+}
+.status-aplicacao.ativa {
+    border-color: rgba(118,221,183,.25);
+    color: #76ddb7;
+    background: rgba(69,201,151,.1);
+}
+.status-aplicacao.resgatada {
+    border-color: rgba(255,147,173,.22);
+    color: #ff93ad;
+    background: rgba(201,54,92,.1);
+}
+.cartao-aplicacao h3 {
+    margin: 20px 0 5px;
+    color: #f1edf5;
+    font: 500 1.45rem Georgia,serif;
+}
+.cartao-aplicacao .codigo-investimento { margin-bottom: 25px; }
+.saldo-investido {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 5px;
+    margin-top: auto;
+    color: var(--branco);
+    font: 500 1.75rem Georgia,serif;
+}
+.saldo-investido::before {
+    color: #817b89;
+    content: "Saldo investido";
+    font: 750 .62rem Inter,"Segoe UI",sans-serif;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+.valor-original-aplicacao {
+    position: relative;
+    z-index: 1;
+    margin-top: 9px;
+    color: #aaa4b1;
+    font-size: .75rem;
+}
+.cartao-aplicacao time {
+    position: relative;
+    z-index: 1;
+    margin-top: 14px;
+    color: #706a78;
+    font-size: .68rem;
+}
+.botao-resgatar {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 43px;
+    margin-top: 19px;
+    border: 1px solid rgba(118,221,183,.26);
+    border-radius: 9px;
+    color: #9ce8ca;
+    background: rgba(69,201,151,.1);
+    font-weight: 750;
+    cursor: pointer;
+}
+.botao-resgatar:hover { border-color: #76ddb7; background: rgba(69,201,151,.18); }
+.botao-confirmar-resgate { background: #278d69; box-shadow: 0 14px 32px rgba(39,141,105,.22); }
+.botao-confirmar-resgate:hover { background: #31a47c; }
+.botao-investir {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 43px;
+    margin-top: 20px;
+    border: 1px solid rgba(182,156,255,.3);
+    border-radius: 9px;
+    color: #e8e3ed;
+    background: rgba(139,92,246,.14);
+    font-weight: 750;
+    cursor: pointer;
+}
+.botao-investir:hover { border-color: var(--violeta-claro); background: rgba(139,92,246,.24); }
+.dialog-investimento {
+    width: min(520px,calc(100% - 32px));
+    padding: 0;
+    border: 1px solid rgba(182,156,255,.24);
+    border-radius: 20px;
+    color: var(--branco);
+    background: linear-gradient(145deg,#191a27,#10111a);
+    box-shadow: 0 35px 100px rgba(0,0,0,.55);
+}
+.dialog-investimento::backdrop { background: rgba(5,6,11,.78); backdrop-filter: blur(5px); }
+.form-aplicacao { display: grid; gap: 23px; padding: clamp(25px,5vw,38px); }
+.form-aplicacao > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.form-aplicacao header .etiqueta { margin-bottom: 8px; }
+.form-aplicacao h2 { margin: 0; font: 500 clamp(1.9rem,6vw,2.7rem) Georgia,serif; }
+.botao-fechar-dialog {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    color: #c9c4d2;
+    background: transparent;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+.produto-selecionado {
+    display: grid;
+    gap: 6px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    background: #0d0e16;
+}
+.produto-selecionado span, .produto-selecionado small { color: #817b89; font-size: .72rem; }
+.produto-selecionado strong { color: var(--violeta-claro); }
+.campo-valor-aplicacao label { color: #ded9e7; }
+.campo-valor-aplicacao input { border-color: rgba(255,255,255,.11); color: var(--branco); background: #0d0e16; }
+.campo-valor-aplicacao input:focus { border-color: var(--violeta); background: #10111a; }
+
+@media (max-width: 900px) {
+    .pagina-autenticacao > main { grid-template-columns: 1fr; }
+    .apresentacao, .painel-marca { position: relative; height: auto; min-height: 500px; }
+    .apresentacao-conteudo, .painel-conteudo { margin: 70px 0 45px; }
+    .area-formulario, .area-login { min-height: auto; }
+    .grade-acoes { grid-template-columns: repeat(2,1fr); }
+    .grade-filtros { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .grade-gerenciamento { grid-template-columns: 1fr; }
+    .apresentacao-investimentos { align-items: stretch; flex-direction: column; gap: 25px; }
+    .aviso-investimentos { max-width: none; flex-basis: auto; }
+}
+@media (max-width: 600px) {
+    .grade-campos { grid-template-columns: 1fr; }
+    .area-formulario, .area-login { padding: 55px 20px 70px; }
+    .cabecalho-painel { align-items: flex-start; gap: 20px; }
+    .cabecalho-painel .marca { font-size: .72rem; letter-spacing: .1em; }
+    .cabecalho-painel > div { align-items: flex-end; flex-direction: column; gap: 8px; font-size: .8rem; }
+    .cartao-saldo dl { gap: 22px; }
+    .item-movimentacao { align-items: flex-start; flex-direction: column; gap: 13px; }
+    .item-movimentacao > div:last-child { width: 100%; text-align: left; }
+    .cabecalho-extrato { align-items: stretch; flex-direction: column; }
+    .resumo-extrato { min-width: 0; }
+    .grade-filtros { grid-template-columns: 1fr; }
+    .linha-extrato { align-items: flex-start; flex-direction: column; gap: 14px; }
+    .valores-movimentacao { width: 100%; text-align: left; }
+    .topo-comprovante, .valor-comprovante { padding-inline: 24px; }
+    .detalhes-comprovante { padding-inline: 24px; }
+    .detalhes-comprovante > div { align-items: flex-start; flex-direction: column; gap: 7px; }
+    .detalhes-comprovante dd { text-align: left; }
+    .rodape-comprovante { padding-inline: 24px; }
+    .acoes-comprovante { grid-template-columns: 1fr; }
+    .cabecalho-operacao { align-items: center; }
+    .cabecalho-operacao > div { min-width: 0; }
+    .resumo-gerenciamento { align-items: flex-start; flex-direction: column; }
+    .resumo-gerenciamento > div:last-child { text-align: left; }
+    .acoes-gerenciamento { grid-template-columns: 1fr; }
+    .apresentacao-investimentos h1 { font-size: clamp(2.5rem,13vw,4rem); }
+    .catalogo-investimentos .cabecalho-secao,
+    .carteira-investimentos .cabecalho-secao { align-items: flex-start; flex-direction: column; gap: 8px; }
+    .grade-investimentos, .grade-carteira { grid-template-columns: 1fr; }
+}
