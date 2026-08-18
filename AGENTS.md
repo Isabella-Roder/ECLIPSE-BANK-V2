@@ -88,8 +88,11 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Carteira de investimentos persistente com aplicação e resgate parcial ou total; débito/crédito da conta e registro no extrato ocorrem na mesma transação.
 - Tela web de investimentos integrada ao catálogo, aplicação, carteira e resgate. Os dados são simulados e exibem aviso educacional.
 - O catálogo possui testes unitários de cadastro válido, código duplicado e listagem de produtos ativos.
-- Testes de aplicação, resgate, saldo insuficiente e rollback ainda não foram implementados.
-- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta e investimentos.
+- Testes de saldo insuficiente na aplicação e resgate inválido (`AplicacaoInvestimentoTest`, `AplicacaoInvestimentoServiceTest`); falta apenas teste de rollback (requer integração com transação real).
+- Metas financeiras: entidade com aporte, resgate e conclusão automática ao atingir o valor alvo; repository, DTOs, service e controller com autorização por proprietário da conta; débito/crédito da conta e registro no extrato na mesma transação.
+- Metas financeiras possuem testes de regra de negócio (entidade), orquestração do service e saldo insuficiente no aporte.
+- Tela web de metas financeiras integrada à API: criação, listagem, aporte e resgate, com barra de progresso.
+- Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta, investimentos e metas financeiras.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
@@ -130,6 +133,11 @@ GET    /api/investimentos/produtos
 POST   /api/contas/{contaId}/investimentos/aplicacoes
 GET    /api/contas/{contaId}/investimentos/carteira
 POST   /api/contas/{contaId}/investimentos/{aplicacaoId}/resgates
+
+POST   /api/contas/{contaId}/metas-financeiras/criar
+GET    /api/contas/{contaId}/metas-financeiras/minhas-metas
+POST   /api/contas/{contaId}/metas-financeiras/{metaId}/aportar
+POST   /api/contas/{contaId}/metas-financeiras/{metaId}/resgatar
 ```
 
 ## Regras arquiteturais

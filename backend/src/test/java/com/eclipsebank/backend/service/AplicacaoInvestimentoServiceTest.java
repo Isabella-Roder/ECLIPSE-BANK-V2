@@ -1,7 +1,10 @@
 package com.eclipsebank.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.enums.TipoInvestimento;
+import com.eclipsebank.backend.exception.SaldoInsuficienteException;
 import com.eclipsebank.backend.models.AplicacaoInvestimento;
 import com.eclipsebank.backend.models.Conta;
 import com.eclipsebank.backend.models.ProdutoInvestimento;
@@ -91,5 +95,21 @@ class AplicacaoInvestimentoServiceTest {
             new BigDecimal("10.000000"),
             captor.getValue().getQuantidadeCotas()
         );
+    }
+
+    @Test
+    void deveRecusarAplicacaoQuandoSaldoForInsuficiente() {
+        AplicacaoInvestimentoRequisicao dados = new AplicacaoInvestimentoRequisicao(2L, new BigDecimal("1000.00"));
+
+        when(contaRepository.findById(1L)).thenReturn(Optional.of(conta));
+        when(produtoInvestimentoRepository.findById(2L)).thenReturn(Optional.of(produto));
+        when(produto.getAtivo()).thenReturn(true);
+        when(produto.getValorMinimo()).thenReturn(new BigDecimal("100.00"));
+        doThrow(new SaldoInsuficienteException()).when(conta).debitar(dados.valor());
+
+        assertThrows(SaldoInsuficienteException.class, () -> aplicacaoInvestimentoService.aplicar(1L, dados));
+
+        verify(aplicacaoInvestimentoRepository, never()).save(any());
+        verify(movimentacaoRepository, never()).save(any());
     }
 }

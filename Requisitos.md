@@ -110,6 +110,13 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 - [ ] Cartões e faturas
 - [x] Metas financeiras (criação, aporte e resgate manuais)
+  - [x] Entidade com regras de aporte/resgate e conclusão automática ao atingir o valor alvo
+  - [x] DTOs validados de cadastro, requisição e resposta
+  - [x] Repository, service e controller com autorização por proprietário da conta
+  - [x] Débito/crédito da conta e registro no extrato na mesma transação
+  - [x] Testes de regra de negócio, orquestração do service e saldo insuficiente
+  - [x] Tela web de criação, listagem, aporte e resgate com barra de progresso
+  - [ ] Aportes automáticos simulados (fora do escopo desta etapa)
 - [ ] Empréstimos
 - [ ] Investimentos
 - [ ] Contas empresariais
@@ -129,7 +136,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Débito da conta e registro da aplicação na mesma transação
   - [x] Resgate parcial ou total com crédito na conta
   - [x] Registro de aplicação e resgate no extrato bancário
-  - [ ] Testes de saldo insuficiente, resgate inválido e rollback
+  - [x] Testes de saldo insuficiente e resgate inválido
+  - [ ] Teste de rollback (requer teste de integração com transação real)
 - [ ] Posição consolidada com quantidade, preço médio e valor atual
 - [ ] Cálculo de rentabilidade nominal e percentual
 - [x] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
