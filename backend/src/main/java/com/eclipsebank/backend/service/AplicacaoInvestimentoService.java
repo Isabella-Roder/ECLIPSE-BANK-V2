@@ -112,6 +112,10 @@ public class AplicacaoInvestimentoService {
             .filter(Objects::nonNull)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        BigDecimal rentabilidadeNominal = calculadoraRentabilidade.calcularRentabilidadeNominal(valorTotalAplicado, valorTotalAtual);
+        
+        BigDecimal rentabilidadePercentual = calculadoraRentabilidade.calcularRentabilidadePercentual(valorTotalAplicado, valorTotalAtual);
+
         BigDecimal precoMedio = quantidadeTotalCotas.compareTo(BigDecimal.ZERO) > 0
             ? valorTotalAplicado.divide(quantidadeTotalCotas, 6, RoundingMode.HALF_UP)
             : null;
@@ -124,6 +128,8 @@ public class AplicacaoInvestimentoService {
             quantidadeTotalCotas,
             valorTotalAplicado,
             valorTotalAtual,
+            rentabilidadeNominal,
+            rentabilidadePercentual,
             precoMedio
         );
     }
@@ -162,7 +168,10 @@ public class AplicacaoInvestimentoService {
 
         movimentacaoRepository.save(movimentacao);
 
-        return AplicacaoInvestimentoResposta.from(aplicacaoSalva, aplicacaoSalva.getSaldoInvestido());
+        BigDecimal rentabilidadeNominal = calculadoraRentabilidade.calcularRentabilidadeNominal(aplicacao.getValorAplicado(), aplicacao.getSaldoInvestido());
+        BigDecimal rentabilidadePercentual = calculadoraRentabilidade.calcularRentabilidadePercentual(aplicacao.getValorAplicado(), aplicacao.getSaldoInvestido());
+
+        return AplicacaoInvestimentoResposta.from(aplicacaoSalva, aplicacaoSalva.getSaldoInvestido(), rentabilidadeNominal, rentabilidadePercentual);
     }
 
     @Transactional
@@ -188,7 +197,10 @@ public class AplicacaoInvestimentoService {
 
         movimentacaoRepository.save(movimentacao);
 
-        return AplicacaoInvestimentoResposta.from(aplicacao, aplicacao.getSaldoInvestido());
+        BigDecimal rentabilidadeNominal = calculadoraRentabilidade.calcularRentabilidadeNominal(aplicacao.getValorAplicado(), saldoAtual);
+        BigDecimal rentabilidadePercentual = calculadoraRentabilidade.calcularRentabilidadePercentual(aplicacao.getValorAplicado(), saldoAtual);
+
+        return AplicacaoInvestimentoResposta.from(aplicacao, aplicacao.getSaldoInvestido(), rentabilidadeNominal, rentabilidadePercentual);
     }
 
     @Transactional(readOnly = true)
@@ -196,7 +208,16 @@ public class AplicacaoInvestimentoService {
         Conta conta = buscarConta(contaId);
 
         return aplicacaoInvestimentoRepository.findByContaIdOrderByAplicadaEmDesc(conta.getId())
-            .stream().map(aplicacao -> AplicacaoInvestimentoResposta.from(aplicacao, calcularSaldoAtualEstimado(aplicacao))).toList();
+            .stream()
+            .map(aplicacao -> {
+                BigDecimal saldoAtualEstimado = calcularSaldoAtualEstimado(aplicacao);
+
+                BigDecimal rentabilidadeNominal = calculadoraRentabilidade.calcularRentabilidadeNominal(aplicacao.getValorAplicado(), saldoAtualEstimado);
+
+                BigDecimal rentabilidadePercentual = calculadoraRentabilidade.calcularRentabilidadePercentual(aplicacao.getValorAplicado(), saldoAtualEstimado);
+
+                return AplicacaoInvestimentoResposta.from(aplicacao, saldoAtualEstimado, rentabilidadeNominal, rentabilidadePercentual);
+            }).toList();
     }
 
     @Transactional(readOnly = true)

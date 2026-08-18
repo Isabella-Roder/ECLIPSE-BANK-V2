@@ -139,7 +139,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Testes de saldo insuficiente e resgate inválido
   - [ ] Teste de rollback (requer teste de integração com transação real)
 - [x] Posição consolidada com quantidade, preço médio e valor atual
-- [ ] Cálculo de rentabilidade nominal e percentual
+- [x] Cálculo de rentabilidade nominal e percentual
 - [x] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
 - [x] Fundos imobiliários com preço da cota e quantidade de cotas adquiridas
 - [ ] Cálculo e manutenção do preço médio dos fundos imobiliários

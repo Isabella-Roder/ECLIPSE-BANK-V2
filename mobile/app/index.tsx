@@ -29,13 +29,15 @@ export default function Index() {
 
       const resposta = await fetch(`${API_URL}/usuarios/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(dados)
       });
 
-      const corpo = await resposta.json();
+      const textoResposta = await resposta.text();
+      const corpo = textoResposta ? JSON.parse(textoResposta) : {};
 
       if (!resposta.ok) {
         const errosDosCampos = Object.values(corpo.campos || {});

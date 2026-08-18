@@ -276,6 +276,33 @@
     color: #aaa4b1;
     font-size: .75rem;
 }
+.rentabilidade-aplicacao {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 6px 9px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 750;
+}
+.rentabilidade-aplicacao::before {
+    font-size: .62rem;
+    content: "●";
+}
+.rentabilidade-aplicacao.positiva {
+    border-color: rgba(118,221,183,.22);
+    color: #76ddb7;
+    background: rgba(69,201,151,.09);
+}
+.rentabilidade-aplicacao.negativa {
+    border-color: rgba(255,147,173,.2);
+    color: #ff93ad;
+    background: rgba(201,54,92,.09);
+}
 .cartao-aplicacao time {
     position: relative;
     z-index: 1;

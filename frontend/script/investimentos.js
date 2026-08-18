@@ -244,6 +244,10 @@ function renderizarCarteira(aplicacoes) {
         valorOriginal.className = "valor-original-aplicacao";
         valorOriginal.textContent = `Aplicado: ${formatarDinheiro(aplicacao.valorAplicado)}`;
 
+        const rentabilidade = document.createElement("span");
+        rentabilidade.className = `rentabilidade-aplicacao ${aplicacao.rentabilidadeNominal >= 0 ? "positiva" : "negativa"}`;
+        rentabilidade.textContent = `${formatarDinheiro(aplicacao.rentabilidadeNominal)} (${aplicacao.rentabilidadePercentual}%)`;
+
         const data = document.createElement("time");
         data.dateTime = aplicacao.aplicadaEm;
         data.textContent = new Date(aplicacao.aplicadaEm).toLocaleString("pt-BR");
@@ -254,6 +258,7 @@ function renderizarCarteira(aplicacoes) {
             codigo,
             saldo,
             valorOriginal,
+            rentabilidade,
             data
         );
 
@@ -425,6 +430,8 @@ function renderizarPosicaoConsolidada(posicoes) {
         if (Number(posicao.quantidadeTotalCotas) > 0) {
             adicionarLinha("Cotas", posicao.quantidadeTotalCotas);
         }
+
+        adicionarLinha("Rentabilidade", `${formatarDinheiro(posicao.rentabilidadeNominal)} (${posicao.rentabilidadePercentual}%)`);
 
         if (posicao.precoMedio) {
             adicionarLinha("Preço médio", formatarDinheiro(posicao.precoMedio));

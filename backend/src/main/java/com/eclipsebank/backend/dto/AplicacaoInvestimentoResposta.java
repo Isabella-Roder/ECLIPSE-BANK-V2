@@ -18,13 +18,15 @@ public record AplicacaoInvestimentoResposta(
     BigDecimal valorAplicado,
     BigDecimal saldoInvestido,
     BigDecimal saldoAtualEstimado,
+    BigDecimal rentabilidadeNominal,
+    BigDecimal rentabilidadePercentual,
     BigDecimal quantidadeCotas,
     StatusAplicacaoInvestimento status,
     LocalDateTime aplicadaEm,
     LocalDateTime atualizadaEm,
     LocalDateTime resgatadaEm
 ) {
-    public static AplicacaoInvestimentoResposta from(AplicacaoInvestimento aplicacao, BigDecimal saldoAtualEstimado) {
+    public static AplicacaoInvestimentoResposta from(AplicacaoInvestimento aplicacao, BigDecimal saldoAtualEstimado, BigDecimal rentabilidadeNominal, BigDecimal rentabilidadePercentual) {
         return new AplicacaoInvestimentoResposta(
             aplicacao.getId(),
             aplicacao.getConta().getId(),
@@ -36,6 +38,8 @@ public record AplicacaoInvestimentoResposta(
             aplicacao.getValorAplicado(),
             aplicacao.getSaldoInvestido(),
             saldoAtualEstimado,
+            rentabilidadeNominal,
+            rentabilidadePercentual,
             aplicacao.getQuantidadeCotas(),
             aplicacao.getStatus(),
             aplicacao.getAplicadaEm(),

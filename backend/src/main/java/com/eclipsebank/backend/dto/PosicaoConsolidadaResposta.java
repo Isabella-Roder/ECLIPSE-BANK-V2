@@ -12,6 +12,8 @@ public record PosicaoConsolidadaResposta(
     BigDecimal quantidadeTotalCotas,
     BigDecimal valorTotalAplicado,
     BigDecimal valorTotalAtual,
+    BigDecimal rentabilidadeNominal,
+    BigDecimal rentabilidadePercentual,
     BigDecimal precoMedio
 ) {
     

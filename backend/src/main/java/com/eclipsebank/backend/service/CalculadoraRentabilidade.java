@@ -30,4 +30,21 @@ public class CalculadoraRentabilidade {
         return valorAplicado.add(rendimento).setScale(2, RoundingMode.HALF_UP);
     }
 
+    public BigDecimal calcularRentabilidadeNominal(BigDecimal valorAplicado, BigDecimal saldoAtual) {
+        return saldoAtual.subtract(valorAplicado).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal calcularRentabilidadePercentual(BigDecimal valorAplicado, BigDecimal saldoAtual) {
+        if (valorAplicado.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        }
+
+        BigDecimal rentabilidadeNominal = calcularRentabilidadeNominal(valorAplicado, saldoAtual);
+
+        return rentabilidadeNominal
+            .divide(valorAplicado, 4, RoundingMode.HALF_UP)
+            .multiply(CEM)
+            .setScale(2, RoundingMode.HALF_UP);
+    }
+
 }
