@@ -28,6 +28,10 @@ const mensagemResgate = document.getElementById("mensagem-resgate");
 const botaoFecharResgate = document.getElementById("botao-fechar-resgate");
 const botaoConfirmarResgate = document.getElementById("botao-confirmar-resgate");
 
+const listaPosicaoConsolidada = document.getElementById("lista-posicao-consolidada");
+const estadoPosicao = document.getElementById("estado-posicao");
+const quantidadePosicoes = document.getElementById("quantidade-posicoes");
+
 function lerCookie(nome) {
     const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
 
@@ -353,6 +357,88 @@ function abrirAplicacao(produto) {
     valorAplicacao.focus();
 }
 
+async function carregarPosicaoConsolidada() {
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/investimentos/posicao`, {
+            credentials: "include"
+        });
+
+        if (resposta.status === 401) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const posicoes = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(posicoes.mensagem || "Erro ao carregar posicao.");
+        }
+
+        renderizarPosicaoConsolidada(posicoes);
+        quantidadePosicoes.textContent = `${posicoes.length} produto(s)`;
+    } catch (erro) {
+        console.error(erro);
+        mensagem.className = "mensagem-operacao sucesso";
+        mensagem.textContent = "Erro: " + erro.message;
+    }
+}
+
+function renderizarPosicaoConsolidada(posicoes) {
+    listaPosicaoConsolidada.replaceChildren();
+
+    if (posicoes.length === 0) {
+        const estadoVazio = document.createElement("p");
+        estadoVazio.id = "estado-posicao";
+        estadoVazio.textContent = "Você ainda não possui posições consolidadas.";
+        listaPosicaoConsolidada.appendChild(estadoVazio);
+        return;
+    }
+
+    posicoes.forEach((posicao) => {
+        const cartao = document.createElement("article");
+        cartao.className = "cartao-posicao";
+
+        const nome = document.createElement("h3");
+        nome.textContent = posicao.produtoNome;
+
+        const codigo = document.createElement("p");
+        codigo.className = "codigo-investimento";
+        codigo.textContent = posicao.produtoCodigo;
+
+        const lista = document.createElement("dl");
+
+        function adicionarLinha(rotulo, valor) {
+            const linha = document.createElement("div");
+            const dt = document.createElement("dt");
+            const dd = document.createElement("dd");
+
+            dt.textContent = rotulo;
+            dd.textContent = valor;
+
+            linha.append(dt, dd);
+            lista.appendChild(linha);
+        }
+
+        adicionarLinha("Valor aplicado", formatarDinheiro(posicao.valorTotalAplicado));
+        adicionarLinha("Valor atual", formatarDinheiro(posicao.valorTotalAtual));
+
+        if (Number(posicao.quantidadeTotalCotas) > 0) {
+            adicionarLinha("Cotas", posicao.quantidadeTotalCotas);
+        }
+
+        if (posicao.precoMedio) {
+            adicionarLinha("Preço médio", formatarDinheiro(posicao.precoMedio));
+        }
+
+        cartao.append(
+            nome,
+            codigo,
+            lista
+        );
+        listaPosicaoConsolidada.appendChild(cartao);
+    });
+}
+
 botaoFecharAplicacao.addEventListener("click", () => {
     dialogoAplicacao.close();
 });
@@ -486,7 +572,8 @@ async function iniciarPagina() {
 
     await Promise.all([
         carregarProdutos(),
-        carregarCarteira()
+        carregarCarteira(),
+        carregarPosicaoConsolidada()
     ]);
 }
 

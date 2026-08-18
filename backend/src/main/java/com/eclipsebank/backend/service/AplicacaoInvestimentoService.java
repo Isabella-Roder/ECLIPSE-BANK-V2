@@ -8,10 +8,15 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoResposta;
+import com.eclipsebank.backend.dto.PosicaoConsolidadaResposta;
 import com.eclipsebank.backend.dto.ResgateInvestimentoRequisicao;
+import com.eclipsebank.backend.enums.StatusAplicacaoInvestimento;
 import com.eclipsebank.backend.enums.TipoInvestimento;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
 import com.eclipsebank.backend.exception.ConflitoException;
@@ -91,6 +96,38 @@ public class AplicacaoInvestimentoService {
         return calculando;
     }
 
+    private PosicaoConsolidadaResposta consolidar(List<AplicacaoInvestimento> aplicacoes) {
+        ProdutoInvestimento produto = aplicacoes.get(0).getProduto();
+
+        BigDecimal valorTotalAplicado = aplicacoes.stream()
+            .map(AplicacaoInvestimento::getValorAplicado)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal valorTotalAtual = aplicacoes.stream()
+            .map(this::calcularSaldoAtualEstimado)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal quantidadeTotalCotas = aplicacoes.stream()
+            .map(AplicacaoInvestimento::getQuantidadeCotas)
+            .filter(Objects::nonNull)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal precoMedio = quantidadeTotalCotas.compareTo(BigDecimal.ZERO) > 0
+            ? valorTotalAplicado.divide(quantidadeTotalCotas, 6, RoundingMode.HALF_UP)
+            : null;
+
+        return new PosicaoConsolidadaResposta(
+            produto.getId(),
+            produto.getNome(),
+            produto.getCodigo(),
+            produto.getTipo(),
+            quantidadeTotalCotas,
+            valorTotalAplicado,
+            valorTotalAtual,
+            precoMedio
+        );
+    }
+
     @Transactional
     public AplicacaoInvestimentoResposta aplicar(Long contaId, AplicacaoInvestimentoRequisicao dados) {
         Conta conta = buscarConta(contaId);
@@ -160,5 +197,21 @@ public class AplicacaoInvestimentoService {
 
         return aplicacaoInvestimentoRepository.findByContaIdOrderByAplicadaEmDesc(conta.getId())
             .stream().map(aplicacao -> AplicacaoInvestimentoResposta.from(aplicacao, calcularSaldoAtualEstimado(aplicacao))).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<PosicaoConsolidadaResposta> listarPosicaoConsolidada(Long contaId) {
+        Conta conta = buscarConta(contaId);
+
+        List<AplicacaoInvestimento> aplicacaoAtivas = aplicacaoInvestimentoRepository
+            .findByContaIdOrderByAplicadaEmDesc(conta.getId())
+            .stream()
+            .filter(aplicacao -> aplicacao.getStatus() == StatusAplicacaoInvestimento.ATIVA)
+            .toList();
+        
+        Map<Long, List<AplicacaoInvestimento>> porProduto = aplicacaoAtivas.stream()
+            .collect(Collectors.groupingBy(aplicacao -> aplicacao.getProduto().getId()));
+
+        return porProduto.values().stream().map(this::consolidar).toList();
     }
 }

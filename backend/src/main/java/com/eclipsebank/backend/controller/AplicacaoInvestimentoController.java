@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.AplicacaoInvestimentoResposta;
+import com.eclipsebank.backend.dto.PosicaoConsolidadaResposta;
 import com.eclipsebank.backend.dto.ResgateInvestimentoRequisicao;
 import com.eclipsebank.backend.dto.ProventoFiiResposta;
 import com.eclipsebank.backend.security.UsuarioAutenticado;
@@ -89,5 +90,15 @@ public class AplicacaoInvestimentoController {
         usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
 
         return ResponseEntity.ok(proventoFiiService.pagar(contaId, aplicacaoId));
+    }
+
+    @GetMapping("/posicao")
+    public ResponseEntity<List<PosicaoConsolidadaResposta>> listarPosicaoConsolidada(
+        @PathVariable Long contaId,
+        Authentication autenticacao
+    ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
+
+        return ResponseEntity.ok(aplicacaoInvestimentoService.listarPosicaoConsolidada(contaId));
     }
 }

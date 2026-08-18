@@ -757,6 +757,59 @@ blockquote footer { color: #777383; font-size: .7rem; text-transform: uppercase;
     font-weight: 750;
 }
 .catalogo-investimentos .mensagem-operacao { margin-top: 18px; }
+.posicao-consolidada { padding: clamp(24px,4vw,35px); }
+.posicao-consolidada .cabecalho-secao { align-items: flex-end; }
+.posicao-consolidada .cabecalho-secao .etiqueta { margin-bottom: 8px; }
+.posicao-consolidada .cabecalho-secao h2 { margin: 0; }
+#quantidade-posicoes {
+    color: #918b99;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+}
+.grade-posicao {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 16px;
+    margin-top: 27px;
+}
+#estado-posicao {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 36px 20px;
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 14px;
+    color: #817b89;
+    text-align: center;
+}
+.cartao-posicao {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    background: linear-gradient(150deg,#181925,#0d0e16);
+    box-shadow: 0 18px 38px rgba(0,0,0,.14);
+}
+.cartao-posicao h3 {
+    margin: 0 0 5px;
+    color: #f1edf5;
+    font: 500 1.3rem Georgia,serif;
+}
+.cartao-posicao .codigo-investimento { margin-bottom: 18px; }
+.cartao-posicao dl {
+    display: grid;
+    width: 100%;
+    gap: 8px;
+    margin: 0;
+}
+.cartao-posicao dl div { display: flex; justify-content: space-between; gap: 10px; }
+.cartao-posicao dt { color: #817b89; font-size: .72rem; }
+.cartao-posicao dd { margin: 0; color: #e4dff0; font-size: .82rem; font-weight: 700; }
 .grade-carteira {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
