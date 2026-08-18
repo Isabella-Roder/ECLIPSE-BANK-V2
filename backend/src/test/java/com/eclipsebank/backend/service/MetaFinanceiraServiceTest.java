@@ -1,6 +1,7 @@
 package com.eclipsebank.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ import com.eclipsebank.backend.dto.MetaFinanceiraCadastro;
 import com.eclipsebank.backend.dto.MetaFinanceiraRequisicao;
 import com.eclipsebank.backend.dto.MetaFinanceiraResposta;
 import com.eclipsebank.backend.enums.StatusMetaFinanceira;
+import com.eclipsebank.backend.exception.SaldoInsuficienteException;
 import com.eclipsebank.backend.models.Conta;
 import com.eclipsebank.backend.models.MetaFinanceira;
 import com.eclipsebank.backend.models.Movimentacao;
@@ -107,5 +109,27 @@ public class MetaFinanceiraServiceTest {
         assertEquals(new BigDecimal("500.00"), conta.getSaldo());
         verify(movimentacaoRepository).save(any(Movimentacao.class));
     }
+
+    @Test
+    void deveRecusarAporteQuandoSaldoDaContaForInsuficiente() {
+        Conta conta = new Conta();
+        conta.creditar(new BigDecimal("100.00"));
+
+        MetaFinanceira meta = new MetaFinanceira();
+        meta.setValorAlvo(new BigDecimal("1000.00"));
+        meta.setStatus(StatusMetaFinanceira.EM_ANDAMENTO);
+        meta.setConta(conta);
+
+        MetaFinanceiraRequisicao dados = new MetaFinanceiraRequisicao(1L, new BigDecimal("500.00"));
+
+        when(metaFinanceiraRepository.findByIdAndContaId(1L, 1L)).thenReturn(Optional.of(meta));
+        when(contaRepository.findById(1L)).thenReturn(Optional.of(conta));
+
+        assertThrows(SaldoInsuficienteException.class, () -> metaFinanceiraService.aportar(1L, 1L, dados));
+
+        assertEquals(0, meta.getValorAtual().compareTo(BigDecimal.ZERO));
+        assertEquals(new BigDecimal("100.00"), conta.getSaldo());
+    }
+
 
 }
