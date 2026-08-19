@@ -120,6 +120,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Empréstimos
 - [ ] Investimentos
 - [ ] Contas empresariais
+- [ ] Dashboard separado para conta pessoa física e conta empresarial
+- [ ] Módulo de analytics em Python para relatórios financeiros
 - [ ] Conversão de moedas
 
 ## 8. Investimentos e dados de mercado
@@ -203,14 +205,34 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Auditoria imutável de ações críticas
 - [ ] Métricas, monitoramento de saúde e alertas da aplicação
 - [ ] Open Finance somente após análise de segurança e conformidade
+- [ ] Exportar extrato e comprovante em PDF ou CSV
+- [ ] Categorização de gastos com resumo mensal
+- [ ] Notificação por e-mail em operações sensíveis (login novo, Pix enviado)
+- [ ] Página "sobre o projeto" explicando decisões técnicas e arquiteturais
+- [ ] Conta conjunta ou múltiplos titulares
+- [ ] Histórico de dispositivos/sessões ativas com opção de encerrar todas
 
-## Ordem de entrega
+## Ordem de entrega (roadmap)
 
-- [ ] Fase 1 — autenticação segura, conta, saldo e extrato
+- [x] Fase 1 — autenticação segura, conta, saldo e extrato
 - [x] Fase 2 — depósito, saque, transferência e Pix
-- [ ] Fase 3 — testes, documentação, Docker e PostgreSQL
+- [x] Fase 5 — carteira de investimentos, metas financeiras, posição consolidada e rentabilidade
+- [x] Fase 7 — aplicativo móvel (login, painel, extrato, Pix, transferência, investimentos, sessão + CSRF)
+  - [ ] Cadastro mobile e demais itens da seção 9 ainda pendentes
+- [ ] Fase 3 — testes, documentação, Docker e PostgreSQL *(próxima fase prioritária)*
+  - [ ] Teste de rollback de investimentos
+  - [ ] Testes de segurança (CSRF, sessão expirada, força bruta)
+  - [ ] Documentação OpenAPI/Swagger
+  - [ ] Docker (aplicação + banco) e migração para PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
-- [ ] Fase 5 — carteira e simulador de investimentos
+  - [ ] README com apresentação, imagens e instruções de execução
+  - [ ] Dados de demonstração sem informações pessoais reais
+  - [ ] Publicação/deploy da demonstração
 - [ ] Fase 6 — integração com dados externos de mercado
-- [ ] Fase 7 — aplicativo móvel
+  - [ ] Selic/CDI/IPCA via API do Banco Central
+  - [ ] Cotações de ações e FIIs via provedor terceiro
+  - [ ] Câmbio para ativos internacionais
 - [ ] Fase 8 — cartões, crédito, antifraude e módulos avançados
+  - [ ] Cartões e faturas, empréstimos, contas empresariais
+  - [ ] Dashboard PF/PJ, analytics em Python
+  - [ ] Painel administrativo, auditoria imutável, detecção de fraude
