@@ -77,7 +77,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] HTTPS obrigatório em produção
 - [ ] Segredos e credenciais somente em variáveis de ambiente
 - [ ] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis
-- [ ] Testes de autorização, CSRF, sessão expirada e força bruta
+- [x] Testes de autorização, CSRF, sessão expirada e força bruta (linha de base, sem rate limiting ainda)
 - [ ] Verificação de dependências vulneráveis no pipeline
 - [ ] Autenticação em dois fatores como evolução futura
 
@@ -221,7 +221,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [ ] Cadastro mobile e demais itens da seção 9 ainda pendentes
 - [ ] Fase 3 — testes, documentação, Docker e PostgreSQL *(próxima fase prioritária)*
   - [x] Teste de rollback de investimentos
-  - [ ] Testes de segurança (CSRF, sessão expirada, força bruta)
+  - [x] Testes de segurança (CSRF, sessão expirada, força bruta)
   - [x] Documentação OpenAPI/Swagger
   - [ ] Docker (aplicação + banco) e migração para PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
