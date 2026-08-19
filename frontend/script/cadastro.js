@@ -52,6 +52,7 @@ formulario.addEventListener("submit", async (evento) => {
 
         const resposta = await fetch(`${API_URL}/usuarios`, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
                 "X-XSRF-TOKEN": lerCookie("XSRF-TOKEN")
