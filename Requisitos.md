@@ -113,7 +113,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Entidade com regras de bloqueio, desbloqueio e cancelamento
   - [x] Repository e DTOs de cadastro e resposta
   - [x] Service e controller com autorização por proprietário da conta e do cartão
-  - [ ] Testes de regra de negócio e orquestração do service
+  - [x] Testes de regra de negócio e orquestração do service
   - [ ] Tela web de listagem, bloqueio, desbloqueio e cancelamento
   - [ ] Fatura (fica para uma etapa seguinte)
 - [x] Metas financeiras (criação, aporte e resgate manuais)
