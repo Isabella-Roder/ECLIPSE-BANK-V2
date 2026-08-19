@@ -3,6 +3,8 @@ import { ActivityIndicator, FlatList, Pressable, SafeAreaView, StyleSheet, Text,
 import { API_URL } from "@/config/api";
 import { buscarTokenCsrf, obterTokenCsrf } from "@/config/csrf";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 type ProdutoInvestimento = {
     id: number;
@@ -352,15 +354,25 @@ export default function InvestimentoScreen() {
 
     return (
         <SafeAreaView style={estilos.pagina}>
+            <StatusBar style="light" />
+            <View style={estilos.luzSuperior} />
             <View style={estilos.cabecalho}>
-            <Pressable onPress={() => roteador.back()}>
-                <Text style={estilos.voltar}>← Voltar</Text>
-            </Pressable>
+                <View style={estilos.topoPagina}>
+                    <Pressable style={estilos.botaoVoltar} onPress={() => roteador.back()} accessibilityLabel="Voltar">
+                        <Ionicons name="arrow-back" size={21} color="#c8b6ff" />
+                    </Pressable>
+                    <View style={estilos.identidade}>
+                        <View style={estilos.simboloMarca}><View style={estilos.recorteMarca} /></View>
+                        <Text style={estilos.marca}>ECLIPSE <Text style={estilos.marcaDestaque}>BANK</Text></Text>
+                    </View>
+                </View>
 
-            <Text style={estilos.titulo}>Investimentos</Text>
-            <Text style={estilos.subtitulo}>
-                Escolha um produto para começar sua carteira.
-            </Text>
+                <View style={estilos.apresentacao}>
+                    <View style={estilos.iconeOperacao}><Ionicons name="trending-up-outline" size={27} color="#92e3c4" /></View>
+                    <Text style={estilos.etiquetaPagina}>SEU DINHEIRO EM MOVIMENTO</Text>
+                    <Text style={estilos.titulo}>Investimentos</Text>
+                    <Text style={estilos.subtitulo}>Construa sua carteira e acompanhe sua evolução.</Text>
+                </View>
             </View>
 
             <FlatList
@@ -536,14 +548,28 @@ export default function InvestimentoScreen() {
 const estilos = StyleSheet.create({
     pagina: {
         flex: 1,
-        padding: 24,
+        paddingHorizontal: 22,
+        paddingTop: 18,
         backgroundColor: "#0c0d15"
     },
+    luzSuperior: { position: "absolute", top: -170, right: -120, width: 340, height: 340, borderRadius: 170, backgroundColor: "rgba(139,92,246,.13)" },
+    topoPagina: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+    botaoVoltar: { width: 42, height: 42, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "rgba(182,156,255,.2)", borderRadius: 21, backgroundColor: "rgba(139,92,246,.08)" },
+    identidade: { flexDirection: "row", alignItems: "center", gap: 9 },
+    simboloMarca: { width: 31, height: 31, alignItems: "center", justifyContent: "center", overflow: "hidden", borderRadius: 16, backgroundColor: "#8b5cf6" },
+    recorteMarca: { width: 25, height: 25, marginLeft: 13, borderRadius: 13, backgroundColor: "#17131f" },
+    marca: { color: "#ffffff", fontSize: 10, fontWeight: "800", letterSpacing: 1.4 },
+    marcaDestaque: { color: "#b69cff" },
+    apresentacao: { marginTop: 30 },
+    iconeOperacao: { width: 52, height: 52, alignItems: "center", justifyContent: "center", marginBottom: 18, borderWidth: 1, borderColor: "rgba(118,221,183,.18)", borderRadius: 17, backgroundColor: "rgba(69,201,151,.09)" },
+    etiquetaPagina: { color: "#76ddb7", fontSize: 9, fontWeight: "800", letterSpacing: 1.7 },
     
     titulo: {
+        marginTop: 8,
         color: "#ffffff",
-        fontSize: 32,
-        fontWeight: "800"
+        fontSize: 34,
+        fontWeight: "800",
+        letterSpacing: -1
     },
     centralizado: {
     flex: 1,
@@ -572,7 +598,7 @@ const estilos = StyleSheet.create({
     fontWeight: "700"
     },
     cabecalho: {
-    marginBottom: 20
+    marginBottom: 24
     },
 
     subtitulo: {
@@ -587,11 +613,16 @@ const estilos = StyleSheet.create({
 
     resumoCarteira: {
     marginBottom: 20,
-    padding: 22,
+    padding: 23,
     borderWidth: 1,
-    borderColor: "#34294b",
-    borderRadius: 16,
-    backgroundColor: "#17131f"
+    borderColor: "rgba(182,156,255,.22)",
+    borderRadius: 21,
+    backgroundColor: "#191525",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: .24,
+    shadowRadius: 22,
+    elevation: 8
     },
 
     rotuloResumo: {
@@ -621,10 +652,10 @@ const estilos = StyleSheet.create({
     },
 
     cartaoProduto: {
-    padding: 20,
+    padding: 21,
     borderWidth: 1,
-    borderColor: "#292431",
-    borderRadius: 16,
+    borderColor: "rgba(255,255,255,.07)",
+    borderRadius: 19,
     backgroundColor: "#12131d"
     },
 
@@ -695,6 +726,8 @@ const estilos = StyleSheet.create({
     conteudoModal: {
     padding: 24,
     paddingBottom: 36,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(182,156,255,.18)",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     backgroundColor: "#171824"
@@ -777,8 +810,8 @@ const estilos = StyleSheet.create({
     cartaoAplicacao: {
     padding: 18,
     borderWidth: 1,
-    borderColor: "#292431",
-    borderRadius: 14,
+    borderColor: "rgba(255,255,255,.07)",
+    borderRadius: 17,
     backgroundColor: "#0d0e16"
     },
 

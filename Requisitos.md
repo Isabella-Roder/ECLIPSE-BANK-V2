@@ -171,9 +171,9 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Login mobile integrado à API de desenvolvimento
 - [x] Painel mobile com titular, saldo, agência e número da conta
 - [x] Carregamento, mensagens de erro e nova tentativa no painel mobile
-- [ ] Consumir a mesma API segura utilizada pelo frontend web
+- [x] Consumir a mesma API segura utilizada pelo frontend web (sessão + CSRF via `GET /api/csrf`)
 - [ ] Cadastro mobile
-- [ ] Pix e transferências mobile
+- [x] Pix e transferências mobile
 - [x] Extrato mobile integrado à API
 - [ ] Cartões mobile
 - [x] Investimentos mobile com catálogo, carteira, aplicação e resgate

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 import { API_URL } from "@/config/api";
 
@@ -53,24 +55,22 @@ export default function ExtratoScreen() {
 
             return (
                 <View style={estilos.movimentacao}>
+                    <View style={[estilos.iconeMovimentacao, credito ? estilos.iconeCredito : estilos.iconeDebito]}>
+                        <Ionicons name={credito ? "arrow-down" : "arrow-up"} size={19} color={credito ? "#76ddb7" : "#ff93ad"} />
+                    </View>
                     <View style={estilos.dadosMovimentacao}>
-                        <Text style={estilos.tipoMovimentacao}>
-                            {tipoFormatado}
-                        </Text>
-
-                        <Text style={estilos.descricao}>
-                            {item.descricao || "Sem descrição"}
-                        </Text>
-
-                        <Text style={estilos.data}>
-                            {dataFormatada}
-                        </Text>
-
-                        <View style={estilos.valoresMovimentacao}>
+                        <View style={estilos.topoMovimentacao}>
+                            <View style={estilos.textosMovimentacao}>
+                                <Text style={estilos.tipoMovimentacao}>{tipoFormatado}</Text>
+                                <Text style={estilos.descricao}>{item.descricao || "Sem descrição"}</Text>
+                            </View>
                             <Text style={[estilos.valor, credito ? estilos.credito : estilos.debito]}>
                                 {sinal} {formatarDinheiro(item.valor)}
                             </Text>
+                        </View>
 
+                        <View style={estilos.rodapeMovimentacao}>
+                            <Text style={estilos.data}>{dataFormatada}</Text>
                             <Text style={estilos.saldoResultante}>
                                 Saldo: {formatarDinheiro(item.saldoResultante)}
                             </Text>
@@ -136,12 +136,18 @@ export default function ExtratoScreen() {
 
     return(
         <SafeAreaView style={estilos.pagina}>
+            <StatusBar style="light" />
+            <View style={estilos.luzSuperior} />
             <View style={estilos.cabecalho}>
-                <Pressable onPress={() => roteador.back()}>
-                    <Text style={estilos.voltar}>← Voltar</Text>
+                <Pressable style={estilos.botaoVoltar} onPress={() => roteador.back()} accessibilityLabel="Voltar">
+                    <Ionicons name="arrow-back" size={21} color="#c8b6ff" />
                 </Pressable>
 
-                <Text style={estilos.titulo}>Extrato</Text>
+                <View style={estilos.apresentacao}>
+                    <Text style={estilos.etiqueta}>MOVIMENTAÇÕES</Text>
+                    <Text style={estilos.titulo}>Seu extrato</Text>
+                    <Text style={estilos.subtitulo}>Acompanhe cada movimento da sua conta.</Text>
+                </View>
             </View>
 
             <FlatList
@@ -166,26 +172,17 @@ const estilos = StyleSheet.create({
   pagina: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingVertical: 24,
+    paddingTop: 18,
     backgroundColor: "#0c0d15"
   },
-
-  cabecalho: {
-    gap: 16,
-    marginBottom: 28
-  },
-
-  voltar: {
-    color: "#b69cff",
-    fontSize: 15,
-    fontWeight: "700"
-  },
-
-  titulo: {
-    color: "#ffffff",
-    fontSize: 32,
-    fontWeight: "800"
-  },
+  luzSuperior: { position: "absolute", top: -170, right: -120, width: 340, height: 340, borderRadius: 170, backgroundColor: "rgba(139,92,246,.13)" },
+  cabecalho: { marginBottom: 25 },
+  botaoVoltar: { width: 42, height: 42, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "rgba(182,156,255,.2)", borderRadius: 21, backgroundColor: "rgba(139,92,246,.08)" },
+  voltar: { color: "#b69cff", fontSize: 15, fontWeight: "700" },
+  apresentacao: { marginTop: 31 },
+  etiqueta: { color: "#b69cff", fontSize: 9, fontWeight: "800", letterSpacing: 1.8 },
+  titulo: { marginTop: 8, color: "#ffffff", fontSize: 34, fontWeight: "800", letterSpacing: -1 },
+  subtitulo: { marginTop: 8, color: "#85808d", fontSize: 14 },
 
   centralizado: {
   flex: 1,
@@ -209,34 +206,38 @@ erro: {
 },
 
 lista: {
-  paddingBottom: 30
+  paddingBottom: 35
 },
 
 movimentacao: {
   flexDirection: "row",
-  justifyContent: "space-between",
-  gap: 18,
-  padding: 18,
+  alignItems: "flex-start",
+  gap: 13,
+  padding: 17,
   borderWidth: 1,
-  borderColor: "#292431",
-  borderRadius: 14,
+  borderColor: "rgba(255,255,255,.07)",
+  borderRadius: 17,
   backgroundColor: "#12131d"
 },
 
+iconeMovimentacao: { width: 42, height: 42, alignItems: "center", justifyContent: "center", borderWidth: 1, borderRadius: 13 },
+iconeCredito: { borderColor: "rgba(118,221,183,.18)", backgroundColor: "rgba(69,201,151,.09)" },
+iconeDebito: { borderColor: "rgba(255,147,173,.18)", backgroundColor: "rgba(201,54,92,.08)" },
+
 dadosMovimentacao: {
   flex: 1,
-  gap: 5
+  gap: 12
 },
 
-valoresMovimentacao: {
-  alignItems: "flex-end",
-  gap: 6
-},
+topoMovimentacao: { flexDirection: "row", justifyContent: "space-between", gap: 10 },
+textosMovimentacao: { flex: 1, gap: 4 },
+rodapeMovimentacao: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
 
 tipoMovimentacao: {
   color: "#b69cff",
-  fontSize: 11,
-  fontWeight: "800"
+  fontSize: 9,
+  fontWeight: "800",
+  letterSpacing: .7
 },
 
 descricao: {
@@ -251,7 +252,7 @@ data: {
 },
 
 valor: {
-  fontSize: 15,
+  fontSize: 14,
   fontWeight: "800"
 },
 

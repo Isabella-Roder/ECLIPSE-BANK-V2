@@ -78,7 +78,7 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Login web cria sessão no servidor e envia cookie `JSESSIONID` com `HttpOnly` e `SameSite=Lax`.
 - O frontend web consulta `/api/usuarios/sessao`, envia `credentials: "include"` e não armazena mais o usuário no `localStorage` ou `sessionStorage`.
 - Logout web invalida a sessão no servidor; a sessão expira após 30 minutos de inatividade.
-- Cadastro e login são públicos; as demais rotas exigem sessão autenticada. O CSRF permanece temporariamente desativado e a autorização por proprietário ainda não está concluída.
+- Cadastro e login são públicos; as demais rotas exigem sessão autenticada. CSRF reativado em todas as operações mutáveis, e a autorização por proprietário da conta já está validada nas rotas bancárias e de investimentos.
 - Erros padronizados: 400, 401, 404, 409, 422 e 500.
 - Conta individual por usuário, saldo em `BigDecimal`, status e `@Version`.
 - Criação e consulta de conta, com bloqueio, desbloqueio e encerramento condicionado ao saldo zerado.
@@ -97,9 +97,11 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
 - Painel mobile consulta ou cria a conta e exibe titular, saldo, agência e número.
-- Extrato mobile integrado à API; Pix e transferência mobile ainda não foram implementados.
+- Extrato, Pix e transferência mobile integrados à API.
 - Investimentos mobile integrados à mesma API: catálogo, carteira, aplicação e resgate parcial ou total.
 - O extrato mobile reconhece aplicação como débito e resgate de investimento como crédito.
+- Posição consolidada da carteira de investimentos (quantidade, valor aplicado, valor atual e preço médio por produto) e cálculo de rentabilidade nominal/percentual, exibidos na tela web de investimentos.
+- Mobile: como o React Native não expõe o cabeçalho `Set-Cookie` da resposta, o token CSRF é obtido via `GET /api/csrf` (retorna `{ token }` no corpo) antes de cada operação que muda dado, em vez de ser lido do cookie como no frontend web.
 
 ## Rotas existentes
 
@@ -107,6 +109,7 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 POST   /api/usuarios
 POST   /api/usuarios/login
 GET    /api/usuarios/sessao
+GET    /api/csrf
 POST   /api/usuarios/logout
 GET    /api/usuarios
 GET    /api/usuarios/{id}
@@ -133,6 +136,7 @@ GET    /api/investimentos/produtos
 POST   /api/contas/{contaId}/investimentos/aplicacoes
 GET    /api/contas/{contaId}/investimentos/carteira
 POST   /api/contas/{contaId}/investimentos/{aplicacaoId}/resgates
+GET    /api/contas/{contaId}/investimentos/posicao
 
 POST   /api/contas/{contaId}/metas-financeiras/criar
 GET    /api/contas/{contaId}/metas-financeiras/minhas-metas
@@ -155,29 +159,28 @@ POST   /api/contas/{contaId}/metas-financeiras/{metaId}/resgatar
 
 O frontend web já usa sessão opaca mantida no servidor. O cookie é `HttpOnly`, usa `SameSite=Lax` e aceita `Secure=true` pela variável `SESSION_COOKIE_SECURE` em produção. O usuário não é mais salvo no armazenamento web.
 
-A migração ainda não terminou: a sessão já é representada no `SecurityContext` e as rotas não públicas exigem autenticação, mas o CSRF continua temporariamente desativado. Os próximos passos obrigatórios são validar o proprietário da conta em todas as rotas bancárias e reativar CSRF. Não marcar “Autenticação com Spring Security” como concluída antes disso.
+A sessão já é representada no `SecurityContext`, as rotas não públicas exigem autenticação, CSRF está reativado em todas as operações mutáveis (web e mobile) e a autorização por proprietário da conta está validada nas rotas bancárias e de investimentos.
 
-Não confiar em `usuarioId` vindo do navegador para autorizar contas ou movimentações. Antes de publicar, todas as rotas bancárias devem identificar o usuário autenticado no backend.
+Não confiar em `usuarioId` vindo do navegador (ou do app mobile) para autorizar contas ou movimentações. Toda rota bancária identifica o usuário autenticado no backend.
 
 ## Próximos passos recomendados
 
-1. Criar testes de aplicação, resgate, saldo insuficiente e rollback.
-2. Proteger recursos bancários e investimentos por proprietário e restringir o cadastro de produtos a administradores.
-3. Reativar CSRF nas operações mutáveis.
-4. Atualizar o saldo da conta mobile quando a tela voltar ao foco.
-5. Evoluir investimentos com posição consolidada, rentabilidade por período, FIIs, proventos e simulador.
-6. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+1. Criar teste de rollback em transação real para investimentos (saldo insuficiente e resgate inválido já têm testes).
+2. Trocar `useEffect` por `useFocusEffect` em `mobile/app/conta.tsx`, para o saldo atualizar ao voltar de outras telas.
+3. Evoluir investimentos com histórico de aportes/resgates/proventos, favoritos, simulador e gráficos de evolução.
+4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
 
 ## Atenções conhecidas
 
 - Não execute duas instâncias do Spring na porta 8080.
 - O banco H2 em arquivo aceita uma instância por vez; os testes já usam banco em memória separado.
-- O enum persistente de `movimentacoes.tipo` no H2 local foi atualizado manualmente para aceitar `APLICACAO_INVESTIMENTO` e `RESGATE_INVESTIMENTO`; futuras mudanças de esquema devem usar migrations.
+- O enum persistente de `movimentacoes.tipo` no H2 local foi atualizado manualmente para aceitar `APLICACAO_INVESTIMENTO`, `RESGATE_INVESTIMENTO`, `PROVENTO_FII`, `APORTE_META_FINANCEIRA` e `RESGATE_META_FINANCEIRA`; futuras mudanças de esquema devem usar migrations.
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
 - O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real ainda precisa ser integrada ao aplicativo.
 - `mobile/app/conta.tsx` carrega o saldo apenas na montagem; ao voltar de aplicação ou resgate, o valor pode ficar visualmente desatualizado até a tela ser recarregada. Usar `useFocusEffect` como próximo ajuste.
+- O React Native não expõe o cabeçalho `Set-Cookie` da resposta (diferente do navegador), então o mobile não pode ler o token CSRF do cookie como o frontend web faz. A solução foi criar `GET /api/csrf`, que devolve o token no corpo da resposta; o mobile busca um token novo antes de cada operação que muda dado.
 - A URL mobile é centralizada em `mobile/config/api.ts`; cada computador usa `mobile/.env.local`, que não deve entrar no Git.
 - Antes de escrever código dentro de `mobile/`, leia também `mobile/AGENTS.md` e consulte a documentação correspondente ao Expo SDK 54.
 

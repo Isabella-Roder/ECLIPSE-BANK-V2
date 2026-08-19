@@ -19,8 +19,9 @@ https://docs.expo.dev/versions/v54.0.0/
 - `app/conta.tsx`: consulta a conta por usuário, cria quando a API devolve 404 e exibe titular, saldo, agência e número.
 - `app/investimentos.tsx`: lista catálogo e carteira, permite aplicação e resgate parcial ou total usando a API do backend.
 - `app/extrato.tsx`: exibe aplicação como débito e resgate de investimento como crédito.
+- `app/pix.tsx` e `app/transferencia.tsx`: totalmente integrados à API (`POST /pix` e `POST /transferencias`), com validação e comprovante.
 - O protótipo foi executado com sucesso em um aparelho Android real usando Expo Go.
-- Os botões de Pix, transferência e extrato ainda são apenas visuais.
+- `config/csrf.ts`: como o React Native não expõe o cabeçalho `Set-Cookie`, o token CSRF é obtido via `GET /api/csrf` (`buscarTokenCsrf()`) e enviado no cabeçalho `X-XSRF-TOKEN`. Chame `buscarTokenCsrf()` antes de qualquer `POST`/`PATCH`/`DELETE` — o token muda após o login (troca de sessão), então um token obtido antes de logar não serve depois.
 
 ## Forma de colaboração
 
@@ -36,5 +37,5 @@ https://docs.expo.dev/versions/v54.0.0/
 - A URL da API está centralizada em `config/api.ts` e vem de `EXPO_PUBLIC_API_URL` no `.env.local`.
 - O `usuarioId` recebido pela navegação não é autenticação nem autorização.
 - Não persista senha em AsyncStorage ou outro armazenamento comum.
-- A autenticação atual é provisória até o backend possuir Spring Security e sessão segura.
+- A autenticação usa sessão (`JSESSIONID`, `HttpOnly`) e CSRF (`X-XSRF-TOKEN` obtido via `GET /api/csrf`), mas o `usuarioId` ainda vem por parâmetro de navegação em vez de derivado da sessão — ver nota acima.
 - A tela `conta.tsx` ainda usa `useEffect` somente na montagem; ao voltar de investimentos, o saldo pode ficar desatualizado. O próximo ajuste é recarregar a conta com `useFocusEffect`.
