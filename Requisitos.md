@@ -109,6 +109,13 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 ## Funcionalidades futuras
 
 - [ ] Cartões e faturas
+  - [x] Enums `TipoCartao` (débito/crédito) e `StatusCartao` (ativo/bloqueado/cancelado)
+  - [x] Entidade com regras de bloqueio, desbloqueio e cancelamento
+  - [x] Repository e DTOs de cadastro e resposta
+  - [ ] Service e controller com autorização por proprietário da conta
+  - [ ] Testes de regra de negócio e orquestração do service
+  - [ ] Tela web de listagem, bloqueio, desbloqueio e cancelamento
+  - [ ] Fatura (fica para uma etapa seguinte)
 - [x] Metas financeiras (criação, aporte e resgate manuais)
   - [x] Entidade com regras de aporte/resgate e conclusão automática ao atingir o valor alvo
   - [x] DTOs validados de cadastro, requisição e resposta
