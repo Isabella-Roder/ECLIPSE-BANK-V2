@@ -70,6 +70,9 @@ public class SecurityConfig {
                     "/api/usuarios",
                     "/api/usuarios/login"
                 ).permitAll()
+                .requestMatchers(HttpMethod.GET,
+                    "/api/csrf"
+                ).permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/investimentos/produtos").hasRole("ADMIN")
                 .anyRequest().authenticated()

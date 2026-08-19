@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, SafeAreaView, StyleSheet, Text, View, Modal, TextInput } from "react-native";
 import { API_URL } from "@/config/api";
+import { buscarTokenCsrf, obterTokenCsrf } from "@/config/csrf";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 type ProdutoInvestimento = {
@@ -192,11 +193,14 @@ export default function InvestimentoScreen() {
             setAplicando(true);
             setErroAplicacao("");
 
+            await buscarTokenCsrf();
+
             const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/investimentos/aplicacoes`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
                 },
                 body: JSON.stringify(dados)
             });
@@ -311,11 +315,14 @@ export default function InvestimentoScreen() {
             setResgatando(true);
             setErroResgate("");
 
+            await buscarTokenCsrf();
+
             const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/investimentos/${aplicacaoSelecionada.id}/resgates`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
                 },
                 body: JSON.stringify({
                     valor

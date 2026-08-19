@@ -3,6 +3,7 @@ import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { API_URL } from "@/config/api";
+import { buscarTokenCsrf, obterTokenCsrf } from "@/config/csrf";
 
 export default function TransferenciaScreen() {
   const roteador = useRouter();
@@ -28,10 +29,16 @@ export default function TransferenciaScreen() {
 
     try {
       setCarregando(true);
+
+      await buscarTokenCsrf();
+
       const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/transferencias`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
+        },
         body: JSON.stringify({
           agenciaDestino: agencia.trim(),
           numeroDestino: numero.trim(),

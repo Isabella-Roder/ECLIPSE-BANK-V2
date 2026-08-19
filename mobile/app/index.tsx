@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 
 import { API_URL } from "../config/api";
+import { buscarTokenCsrf, obterTokenCsrf } from "@/config/csrf";
 
 export default function Index() {
 
@@ -10,10 +11,11 @@ export default function Index() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  
+
   const [carregando, setCarregando] = useState(false);
 
   async function entrar() {
+
     if (email.trim() === "" || senha.trim() === "") {
       Alert.alert("Atenção", "Preencha o e-mail e a senha.");
       return;
@@ -27,11 +29,14 @@ export default function Index() {
     try {
       setCarregando(true);
 
+      await buscarTokenCsrf();
+
       const resposta = await fetch(`${API_URL}/usuarios/login`, {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
         },
         body: JSON.stringify(dados)
       });

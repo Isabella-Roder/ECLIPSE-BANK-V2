@@ -3,6 +3,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 
 import { API_URL } from "@/config/api";
+import { buscarTokenCsrf, obterTokenCsrf } from "@/config/csrf";
 
 export default function PixScreen() {
     const roteador = useRouter();
@@ -35,11 +36,14 @@ export default function PixScreen() {
         try {
             setCarregando(true);
 
+            await buscarTokenCsrf();
+
             const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/pix`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
                 },
                 body: JSON.stringify(dados)
             });

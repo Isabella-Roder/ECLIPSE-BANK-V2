@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 
 import { API_URL } from "../config/api";
+import { buscarTokenCsrf, obterTokenCsrf } from "../config/csrf";
 
 type Conta = {
     id: number;
@@ -38,9 +39,14 @@ export default function ContaScreen() {
             });
 
             if (resposta.status === 404) {
+                await buscarTokenCsrf();
+
                 resposta = await fetch(`${API_URL}/contas/usuario/${parametros.usuarioId}`, {
                     method: "POST",
-                    credentials: "include"
+                    credentials: "include",
+                    headers: {
+                        "X-XSRF-TOKEN": obterTokenCsrf() ?? ""
+                    }
                 });
             }
 

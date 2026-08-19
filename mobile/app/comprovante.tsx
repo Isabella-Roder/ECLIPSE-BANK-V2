@@ -41,6 +41,7 @@ export default function ComprovanteScreen() {
           `${API_URL}/movimentacoes/${parametros.codigo}`,
           { credentials: "include" }
         );
+
         const corpo = await resposta.json();
 
         if (!resposta.ok) {

@@ -86,7 +86,9 @@ export default function ExtratoScreen() {
                 setCarregando(true);
                 setErro("");
 
-                const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/extrato`);
+                const resposta = await fetch(`${API_URL}/contas/${parametros.contaId}/extrato`, {
+                    credentials: "include"
+                });
 
                 const corpo = await resposta.json();
 
