@@ -225,7 +225,11 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Documentação OpenAPI/Swagger
   - [x] Docker (aplicação + banco) e migração para PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
-  - [ ] README com apresentação, imagens e instruções de execução
+  - [x] Frontend web empacotado no JAR e servido pelo Spring Boot no mesmo domínio da API
+  - [x] Entrada da aplicação disponível em `/` com redirecionamento para o login
+  - [x] Scripts web compatíveis com Live Server no desenvolvimento e `/api` no Docker/produção
+  - [x] Execução local da aplicação completa com Docker e PostgreSQL validada
+  - [ ] README com screenshots e instruções de execução via Docker
   - [ ] Dados de demonstração sem informações pessoais reais
   - [ ] Publicação/deploy da demonstração
 - [ ] Fase 6 — integração com dados externos de mercado

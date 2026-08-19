@@ -1,4 +1,6 @@
-const API_URL = `http://${window.location.hostname}:8080/api`;
+const API_URL = window.location.port && window.location.port !== "8080"
+    ? `http://${window.location.hostname}:8080/api`
+    : "/api";
 
 const listaProduto = document.getElementById("lista-produtos-investimento");
 const estadoCatalogo = document.getElementById("estado-catalogo");

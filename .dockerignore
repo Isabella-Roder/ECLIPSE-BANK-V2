@@ -1,0 +1,13 @@
+.git
+.env
+.vscode
+.idea
+
+backend/target
+backend/data
+
+mobile/node_modules
+mobile/.expo
+mobile/.env.local
+
+*.log

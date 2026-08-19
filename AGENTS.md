@@ -61,6 +61,13 @@ cd backend
 
 O frontend é aberto pelo Live Server. Em desenvolvimento, os scripts montam a API com o host atual e a porta 8080 para evitar misturar `localhost` e `127.0.0.1`.
 
+No Docker, `frontend/` é copiado para `src/main/resources/static` durante o build e servido pelo próprio Spring Boot. A aplicação completa fica em `http://localhost:8080/`, e os scripts usam `/api` no mesmo domínio.
+
+```bash
+docker compose up --build
+docker compose down
+```
+
 O aplicativo móvel fica em `mobile/` e é iniciado com:
 
 ```bash
@@ -93,6 +100,8 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Metas financeiras possuem testes de regra de negócio (entidade), orquestração do service e saldo insuficiente no aporte.
 - Tela web de metas financeiras integrada à API: criação, listagem, aporte e resgate, com barra de progresso.
 - Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta, investimentos e metas financeiras.
+- O frontend web é empacotado no JAR pelo Docker, servido no mesmo domínio da API e possui entrada em `/`.
+- O Compose com aplicação e PostgreSQL foi construído e executado localmente com sucesso.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
@@ -165,10 +174,10 @@ Não confiar em `usuarioId` vindo do navegador (ou do app mobile) para autorizar
 
 ## Próximos passos recomendados
 
-1. Criar teste de rollback em transação real para investimentos (saldo insuficiente e resgate inválido já têm testes).
-2. Trocar `useEffect` por `useFocusEffect` em `mobile/app/conta.tsx`, para o saldo atualizar ao voltar de outras telas.
-3. Evoluir investimentos com histórico de aportes/resgates/proventos, favoritos, simulador e gráficos de evolução.
-4. Implementar documentação OpenAPI, PostgreSQL e Docker conforme `Requisitos.md`.
+1. Criar dados fictícios com `@Profile("demo")`, senha recebida por variável de ambiente e nenhuma informação pessoal real.
+2. Completar o README com screenshots, instruções via Docker e credenciais da demonstração.
+3. Escolher uma plataforma e publicar a demonstração com HTTPS, aplicação e PostgreSQL.
+4. Testar cadastro, login e operações bancárias na URL pública antes de marcar a Fase 4 como concluída.
 
 ## Atenções conhecidas
 
@@ -178,6 +187,8 @@ Não confiar em `usuarioId` vindo do navegador (ou do app mobile) para autorizar
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
+- Em produção, frontend e API devem permanecer no mesmo domínio para preservar o fluxo atual de sessão e CSRF.
+- O `.env` é ignorado pelo Git; nunca colocar `DB_PASSWORD` ou a futura senha demo em arquivos rastreados.
 - O login mobile ainda encaminha `usuarioId` como parâmetro de navegação; isso organiza o protótipo, mas não autoriza acesso. A proteção real ainda precisa ser integrada ao aplicativo.
 - `mobile/app/conta.tsx` carrega o saldo apenas na montagem; ao voltar de aplicação ou resgate, o valor pode ficar visualmente desatualizado até a tela ser recarregada. Usar `useFocusEffect` como próximo ajuste.
 - O React Native não expõe o cabeçalho `Set-Cookie` da resposta (diferente do navegador), então o mobile não pode ler o token CSRF do cookie como o frontend web faz. A solução foi criar `GET /api/csrf`, que devolve o token no corpo da resposta; o mobile busca um token novo antes de cada operação que muda dado.

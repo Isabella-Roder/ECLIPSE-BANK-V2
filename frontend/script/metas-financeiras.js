@@ -1,4 +1,6 @@
-const API_URL = `http://${window.location.hostname}:8080/api`;
+const API_URL = window.location.port && window.location.port !== "8080"
+    ? `http://${window.location.hostname}:8080/api`
+    : "/api";
 
 const botaoNovaMeta = document.getElementById("botao-nova-meta");
 const quantidadeMetas = document.getElementById("quantidade-metas");

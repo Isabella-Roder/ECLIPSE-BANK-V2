@@ -1,4 +1,5 @@
 npx expo start --lan  //mobile
 
+docker compose up --build
 
 mvn spring-boot:run   //spring boot

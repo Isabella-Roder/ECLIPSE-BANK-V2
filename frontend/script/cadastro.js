@@ -1,4 +1,6 @@
-const API_URL = `http://${window.location.hostname}:8080/api`;
+const API_URL = window.location.port && window.location.port !== "8080"
+    ? `http://${window.location.hostname}:8080/api`
+    : "/api";
 
 const formulario = document.querySelector("#form-cadastro");
 const nome = document.querySelector("#nome");

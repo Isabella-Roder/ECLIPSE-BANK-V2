@@ -66,6 +66,15 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(autorizacao -> autorizacao
                 .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/html/**",
+                    "/css/**",
+                    "/script/**",
+                    "/favicon.ico",
+                    "/error"
+                ).permitAll()
+                .requestMatchers(
                     HttpMethod.POST,
                     "/api/usuarios",
                     "/api/usuarios/login"
