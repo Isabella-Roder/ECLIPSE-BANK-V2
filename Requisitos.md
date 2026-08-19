@@ -9,14 +9,14 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Backend iniciado com Java 26, Spring Boot e Maven
 - [x] Separação em `model`, `repository`, `dto`, `service`, `controller` e `exception`
 - [x] Banco H2 persistente para desenvolvimento local
-- [ ] PostgreSQL para produção
+- [x] PostgreSQL para produção
 - [x] Valores monetários representados com `BigDecimal`
 - [x] Senhas armazenadas somente com hash BCrypt
 - [x] Validação dos dados recebidos pela API
 - [x] Tratamento global e padronizado de erros
 - [ ] Testes unitários e de integração das regras críticas
 - [x] Documentação da API com OpenAPI/Swagger
-- [ ] Docker para aplicação e banco de produção
+- [x] Docker para aplicação e banco de produção
 
 ## 1. Usuários e autenticação
 
@@ -219,11 +219,11 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Fase 5 — carteira de investimentos, metas financeiras, posição consolidada e rentabilidade
 - [x] Fase 7 — aplicativo móvel (login, painel, extrato, Pix, transferência, investimentos, sessão + CSRF)
   - [ ] Cadastro mobile e demais itens da seção 9 ainda pendentes
-- [ ] Fase 3 — testes, documentação, Docker e PostgreSQL *(próxima fase prioritária)*
+- [x] Fase 3 — testes, documentação, Docker e PostgreSQL
   - [x] Teste de rollback de investimentos
   - [x] Testes de segurança (CSRF, sessão expirada, força bruta)
   - [x] Documentação OpenAPI/Swagger
-  - [ ] Docker (aplicação + banco) e migração para PostgreSQL
+  - [x] Docker (aplicação + banco) e migração para PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
   - [ ] README com apresentação, imagens e instruções de execução
   - [ ] Dados de demonstração sem informações pessoais reais

@@ -1,0 +1,29 @@
+# docker-compose.yml
+
+services:
+  db:
+    image: postgres:17
+    environment: 
+      POSTGRES_DB: eclipsebank
+      POSTGRES_USER: eclipsebank
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dados_postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+  app:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: db
+      DB_NAME: eclipsebank
+      DB_USER: eclipsebank
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+
+volumes:
+  dados_postgres:
