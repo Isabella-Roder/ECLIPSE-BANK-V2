@@ -139,7 +139,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Resgate parcial ou total com crédito na conta
   - [x] Registro de aplicação e resgate no extrato bancário
   - [x] Testes de saldo insuficiente e resgate inválido
-  - [ ] Teste de rollback (requer teste de integração com transação real)
+  - [x] Teste de rollback (integração com transação real, `AplicacaoInvestimentoRollbackTest`)
 - [x] Posição consolidada com quantidade, preço médio e valor atual
 - [x] Cálculo de rentabilidade nominal e percentual
 - [x] Atualização simulada do saldo investido por taxa e período, sem duplicar rendimentos
@@ -220,7 +220,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Fase 7 — aplicativo móvel (login, painel, extrato, Pix, transferência, investimentos, sessão + CSRF)
   - [ ] Cadastro mobile e demais itens da seção 9 ainda pendentes
 - [ ] Fase 3 — testes, documentação, Docker e PostgreSQL *(próxima fase prioritária)*
-  - [ ] Teste de rollback de investimentos
+  - [x] Teste de rollback de investimentos
   - [ ] Testes de segurança (CSRF, sessão expirada, força bruta)
   - [x] Documentação OpenAPI/Swagger
   - [ ] Docker (aplicação + banco) e migração para PostgreSQL
