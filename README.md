@@ -20,6 +20,12 @@ Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://g
 - PostgreSQL e aplicação executados com Docker Compose.
 - Documentação OpenAPI/Swagger e suíte automatizada de testes.
 
+## Demonstração pública
+
+A aplicação completa está publicada em: **https://eclipse-bank-v2.onrender.com/**
+
+> Hospedado no plano gratuito do Render: a primeira requisição após um período de inatividade pode levar alguns segundos para responder.
+
 ## Acesso de demonstração
 
 Use a conta fictícia abaixo para conhecer as funcionalidades do Eclipse Bank:
@@ -303,8 +309,6 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 
 ## Capturas de tela
 
-As capturas do frontend web e do aplicativo mobile serão adicionadas antes da publicação da demonstração.
-
 ## Roadmap
 
 - [x] Autenticação segura, conta, saldo e extrato.
@@ -313,9 +317,9 @@ As capturas do frontend web e do aplicativo mobile serão adicionadas antes da p
 - [x] Aplicativo mobile integrado à API.
 - [x] Testes, OpenAPI, Docker e PostgreSQL.
 - [x] Frontend e API preparados para o mesmo domínio.
-- [ ] Dados fictícios para demonstração pública.
-- [ ] Screenshots do frontend web e mobile.
-- [ ] Deploy público com HTTPS.
+- [x] Dados fictícios para demonstração pública.
+- [x] Screenshots do frontend web e mobile.
+- [x] Deploy público com HTTPS.
 - [ ] Integração com dados externos de mercado.
 - [ ] Cartões, crédito, contas empresariais e antifraude.
 

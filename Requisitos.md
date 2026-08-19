@@ -224,15 +224,15 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Testes de segurança (CSRF, sessão expirada, força bruta)
   - [x] Documentação OpenAPI/Swagger
   - [x] Docker (aplicação + banco) e migração para PostgreSQL
-- [ ] Fase 4 — frontend completo e publicação da demonstração
+- [x] Fase 4 — frontend completo e publicação da demonstração
   - [x] Frontend web empacotado no JAR e servido pelo Spring Boot no mesmo domínio da API
   - [x] Entrada da aplicação disponível em `/` com redirecionamento para o login
   - [x] Scripts web compatíveis com Live Server no desenvolvimento e `/api` no Docker/produção
   - [x] Execução local da aplicação completa com Docker e PostgreSQL validada
   - [x] README com apresentação, arquitetura, segurança e instruções de execução via Docker
-  - [ ] Screenshots do frontend web e aplicativo mobile no README
-  - [ ] Dados de demonstração sem informações pessoais reais
-  - [ ] Publicação/deploy da demonstração
+  - [x] Screenshots do frontend web e aplicativo mobile no README
+  - [x] Dados de demonstração sem informações pessoais reais
+  - [x] Publicação/deploy da demonstração (Render, `https://eclipse-bank-v2.onrender.com/`)
 - [ ] Fase 6 — integração com dados externos de mercado
   - [ ] Selic/CDI/IPCA via API do Banco Central
   - [ ] Cotações de ações e FIIs via provedor terceiro
