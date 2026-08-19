@@ -20,6 +20,43 @@ Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://g
 - PostgreSQL e aplicação executados com Docker Compose.
 - Documentação OpenAPI/Swagger e suíte automatizada de testes.
 
+## Acesso de demonstração
+
+Use a conta fictícia abaixo para conhecer as funcionalidades do Eclipse Bank:
+
+| Campo | Dado de demonstração |
+| --- | --- |
+| E-mail | `demo@eclipsebank.com` |
+| Senha | `SenhaDemo123` |
+| Saldo inicial | R$ 5.000,00 |
+
+> Essas credenciais são exclusivas do ambiente de demonstração e não correspondem a dados pessoais reais.
+
+## Demonstração visual
+
+### Aplicação web
+
+<p align="center">
+  <img src="screenshots/web/login.png" width="49%" alt="Login do Eclipse Bank na versão web">
+  <img src="screenshots/web/painel-conta.png" width="49%" alt="Painel da conta do Eclipse Bank na versão web">
+</p>
+<p align="center">
+  <img src="screenshots/web/extrato.png" width="49%" alt="Extrato do Eclipse Bank na versão web">
+  <img src="screenshots/web/metas-financeiras.png" width="49%" alt="Metas financeiras do Eclipse Bank na versão web">
+</p>
+<p align="center">
+  <img src="screenshots/web/investimento1.png" width="49%" alt="Carteira de investimentos do Eclipse Bank na versão web">
+  <img src="screenshots/web/investimento2.png" width="49%" alt="Catálogo de investimentos do Eclipse Bank na versão web">
+</p>
+
+### Aplicativo mobile
+
+<p align="center">
+  <img src="screenshots/mobile/login.jpeg" width="30%" alt="Login do aplicativo mobile Eclipse Bank">
+  <img src="screenshots/mobile/painel-conta.jpeg" width="30%" alt="Painel da conta no aplicativo mobile Eclipse Bank">
+  <img src="screenshots/mobile/pix.jpeg" width="30%" alt="Pix no aplicativo mobile Eclipse Bank">
+</p>
+
 ## Funcionalidades
 
 ### Conta digital
