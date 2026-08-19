@@ -229,7 +229,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Entrada da aplicação disponível em `/` com redirecionamento para o login
   - [x] Scripts web compatíveis com Live Server no desenvolvimento e `/api` no Docker/produção
   - [x] Execução local da aplicação completa com Docker e PostgreSQL validada
-  - [ ] README com screenshots e instruções de execução via Docker
+  - [x] README com apresentação, arquitetura, segurança e instruções de execução via Docker
+  - [ ] Screenshots do frontend web e aplicativo mobile no README
   - [ ] Dados de demonstração sem informações pessoais reais
   - [ ] Publicação/deploy da demonstração
 - [ ] Fase 6 — integração com dados externos de mercado

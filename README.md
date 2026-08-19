@@ -1,95 +1,293 @@
 # Eclipse Bank V2
 
-Banco digital fictício desenvolvido como projeto de portfólio, com backend Spring Boot, frontend web próprio e aplicativo mobile em React Native. Simula operações bancárias reais (conta, extrato, Pix, transferências, investimentos e metas financeiras) com foco em arquitetura em camadas, segurança e regras de negócio consistentes.
+Banco digital fictício desenvolvido como projeto principal de portfólio. O sistema reúne backend Spring Boot, frontend web próprio e aplicativo mobile em React Native para simular uma experiência bancária completa, com foco em segurança, arquitetura em camadas, testes e regras de negócio consistentes.
 
-> Nova versão do Eclipse Bank, reconstruída do zero. A versão original está disponível em [ECLIPSE-BANK](https://github.com/Isabella-Roder/ECLIPSE-BANK).
+> Projeto educacional: o Eclipse Bank não movimenta dinheiro real e não oferece recomendações financeiras.
 
-## Tecnologias
+Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://github.com/Isabella-Roder/ECLIPSE-BANK), aplicando um padrão de código mais organizado, seguro e próximo de uma aplicação profissional.
 
-- **Backend:** Java 26, Spring Boot 4, Spring Data JPA, Spring Security, Maven, H2
-- **Frontend web:** HTML, CSS e JavaScript
-- **Mobile:** React Native, Expo SDK 54, Expo Router, TypeScript
+## Destaques
+
+- Autenticação com Spring Security e sessão opaca no servidor.
+- Cookie de sessão `HttpOnly`, proteção CSRF e autorização por proprietário do recurso.
+- Conta corrente com depósito, saque, Pix, transferência, extrato e comprovantes.
+- Bloqueio, desbloqueio e encerramento de conta com validações de domínio.
+- Carteira de investimentos simulados com aplicação, resgate, posição consolidada e rentabilidade.
+- Fundos imobiliários com cotas e pagamento simulado de proventos.
+- Metas financeiras com criação, aporte, resgate e acompanhamento de progresso.
+- Frontend web responsivo servido pelo próprio Spring Boot em produção.
+- Aplicativo React Native integrado à mesma API segura.
+- PostgreSQL e aplicação executados com Docker Compose.
+- Documentação OpenAPI/Swagger e suíte automatizada de testes.
 
 ## Funcionalidades
 
-- Cadastro e login com sessão autenticada (`JSESSIONID` + proteção CSRF)
-- Conta corrente com saldo, bloqueio, desbloqueio e encerramento
-- Depósito, saque, transferência entre contas e Pix por chave de e-mail
-- Extrato com filtros e comprovante de operação
-- Carteira de investimentos: catálogo, aplicação, resgate, posição consolidada e rentabilidade
-- Metas financeiras com aporte, resgate e barra de progresso
-- Aplicativo mobile integrado à mesma API segura do frontend web
+### Conta digital
+
+- Cadastro de pessoa física e login.
+- E-mail e CPF únicos.
+- Criação de conta com agência e número exclusivos.
+- Consulta de saldo e movimentações recentes.
+- Depósito e saque.
+- Transferência entre contas.
+- Pix por chave de e-mail.
+- Extrato com filtros por tipo e período.
+- Comprovante com código UUID.
+- Bloqueio, desbloqueio e encerramento da conta.
+
+### Investimentos simulados
+
+- Catálogo de renda fixa, fundos, ações, ETFs e criptomoedas.
+- Aplicação e resgate parcial ou total.
+- Posição consolidada por produto.
+- Quantidade, preço médio, valor atual e rentabilidade.
+- Atualização simulada de rendimentos por taxa e período.
+- Fundos imobiliários com quantidade de cotas.
+- Pagamento mensal simulado de proventos, protegido contra duplicidade.
+
+### Metas financeiras
+
+- Criação de metas com valor-alvo e prazo.
+- Aportes usando o saldo da conta.
+- Resgates para a conta corrente.
+- Conclusão automática ao atingir o objetivo.
+- Barra de progresso no frontend web.
+
+### Aplicativo mobile
+
+- Login e sessão integrada à API.
+- Painel da conta e consulta de saldo.
+- Extrato e comprovantes.
+- Pix e transferência.
+- Catálogo, carteira, aplicação e resgate de investimentos.
+- Proteção CSRF compatível com React Native.
+
+## Tecnologias
+
+| Área | Tecnologias |
+| --- | --- |
+| Backend | Java 26, Spring Boot 4.1, Spring MVC |
+| Segurança | Spring Security, BCrypt, sessão HTTP, CSRF |
+| Persistência | Spring Data JPA, Hibernate, PostgreSQL e H2 |
+| Testes | JUnit 5, Mockito e Spring Test |
+| Documentação | OpenAPI e Swagger UI |
+| Frontend web | HTML5, CSS3 e JavaScript |
+| Mobile | React Native, Expo SDK 54, Expo Router e TypeScript |
+| Infraestrutura | Docker e Docker Compose |
 
 ## Arquitetura
 
-O backend segue arquitetura em camadas, separando responsabilidades por pacote:
+```mermaid
+flowchart LR
+    WEB[Frontend web] --> API[API Spring Boot]
+    MOBILE[Aplicativo mobile] --> API
+    API --> SECURITY[Spring Security]
+    API --> CONTROLLER[Controllers]
+    CONTROLLER --> SERVICE[Services transacionais]
+    SERVICE --> DOMAIN[Entidades e regras de domínio]
+    SERVICE --> REPOSITORY[Repositories JPA]
+    REPOSITORY --> DB[(PostgreSQL / H2)]
+```
+
+O backend utiliza arquitetura em camadas:
 
 ```text
-backend/
-  src/main/java/com/eclipsebank/backend/
-    config/       # Spring Security, CORS, cabeçalhos de segurança
-    controller/   # endpoints REST
-    dto/          # objetos de entrada e saída da API
-    enums/        # tipos fixos do domínio (movimentação, investimento, meta)
-    exception/    # tratamento global e padronizado de erros
-    models/       # entidades JPA com as regras de negócio
-    repository/   # acesso a dados (Spring Data JPA)
-    service/      # orquestração das regras de negócio e transações
+backend/src/main/java/com/eclipsebank/backend/
+├── config/       configurações de segurança, CORS e dados iniciais
+├── controller/   endpoints REST
+├── dto/          objetos de entrada e saída da API
+├── enums/        estados e tipos do domínio
+├── exception/    erros de negócio e tratamento global
+├── models/       entidades JPA e regras de domínio
+├── repository/   persistência com Spring Data JPA
+├── security/     componentes de autenticação, autorização e CSRF
+└── service/      orquestração das regras e transações
+```
+
+Outras partes do projeto:
+
+```text
 frontend/
-  html/           # telas
-  css/            # estilos por módulo
-  script/         # integração com a API
+├── index.html
+├── html/
+├── css/
+└── script/
+
 mobile/
-  app/            # telas do Expo Router
-  config/         # URL da API e token CSRF
+├── app/
+└── config/
 ```
 
 ## Segurança
 
-- Sessão opaca no servidor com cookie `HttpOnly` e `SameSite`; nada de token de sessão salvo no `localStorage`
-- Proteção CSRF em todas as operações que alteram dados, tanto no frontend web quanto no mobile
-- Autorização por proprietário da conta validada no servidor — o `usuarioId` enviado pelo cliente nunca é usado para autorizar sozinho
-- Senhas com hash BCrypt e nunca retornadas pela API
-- Valores monetários sempre em `BigDecimal`, nunca `double`/`float`, para evitar erro de arredondamento
-- Alteração de saldo e registro de movimentação sempre na mesma transação; movimentação concluída nunca é editada ou apagada
+- Senhas armazenadas somente como hash BCrypt.
+- Sessão autenticada no servidor por identificador opaco.
+- Cookie `HttpOnly`, `SameSite` e `Secure` em produção.
+- Proteção CSRF nas operações que alteram dados.
+- Renovação do identificador após o login.
+- Expiração da sessão por inatividade.
+- Logout com invalidação no servidor.
+- Autorização por proprietário da conta no backend.
+- O `usuarioId` enviado pelo navegador ou aplicativo nunca é suficiente para autorizar uma operação.
+- Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência.
+- Senhas, tokens, banco local e arquivos `.env` não são enviados ao Git.
+- Valores monetários são representados por `BigDecimal`.
+- Saldo e movimentação são alterados na mesma transação.
 
-## Testes
+## Executar com Docker
 
-```bash
-cd backend
-./mvnw test
+### Pré-requisitos
+
+- Docker com suporte ao Docker Compose, ou Podman com compatibilidade Docker.
+- Portas `8080` e `5432` disponíveis.
+
+Na raiz do projeto, crie um arquivo `.env`:
+
+```env
+DB_PASSWORD=escolha-uma-senha-local-forte
 ```
 
-Cobrem regras de negócio das entidades, orquestração dos services, saldo insuficiente e cenários de erro nas principais operações (contas, investimentos, metas financeiras).
+O arquivo `.env` está ignorado pelo Git e não deve ser publicado.
 
-## Como executar
+Suba a aplicação e o PostgreSQL:
 
-**Backend**
+```bash
+docker compose up --build
+```
+
+Acesse:
+
+- Aplicação web: [http://localhost:8080/](http://localhost:8080/)
+- Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- OpenAPI JSON: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+Para encerrar:
+
+```bash
+docker compose down
+```
+
+O PostgreSQL utiliza um volume nomeado, portanto os dados permanecem após `docker compose down`. Para apagar também o banco local do Docker:
+
+```bash
+docker compose down -v
+```
+
+> Atenção: o parâmetro `-v` apaga definitivamente os dados armazenados no volume do PostgreSQL.
+
+## Executar para desenvolvimento
+
+### Backend
+
+Pré-requisitos:
+
+- Java 26.
+- Maven Wrapper incluído no projeto.
 
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
 
-**Frontend web**
+Nesse modo, o backend utiliza o banco H2 persistente local. Os arquivos do banco ficam em `backend/data/` e são ignorados pelo Git.
 
-Abra a pasta `frontend/` com o Live Server (ou similar). A API é consumida em `http://localhost:8080` ou `http://<seu-ip>:8080`.
+### Frontend web
 
-**Mobile**
+Há duas opções:
+
+1. Usar a versão empacotada pelo Docker em `http://localhost:8080/`.
+2. Abrir `frontend/html/login.html` com o Live Server.
+
+Quando executado pelo Live Server, o frontend identifica a porta de desenvolvimento e chama a API na porta `8080`. No Docker ou em produção, utiliza `/api` no mesmo domínio.
+
+### Aplicativo mobile
+
+Pré-requisitos:
+
+- Node.js 20.19.x.
+- Expo Go ou emulador Android.
 
 ```bash
 cd mobile
+npm install
 npx expo start --lan
 ```
 
-Configure `EXPO_PUBLIC_API_URL` em `mobile/.env.local` com o IPv4 do computador na rede local (não `localhost`).
+Copie `mobile/.env.example` para `mobile/.env.local` e informe o IPv4 do computador:
 
-## Documentação
+```env
+EXPO_PUBLIC_API_URL=http://SEU_IP_LOCAL:8080/api
+```
 
-- [Requisitos.md](Requisitos.md) — requisitos, roadmap e o que já foi entregue
-- [AGENTS.md](AGENTS.md) — contexto técnico do projeto
-- [mobile/AGENTS.md](mobile/AGENTS.md) — contexto do aplicativo mobile
+O celular e o computador devem estar na mesma rede local. Não use `localhost` para acessar o backend a partir do aparelho físico.
 
-## Status
+## Testes
 
-Projeto em desenvolvimento ativo. Consulte o roadmap em [Requisitos.md](Requisitos.md) para o que já está pronto e o que vem a seguir.
+Execute a suíte completa:
+
+```bash
+cd backend
+./mvnw test
+```
+
+Atualmente, a suíte possui 60 testes automatizados cobrindo, entre outros pontos:
+
+- Regras de crédito, débito e saldo insuficiente.
+- Bloqueio e encerramento de contas.
+- Transferências, Pix e movimentações.
+- Autorização por proprietário da conta.
+- CSRF, sessão expirada e tentativas de login.
+- Cadastro e catálogo de investimentos.
+- Aplicação, resgate e rollback transacional.
+- Metas financeiras.
+- Cálculo e pagamento de proventos.
+
+## Documentação da API
+
+Com o backend em execução, acesse:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários protegidos exigem uma sessão autenticada.
+
+## Variáveis de ambiente
+
+| Variável | Uso |
+| --- | --- |
+| `DB_PASSWORD` | Senha do PostgreSQL no Docker e em produção |
+| `DB_HOST` | Host do PostgreSQL; no Compose é `db` |
+| `DB_PORT` | Porta do PostgreSQL; padrão `5432` |
+| `DB_NAME` | Nome do banco; padrão `eclipsebank` |
+| `DB_USER` | Usuário do banco; padrão `eclipsebank` |
+| `SESSION_COOKIE_SECURE` | Obriga envio do cookie somente por HTTPS |
+| `EXPO_PUBLIC_API_URL` | URL da API utilizada pelo aplicativo mobile |
+
+## Capturas de tela
+
+As capturas do frontend web e do aplicativo mobile serão adicionadas antes da publicação da demonstração.
+
+## Roadmap
+
+- [x] Autenticação segura, conta, saldo e extrato.
+- [x] Depósito, saque, transferência e Pix.
+- [x] Investimentos simulados e metas financeiras.
+- [x] Aplicativo mobile integrado à API.
+- [x] Testes, OpenAPI, Docker e PostgreSQL.
+- [x] Frontend e API preparados para o mesmo domínio.
+- [ ] Dados fictícios para demonstração pública.
+- [ ] Screenshots do frontend web e mobile.
+- [ ] Deploy público com HTTPS.
+- [ ] Integração com dados externos de mercado.
+- [ ] Cartões, crédito, contas empresariais e antifraude.
+
+O roadmap detalhado está em [Requisitos.md](Requisitos.md).
+
+## Autora
+
+Desenvolvido por [Isabella Roder](https://github.com/Isabella-Roder).
+
+## Licença
+
+Este projeto foi criado para fins educacionais e de portfólio. Consulte o arquivo de licença do repositório quando disponível.

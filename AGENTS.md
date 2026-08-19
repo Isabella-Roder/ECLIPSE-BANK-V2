@@ -102,6 +102,7 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Telas: cadastro, login, painel, depósito, saque, transferência, Pix, extrato, comprovante, gerenciamento da conta, investimentos e metas financeiras.
 - O frontend web é empacotado no JAR pelo Docker, servido no mesmo domínio da API e possui entrada em `/`.
 - O Compose com aplicação e PostgreSQL foi construído e executado localmente com sucesso.
+- O README apresenta funcionalidades, arquitetura, segurança, Docker, desenvolvimento local, mobile, testes, variáveis de ambiente e roadmap; faltam screenshots e a futura URL pública.
 - CSS consolidado em `frontend/css/eclipse-bank.css`.
 - Aplicativo Expo iniciado e validado em aparelho Android real com Expo Go.
 - Login mobile integrado ao endpoint existente e com tratamento de carregamento e erro.
@@ -175,7 +176,7 @@ Não confiar em `usuarioId` vindo do navegador (ou do app mobile) para autorizar
 ## Próximos passos recomendados
 
 1. Criar dados fictícios com `@Profile("demo")`, senha recebida por variável de ambiente e nenhuma informação pessoal real.
-2. Completar o README com screenshots, instruções via Docker e credenciais da demonstração.
+2. Adicionar screenshots web/mobile e as futuras credenciais da demonstração ao README.
 3. Escolher uma plataforma e publicar a demonstração com HTTPS, aplicação e PostgreSQL.
 4. Testar cadastro, login e operações bancárias na URL pública antes de marcar a Fase 4 como concluída.
 
