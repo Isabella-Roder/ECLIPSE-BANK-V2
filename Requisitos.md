@@ -112,7 +112,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Enums `TipoCartao` (débito/crédito) e `StatusCartao` (ativo/bloqueado/cancelado)
   - [x] Entidade com regras de bloqueio, desbloqueio e cancelamento
   - [x] Repository e DTOs de cadastro e resposta
-  - [ ] Service e controller com autorização por proprietário da conta
+  - [x] Service e controller com autorização por proprietário da conta e do cartão
   - [ ] Testes de regra de negócio e orquestração do service
   - [ ] Tela web de listagem, bloqueio, desbloqueio e cancelamento
   - [ ] Fatura (fica para uma etapa seguinte)
