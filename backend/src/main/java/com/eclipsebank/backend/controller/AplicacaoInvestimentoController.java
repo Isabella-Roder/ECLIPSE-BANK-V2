@@ -22,8 +22,11 @@ import com.eclipsebank.backend.service.AplicacaoInvestimentoService;
 import com.eclipsebank.backend.service.ContaService;
 import com.eclipsebank.backend.service.ProventoFiiService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
+@Tag(name = "Investimentos", description = "Aplicação, resgate, proventos e posição consolidada da carteira de investimentos")
 @RestController
 @RequestMapping("/api/contas/{contaId}/investimentos")
 public class AplicacaoInvestimentoController {
@@ -45,6 +48,7 @@ public class AplicacaoInvestimentoController {
         this.usuarioAutenticado = usuarioAutenticado;
     }
 
+    @Operation(summary = "Aplicar em investimento", description = "Debita a conta e registra uma nova aplicação no produto escolhido")
     @PostMapping("/aplicacoes")
     public ResponseEntity<AplicacaoInvestimentoResposta> aplicar(
         @PathVariable Long contaId,
@@ -59,6 +63,7 @@ public class AplicacaoInvestimentoController {
         return ResponseEntity.created(localizacao).body(aplicacao);
     }
 
+    @Operation(summary = "Listar carteira", description = "Lista todas as aplicações de investimento da conta")
     @GetMapping("/carteira")
     public ResponseEntity<List<AplicacaoInvestimentoResposta>> listarCarteira(
         @PathVariable Long contaId,
@@ -69,6 +74,7 @@ public class AplicacaoInvestimentoController {
         return ResponseEntity.ok(aplicacaoInvestimentoService.listarPorConta(contaId));
     }
 
+    @Operation(summary = "Resgatar investimento", description = "Resgata parcial ou totalmente uma aplicação, creditando o valor na conta")
     @PostMapping("/{aplicacaoId}/resgates")
     public ResponseEntity<AplicacaoInvestimentoResposta> resgatar(
         @PathVariable Long contaId,
@@ -81,6 +87,7 @@ public class AplicacaoInvestimentoController {
         return ResponseEntity.ok(aplicacaoInvestimentoService.resgatar(contaId, aplicacaoId, dados));
     }
 
+    @Operation(summary = "Receber provento", description = "Credita na conta o provento mensal de uma aplicação em fundo imobiliário")
     @PostMapping("/{aplicacaoId}/proventos")
     public ResponseEntity<ProventoFiiResposta> pagarProvento(
         @PathVariable Long contaId,
@@ -92,6 +99,7 @@ public class AplicacaoInvestimentoController {
         return ResponseEntity.ok(proventoFiiService.pagar(contaId, aplicacaoId));
     }
 
+    @Operation(summary = "Listar posição consolidada", description = "Retorna a posição consolidada por produto, com valor aplicado, valor atual e rentabilidade")
     @GetMapping("/posicao")
     public ResponseEntity<List<PosicaoConsolidadaResposta>> listarPosicaoConsolidada(
         @PathVariable Long contaId,

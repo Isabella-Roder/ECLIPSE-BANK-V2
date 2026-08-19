@@ -15,7 +15,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Validação dos dados recebidos pela API
 - [x] Tratamento global e padronizado de erros
 - [ ] Testes unitários e de integração das regras críticas
-- [ ] Documentação da API com OpenAPI/Swagger
+- [x] Documentação da API com OpenAPI/Swagger
 - [ ] Docker para aplicação e banco de produção
 
 ## 1. Usuários e autenticação
@@ -222,7 +222,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Fase 3 — testes, documentação, Docker e PostgreSQL *(próxima fase prioritária)*
   - [ ] Teste de rollback de investimentos
   - [ ] Testes de segurança (CSRF, sessão expirada, força bruta)
-  - [ ] Documentação OpenAPI/Swagger
+  - [x] Documentação OpenAPI/Swagger
   - [ ] Docker (aplicação + banco) e migração para PostgreSQL
 - [ ] Fase 4 — frontend completo e publicação da demonstração
   - [ ] README com apresentação, imagens e instruções de execução

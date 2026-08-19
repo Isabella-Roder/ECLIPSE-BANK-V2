@@ -73,6 +73,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,
                     "/api/csrf"
                 ).permitAll()
+                .requestMatchers(
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                ).permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/investimentos/produtos").hasRole("ADMIN")
                 .anyRequest().authenticated()
