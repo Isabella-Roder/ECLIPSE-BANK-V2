@@ -6,4 +6,5 @@
 
 backend/target/
 backend/data/
+backend/scripts/
 .env

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerencie seus cartões no Eclipse Bank.">
+    <title>Cartões | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-cartoes">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-cartoes">
+        <header class="apresentacao-cartoes">
+            <div>
+                <p class="etiqueta">CARTÕES</p>
+                <h1>Seus cartões, na palma da mão.</h1>
+                <p>Peça cartões de débito e crédito, bloqueie, desbloqueie ou cancele quando precisar.</p>
+            </div>
+
+            <button id="botao-novo-cartao" class="botao-confirmar" type="button">
+                Novo cartão <span aria-hidden="true">→</span>
+            </button>
+        </header>
+
+        <section class="secao-painel lista-cartoes" aria-labelledby="titulo-cartoes">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">MEUS CARTÕES</p>
+                    <h2 id="titulo-cartoes">Cartões da conta</h2>
+                </div>
+
+                <span id="quantidade-cartoes">0 cartões</span>
+            </header>
+
+            <div id="lista-cartoes" class="grade-cartoes" aria-live="polite">
+                <p id="estado-cartoes">Carregando cartões...</p>
+            </div>
+
+            <p id="mensagem-cartoes" class="mensagem-operacao" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <dialog id="dialog-novo-cartao" class="dialog-investimento">
+        <form id="form-novo-cartao" class="form-aplicacao">
+            <header>
+                <div>
+                    <p class="etiqueta">NOVO CARTÃO</p>
+                    <h2>Qual tipo de cartão?</h2>
+                </div>
+
+                <button id="botao-fechar-novo-cartao" class="botao-fechar-dialog" type="button" aria-label="Fechar">
+                    ×
+                </button>
+            </header>
+
+            <div class="campo">
+                <label for="tipo-novo-cartao">Tipo do cartão</label>
+                <select id="tipo-novo-cartao" name="tipo" required>
+                    <option value="DEBITO">Débito</option>
+                    <option value="CREDITO">Crédito (limite de R$ 1.000,00)</option>
+                </select>
+            </div>
+
+            <p id="mensagem-novo-cartao" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+            <button id="botao-confirmar-novo-cartao" class="botao-confirmar" type="submit">
+                Criar cartão <span aria-hidden="true">→</span>
+            </button>
+        </form>
+    </dialog>
+
+    <script src="../script/cartoes.js"></script>
+</body>
+</html>
