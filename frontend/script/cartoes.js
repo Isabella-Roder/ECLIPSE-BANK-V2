@@ -143,6 +143,17 @@ function renderizarMeusCartoes(cartoes) {
             limite.className = "cartao-limite";
             limite.textContent = formatarDinheiro(cartao.limite);
             card.appendChild(limite);
+
+            const botaoFaturas = document.createElement("button");
+            botaoFaturas.className = "botao-faturas";
+            botaoFaturas.type = "button";
+            botaoFaturas.textContent = "Ver faturas";
+
+            botaoFaturas.addEventListener("click", () => {
+                window.location.href = `faturas.html?cartaoId=${encodeURIComponent(cartao.id)}`;
+            });
+
+            card.appendChild(botaoFaturas);
         }
 
         if (cartao.status === "ATIVO") {

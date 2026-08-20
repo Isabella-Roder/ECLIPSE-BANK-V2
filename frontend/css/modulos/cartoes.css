@@ -54,6 +54,7 @@
         "numero numero"
         "titular titular"
         "limite limite"
+        "faturas faturas"
         "principal cancelar";
     align-content: space-between;
     gap: 12px 14px;
@@ -203,6 +204,11 @@
 }
 .botao-bloquear,
 .botao-desbloquear { grid-area: principal; justify-self: start; }
+.botao-faturas {
+    grid-area: faturas;
+    justify-self: stretch;
+    color: var(--violeta-claro) !important;
+}
 .botao-cancelar {
     grid-area: cancelar;
     justify-self: end;
@@ -226,7 +232,7 @@
 @media (max-width: 420px) {
     .cartao-item {
         grid-template-columns: 1fr;
-        grid-template-areas: "tipo" "status" "numero" "titular" "limite" "principal" "cancelar";
+        grid-template-areas: "tipo" "status" "numero" "titular" "limite" "faturas" "principal" "cancelar";
     }
     .cartao-status { justify-self: start; }
     .cartao-numero { margin-top: 60px; }

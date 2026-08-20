@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulte as faturas do seu cartão de crédito Eclipse Bank.">
+    <title>Faturas | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-faturas">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="cartoes.html">← Voltar para os cartões</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-faturas">
+        <header class="apresentacao-cartoes">
+            <div>
+                <p class="etiqueta">CARTÃO DE CRÉDITO</p>
+                <h1>Suas faturas</h1>
+                <p>Acompanhe os valores, vencimentos e a situação das faturas do seu cartão.</p>
+            </div>
+        </header>
+
+        <section class="secao-painel lista-cartoes" aria-labelledby="titulo-faturas">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">HISTÓRICO</p>
+                    <h2 id="titulo-faturas">Faturas do cartão</h2>
+                    <p id="cartao-selecionado">Identificando cartão...</p>
+                </div>
+
+                <span id="quantidade-faturas">0 faturas</span>
+            </header>
+
+            <div id="lista-faturas" class="grade-cartoes" aria-live="polite">
+                <p id="estado-faturas">Carregando faturas...</p>
+            </div>
+
+            <p id="mensagem-faturas" class="mensagem-operacao" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <script src="../script/faturas.js"></script>
+</body>
+</html>

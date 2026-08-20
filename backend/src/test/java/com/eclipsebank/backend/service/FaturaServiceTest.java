@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -17,10 +18,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.eclipsebank.backend.dto.CompraCartao;
 import com.eclipsebank.backend.dto.FaturaResposta;
+import com.eclipsebank.backend.enums.StatusFatura;
 import com.eclipsebank.backend.enums.TipoCartao;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Cartao;
+import com.eclipsebank.backend.models.Conta;
 import com.eclipsebank.backend.models.Fatura;
+import com.eclipsebank.backend.models.Movimentacao;
 import com.eclipsebank.backend.repository.CartaoRepository;
 import com.eclipsebank.backend.repository.ContaRepository;
 import com.eclipsebank.backend.repository.FaturaRepository;
@@ -101,5 +105,29 @@ public class FaturaServiceTest {
         when(faturaRepository.findById(10L)).thenReturn(Optional.of(fatura));
 
         assertThrows(RecursoNaoEncontradoException.class, () -> faturaService.fechar(1L, 10L));
+    }
+
+    @Test
+    void devePagarFaturaEDebitarConta() {
+        Conta conta = new Conta();
+        conta.creditar(new BigDecimal("500.00"));
+
+        Cartao cartao = mock(Cartao.class);
+        when(cartao.getId()).thenReturn(1L);
+
+        Fatura fatura = new Fatura();
+        fatura.setCartao(cartao);
+        fatura.setMesReferencia("2026-08");
+        fatura.lancarCompra(new BigDecimal("150.00"));
+        fatura.fechar();
+
+        when(contaRepository.findById(1L)).thenReturn(Optional.of(conta));
+        when(faturaRepository.findById(10L)).thenReturn(Optional.of(fatura));
+
+        FaturaResposta resposta = faturaService.pagar(1L, 1L, 10L);
+
+        assertEquals(StatusFatura.PAGA, resposta.status());
+        assertEquals(new BigDecimal("350.00"), conta.getSaldo());
+        verify(movimentacaoRepository).save(any(Movimentacao.class));
     }
 }
