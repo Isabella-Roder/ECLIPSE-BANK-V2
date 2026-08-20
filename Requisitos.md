@@ -104,7 +104,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Testes para saldo insuficiente, duplicidade e concorrência
 - [ ] Coleção de requisições para demonstração da API
 - [x] Dados de demonstração sem informações pessoais reais
-- [ ] Pipeline de integração contínua no GitHub
+- [x] Pipeline de integração contínua no GitHub
 
 ## Funcionalidades futuras
 
