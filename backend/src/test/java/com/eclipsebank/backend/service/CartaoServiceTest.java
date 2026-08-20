@@ -23,6 +23,7 @@ import com.eclipsebank.backend.enums.TipoCartao;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Cartao;
 import com.eclipsebank.backend.models.Conta;
+import com.eclipsebank.backend.models.Usuario;
 import com.eclipsebank.backend.repository.CartaoRepository;
 import com.eclipsebank.backend.repository.ContaRepository;
 
@@ -44,7 +45,11 @@ class CartaoServiceTest {
 
     @Test
     void deveCadastrarCartaoDeDebito() {
+        Usuario usuario = new Usuario();
+        usuario.setNome("Titular Teste");
+
         Conta conta = new Conta();
+        conta.setUsuario(usuario);
         CartaoCadastro dados = new CartaoCadastro(TipoCartao.DEBITO);
 
         when(contaRepository.findById(1L)).thenReturn(Optional.of(conta));
@@ -58,7 +63,11 @@ class CartaoServiceTest {
 
     @Test
     void deveCadastrarCartaoDeCreditoComLimite() {
+        Usuario usuario = new Usuario();
+        usuario.setNome("Titular Teste");
+
         Conta conta = new Conta();
+        conta.setUsuario(usuario);
         CartaoCadastro dados = new CartaoCadastro(TipoCartao.CREDITO);
 
         when(contaRepository.findById(1L)).thenReturn(Optional.of(conta));

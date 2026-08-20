@@ -1,0 +1,105 @@
+package com.eclipsebank.backend.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.eclipsebank.backend.dto.CompraCartao;
+import com.eclipsebank.backend.dto.FaturaResposta;
+import com.eclipsebank.backend.enums.TipoCartao;
+import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
+import com.eclipsebank.backend.models.Cartao;
+import com.eclipsebank.backend.models.Fatura;
+import com.eclipsebank.backend.repository.CartaoRepository;
+import com.eclipsebank.backend.repository.ContaRepository;
+import com.eclipsebank.backend.repository.FaturaRepository;
+import com.eclipsebank.backend.repository.MovimentacaoRepository;
+
+@ExtendWith(MockitoExtension.class)
+public class FaturaServiceTest {
+    
+    @Mock
+    private FaturaRepository faturaRepository;
+
+    @Mock
+    private CartaoRepository cartaoRepository;
+
+    @Mock
+    private ContaRepository contaRepository;
+
+    @Mock
+    private MovimentacaoRepository movimentacaoRepository;
+
+    private FaturaService faturaService;
+
+    @BeforeEach
+    void preparar() {
+        faturaService = new FaturaService(faturaRepository, cartaoRepository, contaRepository, movimentacaoRepository);
+    }
+
+    @Test
+    void deveCriarFaturaNovaQuandoNaoExistirNoMes() {
+        Cartao cartao = mock(Cartao.class);
+        
+        when(cartao.getId()).thenReturn(1L);
+        when(cartao.getTipo()).thenReturn(TipoCartao.CREDITO);
+
+        CompraCartao dados = new CompraCartao(new BigDecimal("150.00"));
+
+        when(cartaoRepository.findById(1L)).thenReturn(Optional.of(cartao));
+        when(faturaRepository.findByCartaoIdAndMesReferencia(any(), any())).thenReturn(Optional.empty());
+        when(faturaRepository.save(any(Fatura.class)))
+            .thenAnswer(invocacao -> invocacao.getArgument(0));
+
+        FaturaResposta resposta = faturaService.lancarCompra(1L, dados);
+
+        assertEquals(new BigDecimal("150.00"), resposta.valorTotal());
+    }
+
+    @Test
+    void deveReaproveitarFaturaExistenteDoMes() {
+        Cartao cartao = mock(Cartao.class);
+
+        when(cartao.getId()).thenReturn(1L);
+        when(cartao.getTipo()).thenReturn(TipoCartao.CREDITO);
+
+        Fatura faturaExistente = new Fatura();
+        faturaExistente.setCartao(cartao);
+        faturaExistente.setMesReferencia("2026-08");
+        faturaExistente.lancarCompra(new BigDecimal("100.00"));
+
+        CompraCartao dados = new CompraCartao(new BigDecimal("50.00"));
+
+        when(cartaoRepository.findById(1L)).thenReturn(Optional.of(cartao));
+        when(faturaRepository.findByCartaoIdAndMesReferencia(any(), any())).thenReturn(Optional.of(faturaExistente));
+
+        FaturaResposta resposta = faturaService.lancarCompra(1L, dados);
+
+        assertEquals(new BigDecimal("150.00"), resposta.valorTotal());
+    }
+
+    @Test
+    void deveRecusarFecharFaturaDeOutroCartao() {
+        Cartao cartaoDaFatura = mock(Cartao.class);
+
+        when(cartaoDaFatura.getId()).thenReturn(2L);
+
+        Fatura fatura = new Fatura();
+        fatura.setCartao(cartaoDaFatura);
+
+        when(faturaRepository.findById(10L)).thenReturn(Optional.of(fatura));
+
+        assertThrows(RecursoNaoEncontradoException.class, () -> faturaService.fechar(1L, 10L));
+    }
+}

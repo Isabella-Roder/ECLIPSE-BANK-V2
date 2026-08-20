@@ -117,7 +117,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Tela web de listagem, criação, bloqueio, desbloqueio e cancelamento
   - [x] Fatura: entidade com lançamento de compra, fechamento e pagamento
   - [x] Repository, DTOs, service e controller de fatura com autorização por conta e cartão
-  - [ ] Testes de fatura (entidade e service)
+  - [x] Testes de fatura (entidade e service)
   - [ ] Tela web de fatura (lançar compra, fechar, pagar)
 - [x] Metas financeiras (criação, aporte e resgate manuais)
   - [x] Entidade com regras de aporte/resgate e conclusão automática ao atingir o valor alvo
