@@ -47,6 +47,9 @@ public class Cartao {
     )
     private Conta conta;
 
+    @Column(nullable = false, length = 100)
+    private String titular;
+
     @Column(nullable = false, length = 16)
     private String numero;
 
@@ -116,6 +119,10 @@ public class Cartao {
         return conta;
     }
 
+    public String getTitular() {
+        return titular;
+    }
+
     public String getNumero() {
         return numero;
     }
@@ -142,6 +149,10 @@ public class Cartao {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public void setTitular(String titular) {
+        this.titular = titular;
     }
 
     public void setNumero(String numero) {

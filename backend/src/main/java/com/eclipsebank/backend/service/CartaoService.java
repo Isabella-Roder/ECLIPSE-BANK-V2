@@ -64,6 +64,10 @@ public class CartaoService {
 
         Cartao cartao = new Cartao();
         cartao.setConta(conta);
+        cartao.setTitular(conta.getUsuario().getNomeSocial() != null
+            ? conta.getUsuario().getNomeSocial()
+            : conta.getUsuario().getNome()
+        );
         cartao.setNumero(gerarNumeroUnico());
         cartao.setTipo(dados.tipo());
 

@@ -10,6 +10,7 @@ import com.eclipsebank.backend.models.Cartao;
 public record CartaoResposta(
     Long id,
     Long contaId,
+    String titular,
     String numero,
     TipoCartao tipo,
     BigDecimal limite,
@@ -20,6 +21,7 @@ public record CartaoResposta(
         return new CartaoResposta(
             cartao.getId(),
             cartao.getConta().getId(),
+            cartao.getTitular(),
             cartao.getNumero(),
             cartao.getTipo(),
             cartao.getLimite(),
