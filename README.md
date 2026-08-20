@@ -307,8 +307,6 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 | `SESSION_COOKIE_SECURE` | Obriga envio do cookie somente por HTTPS |
 | `EXPO_PUBLIC_API_URL` | URL da API utilizada pelo aplicativo mobile |
 
-## Capturas de tela
-
 ## Roadmap
 
 - [x] Autenticação segura, conta, saldo e extrato.

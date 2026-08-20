@@ -99,11 +99,11 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 
 ## 7. Qualidade e portfólio
 
-- [ ] README com apresentação, imagens e instruções de execução
+- [x] README com apresentação, imagens e instruções de execução
 - [ ] Commits pequenos e descritivos
 - [ ] Testes para saldo insuficiente, duplicidade e concorrência
 - [ ] Coleção de requisições para demonstração da API
-- [ ] Dados de demonstração sem informações pessoais reais
+- [x] Dados de demonstração sem informações pessoais reais
 - [ ] Pipeline de integração contínua no GitHub
 
 ## Funcionalidades futuras
