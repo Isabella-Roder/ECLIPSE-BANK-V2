@@ -57,6 +57,10 @@ public class CartaoService {
         return cartao;
     }
 
+    public void validarCartaoDaConta(Long contaId, Long cartaoId) {
+        buscarCartaoDaConta(cartaoId, contaId);
+    }
+
     @Transactional
     public CartaoResposta cadastrar(Long contaId, CartaoCadastro dados) {
         Conta conta = contaRepository.findById(contaId)
