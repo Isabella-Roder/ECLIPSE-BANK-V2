@@ -24,7 +24,7 @@ body {
     background: var(--claro);
     font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-button, input { font: inherit; }
+button, input, select { font: inherit; }
 a { color: inherit; }
 
 /* Elementos compartilhados */
@@ -87,6 +87,47 @@ a { color: inherit; }
     background: var(--branco);
     box-shadow: 0 0 0 4px rgba(139,92,246,.12);
 }
+.campo select {
+    width: 100%;
+    min-height: 53px;
+    padding: 0 46px 0 16px;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    outline: none;
+    color: var(--texto);
+    background-color: rgba(255,255,255,.82);
+    background-image:
+        linear-gradient(45deg,transparent 50%,var(--violeta) 50%),
+        linear-gradient(135deg,var(--violeta) 50%,transparent 50%);
+    background-position:
+        calc(100% - 20px) 50%,
+        calc(100% - 14px) 50%;
+    background-repeat: no-repeat;
+    background-size: 6px 6px,6px 6px;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color .16s, box-shadow .16s, background-color .16s;
+}
+.campo select:hover {
+    border-color: #c5bdcf;
+    background-color: var(--branco);
+}
+.campo select:focus {
+    border-color: var(--violeta);
+    background-color: var(--branco);
+    box-shadow: 0 0 0 4px rgba(139,92,246,.12);
+}
+.pagina-painel .campo select {
+    border-color: rgba(255,255,255,.11);
+    color: var(--branco);
+    background-color: #0d0e16;
+}
+.pagina-painel .campo select:hover,
+.pagina-painel .campo select:focus { background-color: #10111a; }
+.pagina-painel .campo select option {
+    color: var(--branco);
+    background: #11121e;
+}
 .campo small { color: var(--suave); font-size: .73rem; }
 .mensagem-formulario, .mensagem-login, #mensagem-conta {
     display: none;
@@ -116,4 +157,3 @@ a { color: inherit; }
 .botao-principal span, .botao-login span { color: var(--violeta-claro); font-size: 1.35rem; }
 .botao-principal:hover, .botao-login:hover { transform: translateY(-2px); background: #292431; }
 .botao-principal:disabled, .botao-login:disabled { cursor: wait; opacity: .65; transform: none; }
-

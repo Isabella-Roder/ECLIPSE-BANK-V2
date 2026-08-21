@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eclipsebank.backend.dto.CompraCartao;
 import com.eclipsebank.backend.dto.FaturaResposta;
 import com.eclipsebank.backend.security.UsuarioAutenticado;
 import com.eclipsebank.backend.service.CartaoService;
@@ -22,7 +20,6 @@ import com.eclipsebank.backend.service.FaturaService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @Tag(name = "Faturas", description = "Faturas do cartão de crédito")
 @RestController
@@ -44,24 +41,6 @@ public class FaturaController {
         this.contaService = contaService;
         this.cartaoService = cartaoService;
         this.usuarioAutenticado = usuarioAutenticado;
-    }
-
-    @Operation(summary = "Lançar compra", description = "Lança a compra para a fatura")
-    @PostMapping("/compras")
-    public ResponseEntity<FaturaResposta> lancarCompra(
-        @PathVariable Long contaId,
-        @PathVariable Long cartaoId,
-        @Valid @RequestBody CompraCartao dados,
-        Authentication autenticacao
-    ) {
-        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, contaService.obterUsuarioIdDono(contaId));
-        cartaoService.validarCartaoDaConta(contaId, cartaoId);
-
-        FaturaResposta fatura = faturaService.lancarCompra(cartaoId, dados);
-
-        URI localizacao = URI.create("/api/contas/" + contaId + "/cartoes/" + cartaoId + "/faturas/minha-fatura");
-
-        return ResponseEntity.created(localizacao).body(fatura);
     }
 
     @Operation(summary = "Lista por cartao", description = "Lista fatura do cartao")

@@ -12,6 +12,10 @@ const estadoFaturas = document.getElementById("estado-faturas");
 const mensagem = document.getElementById("mensagem-faturas");
 
 const formCompra = document.getElementById("form-compra");
+const descricaoCompra = document.getElementById("descricao-compra");
+const categoriaCompra = document.getElementById("categoria-compra");
+const campoCategoriaPersonalizada = document.getElementById("campo-categoria-personalizada");
+const categoriaPersonalizadaCompra = document.getElementById("categoria-personalizada-compra");
 const valorCompra = document.getElementById("valor-compra");
 const botaoLancarCompra = document.getElementById("botao-lancar-compra");
 
@@ -184,7 +188,7 @@ function renderizarFaturas(faturas) {
     });
 }
 
-async function lancarCompra(valor) {
+async function lancarCompra(valor, descricao, categoria, categoriaPersonalizada) {
     try {
         const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/cartoes/${cartaoId}/faturas/compras`, {
             method: "POST",
@@ -193,7 +197,12 @@ async function lancarCompra(valor) {
                 "Content-Type": "application/json",
                 "X-XSRF-TOKEN": lercookie("XSRF-TOKEN")
             },
-            body: JSON.stringify({valor: valor})
+            body: JSON.stringify({
+                valor: valor,
+                descricao: descricao || null,
+                categoria: categoria,
+                categoriaPersonalizada: categoria === "OUTROS" ? categoriaPersonalizada : null
+            })
         });
 
         const corpo = await resposta.json();
@@ -271,6 +280,17 @@ async function pagarFatura(faturaId) {
     }
 }
 
+categoriaCompra.addEventListener("change", () => {
+    const selecionouOutros = categoriaCompra.value === "OUTROS";
+
+    campoCategoriaPersonalizada.hidden = !selecionouOutros;
+    categoriaPersonalizadaCompra.required = selecionouOutros;
+
+    if (!selecionouOutros) {
+        categoriaPersonalizadaCompra.value = "";
+    }
+});
+
 formCompra.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
@@ -282,18 +302,34 @@ formCompra.addEventListener("submit", async (evento) => {
         return;
     }
 
+    if (categoriaCompra.value === "OUTROS" && !categoriaPersonalizadaCompra.value) {
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Informe a categoria personalizada.";
+        return;
+    }
+
     botaoLancarCompra.disabled = true;
     botaoLancarCompra.textContent = "Lançando...";
 
-    await lancarCompra(valor);
+    await lancarCompra(
+        valor,
+        descricaoCompra.value,
+        categoriaCompra.value,
+        categoriaPersonalizadaCompra.value
+    );
 
     valorCompra.value = "";
+    descricaoCompra.value = "";
+    categoriaCompra.selectedIndex = 0;
+    categoriaPersonalizadaCompra.value = "";
+    categoriaPersonalizadaCompra.required = false;
+    campoCategoriaPersonalizada.hidden = true;
     botaoLancarCompra.disabled = false;
     botaoLancarCompra.innerHTML = `
         Lançar compra
         <span aria-hidden="true">→</span>
     `;
-})
+});
 
 async function iniciarPagina() {
     try {

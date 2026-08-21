@@ -1,5 +1,6 @@
 package com.eclipsebank.backend.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eclipsebank.backend.dto.CompraCartao;
 import com.eclipsebank.backend.dto.FaturaResposta;
 import com.eclipsebank.backend.enums.TipoCartao;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
@@ -74,15 +74,15 @@ public class FaturaService {
     }
 
     @Transactional
-    public FaturaResposta lancarCompra(Long cartaoId, CompraCartao dados) {
+    public Fatura obterFatuaAtualParaLancamento(Long cartaoId, BigDecimal valor) {
         validarCartaoCredito(cartaoId);
 
         String mesReferencia = YearMonth.now().toString();
         Fatura fatura = buscarFaturaPorMesAtual(cartaoId, mesReferencia);
 
-        fatura.lancarCompra(dados.valor());
+        fatura.lancarCompra(valor);
 
-        return FaturaResposta.from(fatura);
+        return fatura;
     }
 
     @Transactional

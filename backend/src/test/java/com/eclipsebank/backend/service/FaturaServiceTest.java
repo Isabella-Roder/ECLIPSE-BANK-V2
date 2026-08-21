@@ -16,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.eclipsebank.backend.dto.CompraCartao;
 import com.eclipsebank.backend.dto.FaturaResposta;
 import com.eclipsebank.backend.enums.StatusFatura;
 import com.eclipsebank.backend.enums.TipoCartao;
@@ -55,27 +54,23 @@ public class FaturaServiceTest {
     @Test
     void deveCriarFaturaNovaQuandoNaoExistirNoMes() {
         Cartao cartao = mock(Cartao.class);
-        
-        when(cartao.getId()).thenReturn(1L);
-        when(cartao.getTipo()).thenReturn(TipoCartao.CREDITO);
 
-        CompraCartao dados = new CompraCartao(new BigDecimal("150.00"));
+        when(cartao.getTipo()).thenReturn(TipoCartao.CREDITO);
 
         when(cartaoRepository.findById(1L)).thenReturn(Optional.of(cartao));
         when(faturaRepository.findByCartaoIdAndMesReferencia(any(), any())).thenReturn(Optional.empty());
         when(faturaRepository.save(any(Fatura.class)))
             .thenAnswer(invocacao -> invocacao.getArgument(0));
 
-        FaturaResposta resposta = faturaService.lancarCompra(1L, dados);
+        Fatura fatura = faturaService.obterFatuaAtualParaLancamento(1L, new BigDecimal("150.00"));
 
-        assertEquals(new BigDecimal("150.00"), resposta.valorTotal());
+        assertEquals(new BigDecimal("150.00"), fatura.getValorTotal());
     }
 
     @Test
     void deveReaproveitarFaturaExistenteDoMes() {
         Cartao cartao = mock(Cartao.class);
 
-        when(cartao.getId()).thenReturn(1L);
         when(cartao.getTipo()).thenReturn(TipoCartao.CREDITO);
 
         Fatura faturaExistente = new Fatura();
@@ -83,14 +78,12 @@ public class FaturaServiceTest {
         faturaExistente.setMesReferencia("2026-08");
         faturaExistente.lancarCompra(new BigDecimal("100.00"));
 
-        CompraCartao dados = new CompraCartao(new BigDecimal("50.00"));
-
         when(cartaoRepository.findById(1L)).thenReturn(Optional.of(cartao));
         when(faturaRepository.findByCartaoIdAndMesReferencia(any(), any())).thenReturn(Optional.of(faturaExistente));
 
-        FaturaResposta resposta = faturaService.lancarCompra(1L, dados);
+        Fatura fatura = faturaService.obterFatuaAtualParaLancamento(1L, new BigDecimal("50.00"));
 
-        assertEquals(new BigDecimal("150.00"), resposta.valorTotal());
+        assertEquals(new BigDecimal("150.00"), fatura.getValorTotal());
     }
 
     @Test

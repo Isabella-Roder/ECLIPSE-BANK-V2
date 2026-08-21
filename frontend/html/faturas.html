@@ -54,6 +54,40 @@
                     </div>
                 </div>
 
+                <div class="campo">
+                    <label for="descricao-compra">Descrição (opcional)</label>
+                    <input
+                        id="descricao-compra"
+                        name="descricao"
+                        type="text"
+                        maxlength="180"
+                        placeholder="Ex: Supermercado"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="categoria-compra">Categoria</label>
+                    <select id="categoria-compra" name="categoria" required>
+                        <option value="ALIMENTACAO">Alimentação</option>
+                        <option value="TRANSPORTE">Transporte</option>
+                        <option value="LAZER">Lazer</option>
+                        <option value="EDUCACAO">Educação</option>
+                        <option value="COMPRAS">Compras</option>
+                        <option value="OUTROS">Outros</option>
+                    </select>
+                </div>
+
+                <div class="campo" id="campo-categoria-personalizada" hidden>
+                    <label for="categoria-personalizada-compra">Qual categoria?</label>
+                    <input
+                        id="categoria-personalizada-compra"
+                        name="categoriaPersonalizada"
+                        type="text"
+                        maxlength="30"
+                        placeholder="Ex: Academia"
+                    >
+                </div>
+
                 <button id="botao-lancar-compra" class="botao-confirmar" type="submit">
                     Lançar compra <span aria-hidden="true">→</span>
                 </button>
