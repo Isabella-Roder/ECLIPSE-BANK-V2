@@ -113,6 +113,7 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Posição consolidada da carteira de investimentos (quantidade, valor aplicado, valor atual e preço médio por produto) e cálculo de rentabilidade nominal/percentual, exibidos na tela web de investimentos.
 - Mobile: como o React Native não expõe o cabeçalho `Set-Cookie` da resposta, o token CSRF é obtido via `GET /api/csrf` (retorna `{ token }` no corpo) antes de cada operação que muda dado, em vez de ser lido do cookie como no frontend web.
 - Cartões: entidade com número gerado por `SecureRandom`, tipo (débito/crédito, limite fixo de R$ 1.000 para crédito) e status (ativo/bloqueado/cancelado); service e controller validam que o cartão pertence à conta autenticada, além da autorização por proprietário da conta. Tela web (`cartoes.html`/`cartoes.js`) integrada: listagem, criação, bloqueio, desbloqueio e cancelamento.
+- Fatura de cartão de crédito: `Fatura` agrupa por mês (`lançarCompra`, `fechar`, `pagar`), débito da conta e registro no extrato (`PAGAMENTO_FATURA`) ocorrem na mesma transação; `Compra` guarda cada lançamento individual (valor, descrição, categoria) vinculado à fatura. Autorização valida dono da conta e que o cartão pertence à conta. Tela web (`faturas.html`/`faturas.js`), acessada pelo botão "Ver faturas" nos cartões de crédito: lançar compra, fechar e pagar fatura.
 - Faturas: entidade com lançamento de compra, fechamento e pagamento; repository, DTOs, service e controller protegidos por autorização da conta e do cartão, além de testes de entidade e service. A tela web permite visualizar e pagar a fatura; ainda falta lançar compras e fechar a fatura pela interface.
 
 ## Rotas existentes
@@ -160,6 +161,11 @@ GET    /api/contas/{contaId}/cartoes/meus-cartoes
 PATCH  /api/contas/{contaId}/cartoes/{id}/bloquear
 PATCH  /api/contas/{contaId}/cartoes/{id}/desbloquear
 PATCH  /api/contas/{contaId}/cartoes/{id}/cancelar
+
+POST   /api/contas/{contaId}/cartoes/{cartaoId}/faturas/compras
+GET    /api/contas/{contaId}/cartoes/{cartaoId}/faturas/minha-fatura
+PATCH  /api/contas/{contaId}/cartoes/{cartaoId}/faturas/{faturaId}/fechar
+POST   /api/contas/{contaId}/cartoes/{cartaoId}/faturas/{faturaId}/pagar
 ```
 
 ## Regras arquiteturais
@@ -192,7 +198,7 @@ Não confiar em `usuarioId` vindo do navegador (ou do app mobile) para autorizar
 
 - Não execute duas instâncias do Spring na porta 8080.
 - O banco H2 em arquivo aceita uma instância por vez; os testes já usam banco em memória separado.
-- O enum persistente de `movimentacoes.tipo` no H2 local foi atualizado manualmente para aceitar `APLICACAO_INVESTIMENTO`, `RESGATE_INVESTIMENTO`, `PROVENTO_FII`, `APORTE_META_FINANCEIRA` e `RESGATE_META_FINANCEIRA`; futuras mudanças de esquema devem usar migrations.
+- O enum persistente de `movimentacoes.tipo` no H2 local foi atualizado manualmente para aceitar `APLICACAO_INVESTIMENTO`, `RESGATE_INVESTIMENTO`, `PROVENTO_FII`, `APORTE_META_FINANCEIRA`, `RESGATE_META_FINANCEIRA` e `PAGAMENTO_FATURA`; futuras mudanças de esquema devem usar migrations. Cada novo valor de `TipoMovimentacao` exige rodar `ALTER TABLE MOVIMENTACOES ALTER COLUMN TIPO ENUM(...)` no `backend/data/eclipsebank` local (com o backend parado) via `org.h2.tools.RunScript`, senão o pagamento/registro falha com `22030` (H2 `JdbcSQLDataException`).
 - A chave Pix atual é o e-mail cadastrado; outros tipos de chave ainda não foram implementados.
 - Após cadastro, direcionar para login; somente o endpoint de login cria a sessão autenticada.
 - CORS com portas locais é configuração de desenvolvimento e deve ser restrito em produção.
