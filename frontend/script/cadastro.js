@@ -39,10 +39,10 @@ formulario.addEventListener("submit", async (evento) => {
     const dados = {
         nome: nome.value,
         nomeSocial: nomeSocial.value || null,
-        cpf: cpf.value,
+        cpf: cpf.value.replace(/\D/g, ""),
         email: email.value,
         senha: senha.value,
-        telefone: telefone.value || null,
+        telefone: telefone.value.replace(/\D/g, "") || null,
         dataNascimento: dataNascimento.value
     };
 

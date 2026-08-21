@@ -80,11 +80,11 @@
                     <input
                         id="valor-alvo-nova-meta"
                         name="valorAlvo"
-                        type="number"
+                        type="text"
                         inputmode="decimal"
-                        min="0.01"
-                        step="0.01"
+                        maxlength="19"
                         placeholder="0,00"
+                        data-mascara="moeda"
                         required
                     >
                 </div>
@@ -136,11 +136,11 @@
                     <input
                         id="valor-aporte-meta"
                         name="valor"
-                        type="number"
+                        type="text"
                         inputmode="decimal"
-                        min="0.01"
-                        step="0.01"
+                        maxlength="19"
                         placeholder="0,00"
+                        data-mascara="moeda"
                         required
                     >
                 </div>
@@ -182,11 +182,11 @@
                     <input
                         id="valor-resgate-meta"
                         name="valor"
-                        type="number"
+                        type="text"
                         inputmode="decimal"
-                        min="0.01"
-                        step="0.01"
+                        maxlength="19"
                         placeholder="0,00"
+                        data-mascara="moeda"
                         required
                     >
                 </div>
@@ -200,6 +200,7 @@
         </form>
     </dialog>
 
+    <script src="../script/mascaras.js"></script>
     <script src="../script/metas-financeiras.js"></script>
 </body>
 </html>

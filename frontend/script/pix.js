@@ -69,7 +69,7 @@ formulario.addEventListener("submit", async (evento) => {
 
     const dados = {
         chave: chavePix.value.trim(),
-        valor: Number(valor.value),
+        valor: obterValorMonetario(valor),
         descricao: descricao.value.trim() || null
     }
 

@@ -73,7 +73,7 @@ formulario.addEventListener("submit", async (evento) => {
     const dados = {
         agenciaDestino: agenciaDestino.value.trim(),
         numeroDestino: numeroDestino.value.trim(),
-        valor: Number(valor.value),
+        valor: obterValorMonetario(valor),
         descricao: descricao.value.trim() || null
     };
 

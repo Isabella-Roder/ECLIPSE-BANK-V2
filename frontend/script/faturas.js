@@ -294,7 +294,7 @@ categoriaCompra.addEventListener("change", () => {
 formCompra.addEventListener("submit", async (evento) => {
     evento.preventDefault();
 
-    const valor = Number(valorCompra.value);
+    const valor = obterValorMonetario(valorCompra);
 
     if (!Number.isFinite(valor) || valor <= 0) {
         mensagem.className = "mensagem-operacao erro";

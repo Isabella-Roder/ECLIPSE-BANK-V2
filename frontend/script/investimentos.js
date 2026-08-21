@@ -461,7 +461,7 @@ formularioAplicacao.addEventListener("submit", async (evento) => {
     
     const dados = {
         produtoId: Number(produtoIdAplicacao.value),
-        valor: Number(valorAplicacao.value)
+        valor: obterValorMonetario(valorAplicacao)
     };
 
     try {
@@ -517,7 +517,7 @@ formularioResgate.addEventListener("submit", async (evento) => {
     }
     
     const dados = {
-        valor: Number(valorResgate.value)
+        valor: obterValorMonetario(valorResgate)
     };
 
     try {

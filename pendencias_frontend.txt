@@ -10,6 +10,15 @@ PARA CONCLUIR A VERSÃO 1.0
 - Atualizar o README com cartões, compras, faturas e o total atual de testes.
 
 
+MELHORIAS DE INTERFACE CONCLUÍDAS
+
+- [x] Ocultação e restauração do saldo no painel.
+- [x] Máscaras de CPF e telefone no cadastro.
+- [x] Restrição numérica para agência e conta de destino.
+- [x] Máscara monetária nos campos de depósito, saque, Pix, transferência,
+  faturas, investimentos e metas financeiras.
+
+
 EVOLUÇÕES FUTURAS — FRONTEND WEB
 
 - Histórico visual de aplicações, resgates, proventos e rendimentos.

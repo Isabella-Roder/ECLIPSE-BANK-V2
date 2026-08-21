@@ -267,7 +267,7 @@ formNovaMeta.addEventListener("submit", async (evento) => {
 
     const dados = {
         nome: nomeNovaMeta.value.trim(),
-        valorAlvo: Number(valorAlvoNovaMeta.value),
+        valorAlvo: obterValorMonetario(valorAlvoNovaMeta),
         prazo: new Date(prazoNovaMeta.value)
     };
 
@@ -326,7 +326,7 @@ formAporteMeta.addEventListener("submit", async (evento) => {
 
     const dados = {
         metaId: Number(metaIdAporte.value),
-        valor: Number(valorAporteMeta.value)
+        valor: obterValorMonetario(valorAporteMeta)
     };
 
     try {
@@ -382,7 +382,7 @@ formResgateMeta.addEventListener("submit", async (evento) => {
 
     const dados = {
         metaId: Number(metaIdResgate.value),
-        valor: Number(valorResgateMeta.value)
+        valor: obterValorMonetario(valorResgateMeta)
     };
 
     try {

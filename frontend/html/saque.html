@@ -40,11 +40,11 @@
                         <input
                             id="valor"
                             name="valor"
-                            type="number"
+                            type="text"
                             inputmode="decimal"
-                            min="0.01"
-                            step="0.01"
+                            maxlength="19"
                             placeholder="0,00"
+                            data-mascara="moeda"
                             required
                             autofocus
                         >
@@ -78,6 +78,7 @@
         </aside>
     </main>
 
+    <script src="../script/mascaras.js"></script>
     <script src="../script/saque.js"></script>
 </body>
 </html>

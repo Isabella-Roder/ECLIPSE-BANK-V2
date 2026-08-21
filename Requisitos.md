@@ -93,6 +93,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Extrato com filtros
 - [x] Comprovante de operação
 - [x] Lista de movimentações recentes no painel
+- [x] Ocultar e restaurar a visualização do saldo no painel
+- [x] Máscaras de CPF, telefone, dados bancários e valores monetários
 - [x] Tela de gerenciamento para bloquear, desbloquear e encerrar conta
 - [x] Tela de investimentos com catálogo, aplicação, carteira e resgate
 - [x] Layout responsivo e identidade visual própria

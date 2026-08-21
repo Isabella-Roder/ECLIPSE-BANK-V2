@@ -23,6 +23,7 @@
 }
 .topo-saldo { display: flex; justify-content: space-between; color: #bdb8c7; }
 #saldo-conta { display: block; margin: 18px 0 35px; font: 500 clamp(2.8rem,7vw,5rem) Georgia,serif; }
+#saldo-conta.saldo-oculto { letter-spacing: .08em; }
 .cartao-saldo dl { display: flex; gap: 45px; margin: 0; }
 .cartao-saldo dl div { display: grid; gap: 6px; }
 .cartao-saldo dt { color: #8f8998; font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; }
@@ -87,4 +88,3 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-

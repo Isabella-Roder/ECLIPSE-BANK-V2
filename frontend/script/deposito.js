@@ -52,7 +52,7 @@ formulario.addEventListener("submit", async (evento) => {
     }
 
     const dados = {
-        valor: Number(valor.value),
+        valor: obterValorMonetario(valor),
         descricao: descricao.value.trim() || null
     };
 

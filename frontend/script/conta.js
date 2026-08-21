@@ -9,6 +9,7 @@ const numeroConta = document.getElementById("numero-conta");
 const listaMovimentacoes = document.getElementById("lista-movimentacoes");
 const mensagem = document.getElementById("mensagem-conta");
 const botaoSair = document.getElementById("botao-sair");
+const botaoOcultarSaldo = document.getElementById("botao-ocultar-saldo");
 
 function lerCookie(nome) {
     const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
@@ -17,6 +18,8 @@ function lerCookie(nome) {
 }
 
 let usuario;
+let saldoAtual = 0;
+let saldoOculto = false;
 
 function formatarSaldo(saldo) {
     return Number(saldo).toLocaleString("pt-BR", {
@@ -99,9 +102,24 @@ async function carregarExtrato(contaId) {
 }
 
 function preencherConta(conta) {
-    saldoConta.textContent = formatarSaldo(conta.saldo);
+    saldoAtual = conta.saldo;
+    atualizarVisibilidadeSaldo();
     agenciaConta.textContent = conta.agencia;
     numeroConta.textContent = conta.numero;
+}
+
+function atualizarVisibilidadeSaldo() {
+    saldoConta.textContent = saldoOculto
+        ? "R$ ••••••"
+        : formatarSaldo(saldoAtual);
+
+    saldoConta.classList.toggle("saldo-oculto", saldoOculto);
+    botaoOcultarSaldo.textContent = saldoOculto ? "Mostrar" : "Ocultar";
+    botaoOcultarSaldo.setAttribute("aria-pressed", String(saldoOculto));
+    botaoOcultarSaldo.setAttribute(
+        "aria-label",
+        saldoOculto ? "Mostrar saldo da conta" : "Ocultar saldo da conta"
+    );
 }
 
 function preencherExtrato(movimentacoes) {
@@ -148,6 +166,11 @@ function preencherExtrato(movimentacoes) {
         listaMovimentacoes.appendChild(item);
     });
 }
+
+botaoOcultarSaldo.addEventListener("click", () => {
+    saldoOculto = !saldoOculto;
+    atualizarVisibilidadeSaldo();
+});
 
 botaoSair.addEventListener("click", async () => {
     botaoSair.disabled = true;
