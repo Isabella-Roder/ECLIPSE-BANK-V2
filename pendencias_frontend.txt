@@ -1,0 +1,50 @@
+ECLIPSE BANK V2 — PENDÊNCIAS DE FRONTEND
+
+PARA CONCLUIR A VERSÃO 1.0
+
+- Mostrar as compras dentro de cada fatura.
+- Exibir descrição, categoria, data e valor de cada compra.
+- Mostrar limite utilizado e limite disponível do cartão.
+- Testar visualmente o fluxo: lançar compra, fechar fatura e pagar fatura.
+- Adicionar screenshots das telas de cartões e faturas ao README.
+- Atualizar o README com cartões, compras, faturas e o total atual de testes.
+
+
+EVOLUÇÕES FUTURAS — FRONTEND WEB
+
+- Histórico visual de aplicações, resgates, proventos e rendimentos.
+- Lista de ativos favoritos.
+- Simulador de investimentos.
+- Gráficos de evolução e distribuição da carteira.
+- Exibir fonte, moeda e horário das cotações externas.
+- Dashboard separado para pessoa física e pessoa jurídica.
+- Tela de empréstimos e simulação de parcelas.
+- Painel administrativo.
+- Central de notificações e atividades.
+- Exportação de extrato e comprovante em PDF ou CSV.
+- Resumo mensal e categorização de gastos.
+- [x] Página "Sobre o projeto" concluída.
+- Interface para favorecidos e novas chaves Pix.
+- Interface para agendamentos e pagamentos recorrentes.
+
+
+EVOLUÇÕES FUTURAS — APLICATIVO MOBILE
+
+- Cadastro mobile.
+- Cartões e faturas mobile.
+- Interface adaptada para diferentes tamanhos de tela.
+- Tema claro e escuro.
+- Desbloqueio local com biometria.
+- Encerramento e expiração de sessão.
+- Notificações de login e movimentações.
+- Ocultar valores quando o aplicativo entrar em segundo plano.
+- Impedir informações sensíveis em logs e mensagens de erro.
+- Testes em emulador Android.
+- Pipeline de build separado para desenvolvimento e produção.
+
+
+OBSERVAÇÃO
+
+Os itens de evolução futura não impedem a publicação da versão 1.0. Para finalizar
+o projeto de portfólio, a prioridade é concluir a visualização das compras da
+fatura, revisar a documentação e validar o fluxo completo no deploy.

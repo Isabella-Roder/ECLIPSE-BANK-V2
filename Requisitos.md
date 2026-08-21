@@ -218,7 +218,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Exportar extrato e comprovante em PDF ou CSV
 - [ ] Categorização de gastos com resumo mensal
 - [ ] Notificação por e-mail em operações sensíveis (login novo, Pix enviado)
-- [ ] Página "sobre o projeto" explicando decisões técnicas e arquiteturais
+- [x] Página "sobre o projeto" explicando decisões técnicas e arquiteturais
 - [ ] Conta conjunta ou múltiplos titulares
 - [ ] Histórico de dispositivos/sessões ativas com opção de encerrar todas
 

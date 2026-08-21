@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça o Eclipse Bank V2, sua arquitetura, tecnologias e decisões de segurança.">
+    <title>Sobre o projeto | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-sobre">
+    <header class="cabecalho-sobre">
+        <a class="marca" href="login.html" aria-label="Eclipse Bank - página de login">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <nav aria-label="Navegação da página">
+            <a href="#arquitetura">Arquitetura</a>
+            <a href="#seguranca">Segurança</a>
+            <a class="botao-sobre" href="login.html">Acessar demonstração</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-sobre" aria-labelledby="titulo-sobre">
+            <div class="conteudo-hero-sobre">
+                <p class="etiqueta">PROJETO DE PORTFÓLIO</p>
+                <h1 id="titulo-sobre">Um banco fictício construído para aprender fazendo.</h1>
+                <p>
+                    O Eclipse Bank V2 simula uma plataforma bancária completa, reunindo
+                    backend Spring Boot, frontend web e aplicativo React Native em um
+                    projeto focado em segurança, organização e regras de negócio reais.
+                </p>
+
+                <div class="acoes-sobre">
+                    <a class="botao-destaque-sobre" href="login.html">Conhecer o sistema <span aria-hidden="true">→</span></a>
+                    <a href="https://github.com/Isabella-Roder/ECLIPSE-BANK-V2" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+                </div>
+            </div>
+
+            <div class="eclipse-sobre" aria-hidden="true">
+                <span></span>
+            </div>
+        </section>
+
+        <section class="numeros-sobre" aria-label="Números e plataformas do projeto">
+            <article>
+                <strong>90</strong>
+                <span>testes automatizados</span>
+            </article>
+            <article>
+                <strong>3</strong>
+                <span>experiências integradas: API, web e mobile</span>
+            </article>
+            <article>
+                <strong>Java 26</strong>
+                <span>com Spring Boot 4.1</span>
+            </article>
+            <article>
+                <strong>HTTPS</strong>
+                <span>demonstração pública</span>
+            </article>
+        </section>
+
+        <section class="secao-sobre historia-sobre" aria-labelledby="titulo-historia">
+            <div>
+                <p class="etiqueta">A HISTÓRIA</p>
+                <h2 id="titulo-historia">Uma reconstrução com propósito.</h2>
+            </div>
+
+            <div class="texto-sobre">
+                <p>
+                    O projeto nasceu como uma nova versão do Eclipse Bank original. A V2
+                    foi recomeçada do zero para aplicar uma arquitetura mais organizada,
+                    separar responsabilidades e transformar cada funcionalidade em uma
+                    oportunidade de aprendizado.
+                </p>
+                <p>
+                    Contas, movimentações, investimentos, metas, cartões e faturas são
+                    simulados com regras de domínio e persistência. Nenhuma operação usa
+                    dinheiro real, e os dados financeiros têm finalidade exclusivamente
+                    educacional.
+                </p>
+            </div>
+        </section>
+
+        <section id="arquitetura" class="secao-sobre" aria-labelledby="titulo-arquitetura">
+            <header class="cabecalho-conteudo-sobre">
+                <p class="etiqueta">POR DENTRO</p>
+                <h2 id="titulo-arquitetura">Arquitetura em camadas.</h2>
+                <p>Cada parte possui uma responsabilidade clara e pode evoluir sem misturar interface, regras e persistência.</p>
+            </header>
+
+            <div class="grade-arquitetura">
+                <article>
+                    <span>01</span>
+                    <h3>Interfaces</h3>
+                    <p>Frontend web em HTML, CSS e JavaScript e aplicativo mobile com React Native e Expo.</p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <h3>API e segurança</h3>
+                    <p>Controllers REST, validação, Spring Security, sessão no servidor, autorização e proteção CSRF.</p>
+                </article>
+                <article>
+                    <span>03</span>
+                    <h3>Domínio</h3>
+                    <p>Services transacionais e entidades responsáveis pelas regras bancárias e financeiras.</p>
+                </article>
+                <article>
+                    <span>04</span>
+                    <h3>Persistência</h3>
+                    <p>Spring Data JPA, Hibernate, PostgreSQL em produção e H2 isolado nos testes.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="seguranca" class="secao-sobre seguranca-sobre" aria-labelledby="titulo-seguranca">
+            <div>
+                <p class="etiqueta">SEGURANÇA</p>
+                <h2 id="titulo-seguranca">Proteção em todas as camadas.</h2>
+                <p>
+                    Mesmo sendo um ambiente educacional, o projeto adota práticas usadas
+                    em aplicações reais para proteger autenticação, sessão e operações.
+                </p>
+            </div>
+
+            <ul>
+                <li>Senhas armazenadas com hash BCrypt.</li>
+                <li>Cookie de sessão HttpOnly e identificador renovado no login.</li>
+                <li>Proteção CSRF nas operações que alteram dados.</li>
+                <li>Autorização por proprietário da conta e do recurso.</li>
+                <li>Valores monetários tratados com BigDecimal.</li>
+                <li>Saldo e movimentação atualizados na mesma transação.</li>
+            </ul>
+        </section>
+
+        <section class="secao-sobre tecnologias-sobre" aria-labelledby="titulo-tecnologias">
+            <header class="cabecalho-conteudo-sobre">
+                <p class="etiqueta">TECNOLOGIAS</p>
+                <h2 id="titulo-tecnologias">Um ecossistema completo.</h2>
+            </header>
+
+            <div class="lista-tecnologias" aria-label="Tecnologias utilizadas">
+                <span>Java 26</span>
+                <span>Spring Boot</span>
+                <span>Spring Security</span>
+                <span>PostgreSQL</span>
+                <span>Docker</span>
+                <span>JUnit</span>
+                <span>JavaScript</span>
+                <span>React Native</span>
+                <span>Expo</span>
+                <span>OpenAPI</span>
+            </div>
+        </section>
+
+        <section class="chamada-sobre" aria-labelledby="titulo-chamada">
+            <p class="etiqueta">EXPLORE O PROJETO</p>
+            <h2 id="titulo-chamada">Veja o Eclipse Bank funcionando.</h2>
+            <p>Acesse a demonstração, conheça os fluxos bancários simulados e acompanhe a evolução pelo GitHub.</p>
+            <a class="botao-destaque-sobre" href="login.html">Ir para o login <span aria-hidden="true">→</span></a>
+        </section>
+    </main>
+
+    <footer class="rodape-sobre">
+        <p>Desenvolvido por <a href="https://github.com/Isabella-Roder" target="_blank" rel="noopener noreferrer">Isabella Roder</a>.</p>
+        <p>Projeto educacional. O Eclipse Bank não movimenta dinheiro real.</p>
+    </footer>
+</body>
+</html>
