@@ -61,11 +61,12 @@ function renderizarComprovante(comprovante) {
     status.textContent = comprovante.status;
     saldo.textContent = formatarDinheiro(comprovante.saldoResultante);
     contaId.textContent = comprovante.contaId;
-    codigoMovimentacao.textContent = comprovante.codigo
+    codigoMovimentacao.textContent = comprovante.codigo;
+    botaoImprimir.disabled = false;
 }
 
 botaoImprimir.addEventListener("click", () => {
     window.print();
-})
+});
 
 carregarComprovante();

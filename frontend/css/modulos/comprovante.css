@@ -68,4 +68,18 @@
     font-weight: 750;
     text-decoration: none;
 }
-
+@media print {
+    @page { margin: 14mm; }
+    body.pagina-comprovante { color: #111; background: #fff; }
+    .pagina-comprovante .nao-imprimir,
+    .pagina-comprovante #mensagem-comprovante { display: none !important; }
+    .conteudo-comprovante { width: 100%; padding: 0; }
+    .cartao-comprovante { border: 1px solid #bbb; color: #111; background: #fff; box-shadow: none; }
+    .valor-comprovante,
+    .rodape-comprovante { background: #f5f5f5; }
+    .topo-comprovante > p:last-child,
+    .valor-comprovante time,
+    .detalhes-comprovante dt,
+    .rodape-comprovante { color: #555; }
+    .detalhes-comprovante dd { color: #111; }
+}

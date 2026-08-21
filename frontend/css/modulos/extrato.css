@@ -69,7 +69,27 @@
     cursor: pointer;
 }
 .botao-filtro:hover { border-color: var(--violeta); background: #211d32; }
+.cabecalho-lista-extrato {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
 .cabecalho-lista-extrato p { margin: 7px 0 0; color: #8f8998; font-size: .78rem; }
+.acoes-exportacao-extrato { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.botao-exportacao {
+    min-height: 42px;
+    padding: 0 15px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 9px;
+    color: #d9d4e0;
+    background: #191a26;
+    font-size: .76rem;
+    font-weight: 750;
+    cursor: pointer;
+}
+.botao-exportacao:hover { transform: translateY(-1px); border-color: var(--violeta); background: #211d32; }
+.botao-exportacao.destaque { border-color: rgba(182,156,255,.28); color: #eee8ff; background: rgba(139,92,246,.16); }
 .lista-extrato {
     display: grid;
     margin-top: 22px;
@@ -139,4 +159,38 @@
     font-weight: 700;
     text-underline-offset: 3px;
 }
-
+@media (max-width: 700px) {
+    .cabecalho-extrato { align-items: stretch; flex-direction: column; }
+    .resumo-extrato { min-width: 0; }
+    .grade-filtros { grid-template-columns: 1fr; }
+    .cabecalho-lista-extrato { align-items: stretch; flex-direction: column; }
+    .acoes-exportacao-extrato { justify-content: stretch; }
+    .botao-exportacao { flex: 1 1 180px; }
+    .linha-extrato { align-items: flex-start; flex-direction: column; gap: 15px; }
+    .valores-movimentacao { width: 100%; text-align: left; }
+}
+@media print {
+    @page { margin: 14mm; }
+    body.pagina-extrato { color: #111; background: #fff; }
+    .pagina-extrato .nao-imprimir,
+    .pagina-extrato .filtros-extrato,
+    .pagina-extrato #mensagem-extrato,
+    .pagina-extrato .link-comprovante { display: none !important; }
+    .conteudo-extrato { width: 100%; padding: 0; }
+    .cabecalho-extrato { align-items: end; margin-bottom: 20px; }
+    .cabecalho-extrato h1,
+    .resumo-extrato strong,
+    .secao-extrato h2,
+    .dados-movimentacao strong,
+    .valores-movimentacao strong { color: #111 !important; }
+    .cabecalho-extrato > div:first-child > p:last-child,
+    .resumo-extrato span,
+    .cabecalho-lista-extrato p,
+    .dados-movimentacao > span:last-child,
+    .valores-movimentacao span { color: #555; }
+    .resumo-extrato,
+    .secao-extrato,
+    .lista-extrato { border-color: #bbb; color: #111; background: #fff; box-shadow: none; }
+    .linha-extrato { break-inside: avoid; border-color: #ddd !important; }
+    .tipo-movimentacao { color: #51309f; }
+}

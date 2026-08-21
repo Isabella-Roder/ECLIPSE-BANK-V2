@@ -21,7 +21,7 @@ EVOLUÇÕES FUTURAS — FRONTEND WEB
 - Tela de empréstimos e simulação de parcelas.
 - Painel administrativo.
 - Central de notificações e atividades.
-- Exportação de extrato e comprovante em PDF ou CSV.
+- [x] Exportação de extrato e comprovante em PDF ou CSV concluída.
 - Resumo mensal e categorização de gastos.
 - [x] Página "Sobre o projeto" concluída.
 - Interface para favorecidos e novas chaves Pix.

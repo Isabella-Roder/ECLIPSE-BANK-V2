@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/eclipse-bank.css">
 </head>
 <body class="pagina-painel pagina-extrato">
-    <header class="cabecalho-painel">
+    <header class="cabecalho-painel nao-imprimir">
         <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
             <span class="marca-simbolo" aria-hidden="true"><span></span></span>
             <span>ECLIPSE<span>BANK</span></span>
@@ -68,6 +68,15 @@
                 <div>
                     <h2 id="titulo-lista-extrato">Movimentações</h2>
                     <p id="quantidade-movimentacoes">Carregando extrato...</p>
+                </div>
+
+                <div class="acoes-exportacao-extrato nao-imprimir" aria-label="Opções de exportação">
+                    <button id="botao-exportar-csv" class="botao-exportacao" type="button">
+                        Exportar CSV
+                    </button>
+                    <button id="botao-imprimir-extrato" class="botao-exportacao destaque" type="button">
+                        Imprimir ou salvar PDF
+                    </button>
                 </div>
             </header>
 

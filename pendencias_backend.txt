@@ -1,0 +1,94 @@
+ECLIPSE BANK V2 — PENDÊNCIAS DE BACKEND
+
+PARA CONCLUIR A VERSÃO 1.0
+
+1. Compras e faturas
+
+- Criar endpoint GET para listar as compras de uma fatura.
+- Validar no backend que a fatura pertence ao cartão e à conta autenticada antes de listar compras.
+- Validar o limite disponível do cartão antes de aceitar uma compra.
+- Retornar limite utilizado e limite disponível para o frontend.
+- Criar testes de CompraService e dos endpoints de compras.
+- Testar o fluxo completo: lançar compra, fechar fatura e pagar fatura.
+
+2. Operações financeiras
+
+- Implementar proteção contra envio duplicado de Pix e transferências.
+- Adotar uma chave de idempotência para impedir o processamento repetido da mesma operação.
+- Criar testes de duplicidade e concorrência.
+
+3. Segurança e produção
+
+- Definir um limite absoluto de duração da sessão, além do limite por inatividade.
+- Implementar rate limiting para login, Pix e transferências.
+- Confirmar que todos os segredos e credenciais de produção vêm de variáveis de ambiente.
+- Garantir que logs não exponham senha, token, CPF completo ou dados bancários sensíveis.
+- Adicionar verificação automática de dependências vulneráveis ao pipeline.
+- Confirmar redirecionamento obrigatório para HTTPS no ambiente de produção.
+
+4. Qualidade e banco de dados
+
+- Ampliar testes de integração para regras financeiras críticas.
+- Adicionar testes de concorrência para saldo, pagamento de fatura e transferências.
+- Adotar migrations com Flyway ou Liquibase para futuras alterações de esquema.
+- Criar uma coleção de requisições da API para demonstração, usando Bruno, Postman ou Insomnia.
+
+
+MELHORIAS IMPORTANTES APÓS A VERSÃO 1.0
+
+1. Investimentos
+
+- Calcular e manter corretamente o preço médio dos fundos imobiliários.
+- Disponibilizar histórico de aplicações, resgates, rendimentos e proventos.
+- Implementar ativos favoritos.
+- Criar simulador de investimento por prazo e rentabilidade.
+- Fornecer dados para gráficos de evolução e distribuição da carteira.
+
+2. Integração com dados de mercado
+
+- Integrar Selic, CDI e IPCA por uma API oficial, como a do Banco Central.
+- Integrar cotações e histórico de ações e fundos imobiliários.
+- Integrar dados de câmbio para ativos internacionais.
+- Criar uma camada própria de integração para permitir troca de provedor.
+- Implementar cache de cotações.
+- Tratar indisponibilidade e limite de requisições dos provedores.
+- Manter dados simulados como fallback.
+- Retornar fonte, moeda e horário da última atualização.
+- Armazenar chaves das APIs externas somente no backend.
+- Verificar termos de uso e licença dos dados antes da publicação.
+
+3. Segurança avançada
+
+- Implementar autenticação em dois fatores.
+- Criar histórico de dispositivos e sessões ativas.
+- Permitir encerrar uma sessão específica ou todas as sessões.
+- Registrar auditoria imutável de ações críticas.
+- Detectar movimentações suspeitas por regras.
+- Enviar notificações de segurança em novos logins e operações sensíveis.
+
+
+MÓDULOS FUTUROS
+
+- Empréstimos com simulação de parcelas, juros e pagamento.
+- Contas empresariais.
+- Conta conjunta ou múltiplos titulares.
+- Dashboard e regras separadas para pessoa física e pessoa jurídica.
+- Painel administrativo com autorização própria.
+- Novos tipos de chave Pix e gerenciamento de favorecidos.
+- Agendamento e recorrência de pagamentos.
+- Metas com aportes automáticos simulados.
+- Cartão virtual e gerenciamento de limites.
+- Central de notificações e atividades.
+- Métricas, monitoramento de saúde e alertas da aplicação.
+- Categorização de gastos e resumo mensal.
+- Módulo de analytics em Python.
+- Conversão de moedas.
+- Open Finance, somente após análise de segurança e conformidade.
+
+
+OBSERVAÇÃO
+
+Os itens de melhorias e módulos futuros não impedem a conclusão do projeto de
+portfólio. Para fechar a versão 1.0, a prioridade do backend é concluir a listagem
+das compras da fatura, validar o limite do cartão e fortalecer duplicidade,
+concorrência e segurança das operações críticas.

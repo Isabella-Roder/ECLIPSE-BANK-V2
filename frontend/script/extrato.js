@@ -11,8 +11,11 @@ const botaoLimpar = document.getElementById("botao-limpar-filtros");
 const quantidade = document.getElementById("quantidade-movimentacoes");
 const listaExtrato = document.getElementById("lista-extrato");
 const mensagem = document.getElementById("mensagem-extrato");
+const botaoExportarCsv = document.getElementById("botao-exportar-csv");
+const botaoImprimirExtrato = document.getElementById("botao-imprimir-extrato");
 
 let movimentacoes = [];
+let movimentacoesExibidas = [];
 
 function formatarDinheiro(valor) {
     return Number(valor).toLocaleString("pt-BR", {
@@ -66,6 +69,7 @@ async function carregarExtrato(contaId) {
 }
 
 function renderizarExtrato(lista) {
+    movimentacoesExibidas = [...lista];
     listaExtrato.replaceChildren();
     quantidade.textContent = `${lista.length} Movimentação(ões)`;
 
@@ -138,6 +142,67 @@ function renderizarExtrato(lista) {
     });
 }
 
+function protegerFormulaCsv(valor) {
+    const texto = String(valor ?? "");
+
+    return /^[=+\-@]/.test(texto) ? `'${texto}` : texto;
+}
+
+function escaparCampoCsv(valor) {
+    const textoSeguro = protegerFormulaCsv(valor).replaceAll('"', '""');
+
+    return `"${textoSeguro}"`;
+}
+
+function exportarExtratoCsv() {
+    if (movimentacoesExibidas.length === 0) {
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Não há movimentações para exportar.";
+        return;
+    }
+
+    const cabecalho = [
+        "Data",
+        "Tipo",
+        "Descrição",
+        "Valor",
+        "Saldo resultante",
+        "Status",
+        "Código"
+    ];
+
+    const linhas = movimentacoesExibidas.map((movimentacao) => [
+        new Date(movimentacao.criadaEm).toLocaleString("pt-BR"),
+        movimentacao.tipo,
+        movimentacao.descricao || "Sem descrição",
+        Number(movimentacao.valor).toFixed(2).replace(".", ","),
+        Number(movimentacao.saldoResultante).toFixed(2).replace(".", ","),
+        movimentacao.status,
+        movimentacao.codigo
+    ]);
+
+    const conteudoCsv = [cabecalho, ...linhas]
+        .map((linha) => linha.map(escaparCampoCsv).join(";"))
+        .join("\n");
+
+    const arquivo = new Blob(["\uFEFF", conteudoCsv], {
+        type: "text/csv;charset=utf-8"
+    });
+    const url = URL.createObjectURL(arquivo);
+    const link = document.createElement("a");
+    const dataArquivo = new Date().toISOString().slice(0, 10);
+
+    link.href = url;
+    link.download = `extrato-eclipse-bank-${dataArquivo}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+
+    mensagem.className = "mensagem-operacao sucesso";
+    mensagem.textContent = "Extrato exportado em CSV com sucesso.";
+}
+
 function aplicarFiltros() {
     let resultado = movimentacoes;
 
@@ -178,6 +243,18 @@ botaoLimpar.addEventListener("click", () => {
     dataFinal.value = "";
 
     renderizarExtrato(movimentacoes);
+});
+
+botaoExportarCsv.addEventListener("click", exportarExtratoCsv);
+
+botaoImprimirExtrato.addEventListener("click", () => {
+    if (movimentacoesExibidas.length === 0) {
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Não há movimentações para imprimir.";
+        return;
+    }
+
+    window.print();
 });
 
 async function iniciarPagina() {
