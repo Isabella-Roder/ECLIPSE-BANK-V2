@@ -26,6 +26,40 @@
             </div>
         </header>
 
+        <section class="secao-painel lista-cartoes" aria-labelledby="titulo-nova-compra">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">SIMULAÇÃO</p>
+                    <h2 id="titulo-nova-compra">Lançar nova compra</h2>
+                    <p>Informe o valor que será adicionado à fatura aberta deste cartão.</p>
+                </div>
+            </header>
+
+            <form id="form-compra" class="form-operacao">
+                <div class="campo campo-valor">
+                    <label for="valor-compra">Valor da compra</label>
+
+                    <div class="entrada-monetaria">
+                        <span>R$</span>
+                        <input
+                            id="valor-compra"
+                            name="valor"
+                            type="number"
+                            inputmode="decimal"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0,00"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button id="botao-lancar-compra" class="botao-confirmar" type="submit">
+                    Lançar compra <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
         <section class="secao-painel lista-cartoes" aria-labelledby="titulo-faturas">
             <header class="cabecalho-secao">
                 <div>

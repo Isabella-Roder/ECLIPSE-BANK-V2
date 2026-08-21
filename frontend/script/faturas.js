@@ -11,6 +11,10 @@ const listaFaturas = document.getElementById("lista-faturas");
 const estadoFaturas = document.getElementById("estado-faturas");
 const mensagem = document.getElementById("mensagem-faturas");
 
+const formCompra = document.getElementById("form-compra");
+const valorCompra = document.getElementById("valor-compra");
+const botaoLancarCompra = document.getElementById("botao-lancar-compra");
+
 let contaAtual;
 
 function lercookie(nome) {
@@ -150,6 +154,19 @@ function renderizarFaturas(faturas) {
             vencimento
         );
 
+        if (fatura.status === "ABERTA") {
+            const botaoFechar = document.createElement("button");
+            botaoFechar.className = "botao-fatura";
+            botaoFechar.type = "button";
+            botaoFechar.textContent = "Fechar fatura";
+
+            botaoFechar.addEventListener("click", () => {
+                fecharFatura(fatura.id);
+            });
+
+            card.appendChild(botaoFechar);
+        }
+
         if (fatura.status === "FECHADA") {
             const botaoPagar = document.createElement("button");
             botaoPagar.className = "botao-fatura";
@@ -165,6 +182,61 @@ function renderizarFaturas(faturas) {
 
         listaFaturas.appendChild(card);
     });
+}
+
+async function lancarCompra(valor) {
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/cartoes/${cartaoId}/faturas/compras`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lercookie("XSRF-TOKEN")
+            },
+            body: JSON.stringify({valor: valor})
+        });
+
+        const corpo = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(corpo.mensagem || "Erro ao lançar compra.");
+        }
+
+        await carregarFaturas();
+    } catch (erro) {
+        console.error(erro);
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Erro: " + erro.message;
+    }
+}
+
+async function fecharFatura(faturaId) {
+    if (!confirm("Deseja fechar esta fatura?")) {
+        return;
+    }
+
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/cartoes/${cartaoId}/faturas/${faturaId}/fechar`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-XSRF-TOKEN": lercookie("XSRF-TOKEN")
+            }
+        });
+
+        const corpo = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(corpo.mensagem || "Erro ao fechar fatura.");
+        }
+
+        await carregarFaturas();
+    } catch (erro) {
+        console.error(erro);
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Erro: " + erro.message;
+    }
 }
 
 async function pagarFatura(faturaId) {
@@ -198,6 +270,30 @@ async function pagarFatura(faturaId) {
         mensagem.textContent = "Erro: " + erro.message;
     }
 }
+
+formCompra.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const valor = Number(valorCompra.value);
+
+    if (!Number.isFinite(valor) || valor <= 0) {
+        mensagem.className = "mensagem-operacao erro";
+        mensagem.textContent = "Informe um valor valido.";
+        return;
+    }
+
+    botaoLancarCompra.disabled = true;
+    botaoLancarCompra.textContent = "Lançando...";
+
+    await lancarCompra(valor);
+
+    valorCompra.value = "";
+    botaoLancarCompra.disabled = false;
+    botaoLancarCompra.innerHTML = `
+        Lançar compra
+        <span aria-hidden="true">→</span>
+    `;
+})
 
 async function iniciarPagina() {
     try {

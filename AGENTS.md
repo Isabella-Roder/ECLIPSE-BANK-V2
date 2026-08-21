@@ -112,7 +112,8 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - O extrato mobile reconhece aplicação como débito e resgate de investimento como crédito.
 - Posição consolidada da carteira de investimentos (quantidade, valor aplicado, valor atual e preço médio por produto) e cálculo de rentabilidade nominal/percentual, exibidos na tela web de investimentos.
 - Mobile: como o React Native não expõe o cabeçalho `Set-Cookie` da resposta, o token CSRF é obtido via `GET /api/csrf` (retorna `{ token }` no corpo) antes de cada operação que muda dado, em vez de ser lido do cookie como no frontend web.
-- Cartões: entidade com número gerado por `SecureRandom`, tipo (débito/crédito, limite fixo de R$ 1.000 para crédito) e status (ativo/bloqueado/cancelado); service e controller validam que o cartão pertence à conta autenticada, além da autorização por proprietário da conta. Tela web (`cartoes.html`/`cartoes.js`) integrada: listagem, criação, bloqueio, desbloqueio e cancelamento. Fatura ainda não foi implementada.
+- Cartões: entidade com número gerado por `SecureRandom`, tipo (débito/crédito, limite fixo de R$ 1.000 para crédito) e status (ativo/bloqueado/cancelado); service e controller validam que o cartão pertence à conta autenticada, além da autorização por proprietário da conta. Tela web (`cartoes.html`/`cartoes.js`) integrada: listagem, criação, bloqueio, desbloqueio e cancelamento.
+- Faturas: entidade com lançamento de compra, fechamento e pagamento; repository, DTOs, service e controller protegidos por autorização da conta e do cartão, além de testes de entidade e service. A tela web permite visualizar e pagar a fatura; ainda falta lançar compras e fechar a fatura pela interface.
 
 ## Rotas existentes
 
