@@ -15,6 +15,7 @@ Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://g
 - Carteira de investimentos simulados com aplicação, resgate, posição consolidada e rentabilidade.
 - Fundos imobiliários com cotas e pagamento simulado de proventos.
 - Metas financeiras com criação, aporte, resgate e acompanhamento de progresso.
+- Empréstimos simulados com cálculo de juros, geração de parcelas, aprovação e pagamento.
 - Frontend web responsivo servido pelo próprio Spring Boot em produção.
 - Aplicativo React Native integrado à mesma API segura.
 - PostgreSQL e aplicação executados com Docker Compose.
@@ -95,6 +96,15 @@ Use a conta fictícia abaixo para conhecer as funcionalidades do Eclipse Bank:
 - Resgates para a conta corrente.
 - Conclusão automática ao atingir o objetivo.
 - Barra de progresso no frontend web.
+
+### Empréstimos simulados
+
+- Simulação do valor total e das parcelas com juros.
+- Solicitação e aprovação do empréstimo pelo frontend web.
+- Crédito do valor aprovado diretamente na conta corrente.
+- Geração automática e pagamento individual das parcelas.
+- Registro da liberação e dos pagamentos no extrato bancário.
+- Quitação automática quando todas as parcelas são pagas.
 
 ### Aplicativo mobile
 
@@ -273,7 +283,7 @@ cd backend
 ./mvnw test
 ```
 
-Atualmente, a suíte possui 60 testes automatizados cobrindo, entre outros pontos:
+Atualmente, a suíte possui 101 testes automatizados cobrindo, entre outros pontos:
 
 - Regras de crédito, débito e saldo insuficiente.
 - Bloqueio e encerramento de contas.
@@ -283,6 +293,7 @@ Atualmente, a suíte possui 60 testes automatizados cobrindo, entre outros ponto
 - Cadastro e catálogo de investimentos.
 - Aplicação, resgate e rollback transacional.
 - Metas financeiras.
+- Empréstimos, geração de parcelas, aprovação e pagamento.
 - Cálculo e pagamento de proventos.
 
 ## Documentação da API
@@ -312,6 +323,7 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 - [x] Autenticação segura, conta, saldo e extrato.
 - [x] Depósito, saque, transferência e Pix.
 - [x] Investimentos simulados e metas financeiras.
+- [x] Cartões, faturas e empréstimos simulados.
 - [x] Aplicativo mobile integrado à API.
 - [x] Testes, OpenAPI, Docker e PostgreSQL.
 - [x] Frontend e API preparados para o mesmo domínio.
@@ -319,7 +331,7 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 - [x] Screenshots do frontend web e mobile.
 - [x] Deploy público com HTTPS.
 - [ ] Integração com dados externos de mercado.
-- [ ] Cartões, crédito, contas empresariais e antifraude.
+- [ ] Contas empresariais, integração de mercado e antifraude.
 
 O roadmap detalhado está em [Requisitos.md](Requisitos.md).
 

@@ -97,6 +97,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Máscaras de CPF, telefone, dados bancários e valores monetários
 - [x] Tela de gerenciamento para bloquear, desbloquear e encerrar conta
 - [x] Tela de investimentos com catálogo, aplicação, carteira e resgate
+- [x] Tela de empréstimos com simulação, solicitação e aprovação
 - [x] Layout responsivo e identidade visual própria
 
 ## 7. Qualidade e portfólio
@@ -130,7 +131,14 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Testes de regra de negócio, orquestração do service e saldo insuficiente
   - [x] Tela web de criação, listagem, aporte e resgate com barra de progresso
   - [ ] Aportes automáticos simulados (fora do escopo desta etapa)
-- [ ] Empréstimos
+- [x] Empréstimos
+  - [x] Entidades `Emprestimo` e `Parcela` com estados e regras de negócio
+  - [x] DTOs validados, repositories, service e controller com autorização por proprietário da conta
+  - [x] Cálculo do valor total, juros e geração automática das parcelas
+  - [x] Aprovação com crédito na conta e registro no extrato na mesma transação
+  - [x] Pagamento de parcela com débito da conta e quitação automática do empréstimo
+  - [x] Testes das entidades e da orquestração do service
+  - [x] Tela web responsiva com simulação, solicitação e aprovação
 - [ ] Investimentos
 - [ ] Contas empresariais
 - [ ] Dashboard separado para conta pessoa física e conta empresarial
@@ -211,7 +219,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Agendamento e recorrência de pagamentos
 - [ ] Cartão virtual, limites, bloqueio e fatura
 - [ ] Metas com aportes automáticos simulados
-- [ ] Empréstimos com simulação de parcelas e juros
+- [x] Empréstimos com simulação de parcelas e juros
 - [ ] Notificações e central de atividades da conta
 - [ ] Painel administrativo com autorização própria
 - [ ] Detecção de movimentações suspeitas por regras
@@ -252,6 +260,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [ ] Câmbio para ativos internacionais
 - [ ] Fase 8 — cartões, crédito, antifraude e módulos avançados
   - [x] Cartões e faturas
-  - [ ] Empréstimos, contas empresariais
+  - [x] Empréstimos
+  - [ ] Contas empresariais
   - [ ] Dashboard PF/PJ, analytics em Python
   - [ ] Painel administrativo, auditoria imutável, detecção de fraude

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simule e solicite seu empréstimo no Eclipse Bank.">
+    <title>Empréstimos | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-emprestimos">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-emprestimos">
+        <header class="apresentacao-emprestimos">
+            <div>
+                <p class="etiqueta">EMPRÉSTIMOS</p>
+                <h1>Crédito para os seus próximos passos.</h1>
+                <p>Simule as condições, confira os valores e solicite seu empréstimo com transparência.</p>
+            </div>
+        </header>
+
+        <section class="secao-painel simulacao-emprestimo" aria-labelledby="titulo-simulacao-emprestimo">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">SIMULAÇÃO</p>
+                    <h2 id="titulo-simulacao-emprestimo">Simule seu empréstimo</h2>
+                </div>
+            </header>
+
+            <form id="form-solicitar-emprestimo" class="form-aplicacao">
+                <div class="campo campo-valor-aplicacao">
+                    <label for="valor-solicitado">Valor solicitado</label>
+                    <div class="entrada-monetaria">
+                        <span>R$</span>
+                        <input
+                            id="valor-solicitado"
+                            name="valorSolicitado"
+                            type="text"
+                            inputmode="decimal"
+                            maxlength="19"
+                            placeholder="0,00"
+                            data-mascara="moeda"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="taxa-juros">Taxa de juros</label>
+                    <div class="entrada-monetaria">
+                        <span>%</span>
+                        <input
+                            id="taxa-juros"
+                            name="taxaJuros"
+                            type="number"
+                            inputmode="decimal"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="0,00"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="quantidade-parcelas">Quantidade de parcelas</label>
+                    <input
+                        id="quantidade-parcelas"
+                        name="quantidadeParcelas"
+                        type="number"
+                        inputmode="numeric"
+                        min="1"
+                        step="1"
+                        placeholder="Ex: 12"
+                        required
+                    >
+                </div>
+
+                <section id="resumo-simulacao" class="produto-selecionado" aria-labelledby="titulo-resumo-simulacao">
+                    <span id="titulo-resumo-simulacao">Resumo da simulação</span>
+                    <strong id="valor-total-simulacao">Total: R$ 0,00</strong>
+                    <small id="valor-parcela-simulacao">Parcela: R$ 0,00</small>
+                </section>
+
+                <p id="mensagem-emprestimo" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+                <button id="botao-solicitar-emprestimo" class="botao-confirmar" type="submit">
+                    Solicitar empréstimo <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <section id="resultado-emprestimo" class="secao-painel resultado-emprestimo" aria-labelledby="titulo-resultado-emprestimo" hidden>
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">SOLICITAÇÃO</p>
+                    <h2 id="titulo-resultado-emprestimo">Empréstimo solicitado</h2>
+                </div>
+
+                <span id="status-emprestimo">SOLICITADO</span>
+            </header>
+
+            <div class="produto-selecionado">
+                <span id="identificador-emprestimo">Empréstimo —</span>
+                <strong id="valor-solicitado-resultado">R$ 0,00</strong>
+                <small id="detalhes-emprestimo">— parcelas · Total de R$ 0,00</small>
+            </div>
+
+            <button id="botao-aprovar-emprestimo" class="botao-confirmar" type="button">
+                Aprovar e liberar valor <span aria-hidden="true">→</span>
+            </button>
+        </section>
+    </main>
+
+    <script src="../script/mascaras.js"></script>
+    <script src="../script/emprestimos.js"></script>
+</body>
+</html>

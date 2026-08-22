@@ -1,0 +1,148 @@
+/* Empréstimos */
+.conteudo-emprestimos {
+    gap: 25px;
+    max-width: 1050px;
+}
+
+.apresentacao-emprestimos {
+    padding: 18px 0 15px;
+}
+
+.apresentacao-emprestimos > div {
+    max-width: 760px;
+}
+
+.apresentacao-emprestimos h1 {
+    max-width: 750px;
+    margin: 0;
+    font: 500 clamp(2.8rem, 6vw, 5.2rem)/1.02 Georgia, serif;
+    letter-spacing: -.045em;
+}
+
+.apresentacao-emprestimos > div > p:last-child {
+    max-width: 610px;
+    margin: 19px 0 0;
+    color: #97919f;
+    line-height: 1.65;
+}
+
+.simulacao-emprestimo,
+.resultado-emprestimo {
+    padding: clamp(24px, 4vw, 38px);
+}
+
+.simulacao-emprestimo .cabecalho-secao,
+.resultado-emprestimo .cabecalho-secao {
+    margin-bottom: 27px;
+}
+
+.simulacao-emprestimo .cabecalho-secao h2,
+.resultado-emprestimo .cabecalho-secao h2 {
+    margin: 7px 0 0;
+    font: 500 1.55rem Georgia, serif;
+}
+
+.simulacao-emprestimo .form-aplicacao {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.simulacao-emprestimo .campo:first-of-type,
+.simulacao-emprestimo #resumo-simulacao,
+.simulacao-emprestimo .mensagem-operacao,
+.simulacao-emprestimo .botao-confirmar {
+    grid-column: 1 / -1;
+}
+
+#resumo-simulacao {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 25px;
+    padding: 22px;
+    border: 1px solid rgba(182, 156, 255, .16);
+    border-radius: 15px;
+    background: rgba(139, 92, 246, .06);
+}
+
+#resumo-simulacao > span {
+    grid-column: 1 / -1;
+    color: #8f8998;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+#valor-total-simulacao {
+    color: #eee9f5;
+    font: 500 1.45rem Georgia, serif;
+}
+
+#valor-parcela-simulacao {
+    align-self: center;
+    color: var(--violeta-claro);
+    font-weight: 700;
+}
+
+.resultado-emprestimo .cabecalho-secao > span {
+    padding: 7px 10px;
+    border: 1px solid rgba(255, 190, 91, .25);
+    border-radius: 999px;
+    color: #ffcf85;
+    background: rgba(255, 181, 71, .1);
+    font-size: .65rem;
+    font-weight: 850;
+    letter-spacing: .09em;
+}
+
+.resultado-emprestimo .cabecalho-secao > span[data-status="APROVADO"] {
+    border-color: rgba(69, 201, 151, .25);
+    color: #76ddb7;
+    background: rgba(69, 201, 151, .1);
+}
+
+.resultado-emprestimo .produto-selecionado {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 22px;
+    padding: 24px;
+    border: 1px solid rgba(203, 184, 255, .16);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(48, 33, 65, .7), rgba(13, 14, 22, .8));
+}
+
+.resultado-emprestimo .produto-selecionado span,
+.resultado-emprestimo .produto-selecionado small {
+    color: #928b9b;
+}
+
+.resultado-emprestimo .produto-selecionado strong {
+    color: #f1edf5;
+    font: 500 2rem Georgia, serif;
+}
+
+.resultado-emprestimo > .botao-confirmar {
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+    .apresentacao-emprestimos h1 {
+        font-size: clamp(2.5rem, 13vw, 4rem);
+    }
+
+    .simulacao-emprestimo .form-aplicacao {
+        grid-template-columns: 1fr;
+    }
+
+    .simulacao-emprestimo .campo,
+    .simulacao-emprestimo #resumo-simulacao,
+    .simulacao-emprestimo .mensagem-operacao,
+    .simulacao-emprestimo .botao-confirmar {
+        grid-column: 1;
+    }
+
+    #resumo-simulacao {
+        grid-template-columns: 1fr;
+    }
+}
