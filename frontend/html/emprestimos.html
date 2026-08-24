@@ -97,6 +97,21 @@
             </form>
         </section>
 
+        <section class="secao-painel meus-emprestimos" aria-labelledby="titulo-meus-emprestimos">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">HISTÓRICO</p>
+                    <h2 id="titulo-meus-emprestimos">Meus empréstimos</h2>
+                </div>
+
+                <span id="quantidade-emprestimos">0 empréstimos</span>
+            </header>
+
+            <div id="lista-emprestimos" class="lista-emprestimos" aria-live="polite">
+                <p id="estado-emprestimos">Carregando empréstimos...</p>
+            </div>
+        </section>
+
         <section id="resultado-emprestimo" class="secao-painel resultado-emprestimo" aria-labelledby="titulo-resultado-emprestimo" hidden>
             <header class="cabecalho-secao">
                 <div>
@@ -116,6 +131,21 @@
             <button id="botao-aprovar-emprestimo" class="botao-confirmar" type="button">
                 Aprovar e liberar valor <span aria-hidden="true">→</span>
             </button>
+
+            <section class="parcelas-emprestimo" aria-labelledby="titulo-parcelas-emprestimo">
+                <header class="cabecalho-parcelas">
+                    <div>
+                        <p class="etiqueta">PAGAMENTO</p>
+                        <h3 id="titulo-parcelas-emprestimo">Parcelas do empréstimo</h3>
+                    </div>
+
+                    <span id="quantidade-parcelas-emprestimo">0 parcelas</span>
+                </header>
+
+                <div id="lista-parcelas" class="lista-parcelas" aria-live="polite">
+                    <p id="estado-parcelas">Carregando parcelas...</p>
+                </div>
+            </section>
         </section>
     </main>
 

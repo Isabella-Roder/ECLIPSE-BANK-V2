@@ -97,6 +97,28 @@ public class EmprestimoServiceTest {
     }
 
     @Test
+    void deveListarEmprestimosPorConta() {
+        Conta conta = new Conta();
+        ReflectionTestUtils.setField(conta, "id", 1L);
+
+        Emprestimo emprestimo = new Emprestimo();
+        ReflectionTestUtils.setField(emprestimo, "id", 10L);
+        emprestimo.setConta(conta);
+        emprestimo.setValorSolicitado(new BigDecimal("1000.00"));
+        emprestimo.setTaxaJuros(new BigDecimal("10.00"));
+        emprestimo.setQuantidadeParcelas(5);
+        emprestimo.setValorTotal(new BigDecimal("1100.00"));
+
+        when(emprestimoRepository.findByContaId(1L)).thenReturn(List.of(emprestimo));
+
+        List<EmprestimoResposta> resposta = emprestimoService.listarPorConta(1L);
+
+        assertEquals(1, resposta.size());
+        assertEquals(10L, resposta.getFirst().id());
+        assertEquals(new BigDecimal("1100.00"), resposta.getFirst().valorTotal());
+    }
+
+    @Test
     void deveAprovarECreditarValorNaConta() {
         Conta conta = new Conta();
         ReflectionTestUtils.setField(conta, "id", 1L);

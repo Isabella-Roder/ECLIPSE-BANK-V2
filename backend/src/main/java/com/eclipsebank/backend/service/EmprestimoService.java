@@ -3,6 +3,7 @@ package com.eclipsebank.backend.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -105,6 +106,14 @@ public class EmprestimoService {
         return EmprestimoResposta.from(emprestimo);
     }
 
+    @Transactional(readOnly = true)
+    public List<EmprestimoResposta> listarPorConta(Long contaId) {
+        return emprestimoRepository.findByContaId(contaId)
+            .stream()
+            .map(EmprestimoResposta::from)
+            .toList();
+    }
+
     @Transactional
     public EmprestimoResposta aprovar(Long contaId, Long emprestimoId) {
         Emprestimo emprestimo = buscarEmprestimoDaConta(emprestimoId, contaId);
@@ -153,5 +162,13 @@ public class EmprestimoService {
         }
 
         return ParcelaResposta.from(parcela);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ParcelaResposta> listarParcelas(Long contaId, Long emprestimoId) {
+        buscarEmprestimoDaConta(emprestimoId, contaId);
+
+        return parcelaRepository.findByEmprestimoId(emprestimoId)
+            .stream().map(ParcelaResposta::from).toList();
     }
 }

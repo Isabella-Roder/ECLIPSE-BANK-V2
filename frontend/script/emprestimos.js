@@ -19,6 +19,12 @@ const identificadorEmprestimo = document.getElementById("identificador-emprestim
 const valorSolicitadoResultado = document.getElementById("valor-solicitado-resultado");
 const detalhesEmprestimo = document.getElementById("detalhes-emprestimo");
 const botaoAprovar = document.getElementById("botao-aprovar-emprestimo");
+const quantidadeEmprestimos = document.getElementById("quantidade-emprestimos");
+const listaEmprestimos = document.getElementById("lista-emprestimos");
+const estadoEmprestimos = document.getElementById("estado-emprestimos");
+const quantidadeParcelasEmprestimo = document.getElementById("quantidade-parcelas-emprestimo");
+const listaParcelas = document.getElementById("lista-parcelas");
+const estadoParcelas = document.getElementById("estado-parcelas");
 
 function lerCookie(nome) {
     const valor = document.cookie.split("; ").find(linha => linha.startsWith(nome + "="));
@@ -31,6 +37,14 @@ function formatarDinheiro(valor) {
         style: "currency",
         currency: "BRL"
     });
+}
+
+function formatarData(data) {
+    if (!data) {
+        return "—";
+    }
+
+    return new Date(`${data}T00:00:00`).toLocaleDateString("pt-BR");
 }
 
 function alterarMensagem(texto = "", tipo = "") {
@@ -141,6 +155,30 @@ async function solicitar(dados) {
     }
 }
 
+async function buscarEmprestimos() {
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/emprestimos`, {
+            credentials: "include"
+        });
+
+        if (resposta.status === 401) {
+            window.location.href = "login.html";
+            return [];
+        }
+
+        const corpo = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(corpo.mensagem || "Erro ao buscar empréstimos.");
+        }
+
+        return corpo;
+    } catch (erro) {
+        console.error(erro);
+        throw erro;
+    }
+}
+
 async function aprovar(emprestimoId) {
     try {
         const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/emprestimos/${emprestimoId}/aprovar`, {
@@ -203,6 +241,180 @@ function exibirEmprestimo(emprestimo) {
     resultadoEmprestimo.hidden = false;
 }
 
+async function abrirEmprestimo(emprestimo) {
+    try {
+        exibirEmprestimo(emprestimo);
+        await carregarParcelas(emprestimo.id);
+        resultadoEmprestimo.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (erro) {
+        alterarMensagem(`Erro: ${erro.message}`, "erro");
+    }
+}
+
+function renderizarEmprestimos(emprestimos) {
+    listaEmprestimos.replaceChildren();
+    quantidadeEmprestimos.textContent = `${emprestimos.length} empréstimo(s)`;
+
+    if (emprestimos.length === 0) {
+        estadoEmprestimos.textContent = "Você ainda não possui empréstimos.";
+        listaEmprestimos.appendChild(estadoEmprestimos);
+        return;
+    }
+
+    emprestimos
+        .sort((primeiro, segundo) => segundo.id - primeiro.id)
+        .forEach((emprestimo) => {
+            const item = document.createElement("article");
+            item.className = "emprestimo-item";
+
+            const cabecalho = document.createElement("div");
+            cabecalho.className = "emprestimo-item-cabecalho";
+
+            const identificador = document.createElement("strong");
+            identificador.textContent = `Empréstimo #${emprestimo.id}`;
+
+            const status = document.createElement("span");
+            status.className = `status-emprestimo-lista ${emprestimo.status.toLowerCase()}`;
+            status.textContent = emprestimo.status.replaceAll("_", " ");
+
+            cabecalho.append(identificador, status);
+
+            const valor = document.createElement("strong");
+            valor.className = "valor-emprestimo-lista";
+            valor.textContent = formatarDinheiro(emprestimo.valorSolicitado);
+
+            const detalhes = document.createElement("p");
+            detalhes.textContent = `${emprestimo.quantidadeParcelas} parcelas · Total de ${formatarDinheiro(emprestimo.valorTotal)}`;
+
+            const botaoDetalhes = document.createElement("button");
+            botaoDetalhes.type = "button";
+            botaoDetalhes.textContent = "Ver parcelas";
+            botaoDetalhes.addEventListener("click", () => abrirEmprestimo(emprestimo));
+
+            item.append(cabecalho, valor, detalhes, botaoDetalhes);
+            listaEmprestimos.appendChild(item);
+        });
+}
+
+async function carregarEmprestimos() {
+    const emprestimos = await buscarEmprestimos();
+    renderizarEmprestimos(emprestimos);
+}
+
+async function buscarParcelas(emprestimoId) {
+    try {
+        const resposta = await fetch(`${API_URL}/contas/${contaAtual.id}/emprestimos/${emprestimoId}/parcelas`, {
+            credentials: "include"
+        });
+
+        const corpo = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(corpo.mensagem || "Erro ao buscar parcelas.");
+        }
+
+        return corpo;
+    } catch (erro) {
+        console.error(erro);
+        throw erro;
+    }
+}
+
+function renderizarParcelas(parcelas) {
+    listaParcelas.replaceChildren();
+    quantidadeParcelasEmprestimo.textContent = `${parcelas.length} parcela(s)`;
+
+    if (parcelas.length === 0) {
+        estadoParcelas.textContent = "Nenhuma parcela encontrada.";
+        listaParcelas.appendChild(estadoParcelas);
+        return;
+    }
+
+    parcelas
+        .sort((primeira, segunda) => primeira.numero - segunda.numero)
+        .forEach((parcela) => {
+            const item = document.createElement("article");
+            item.className = "parcela-item";
+
+            const cabecalho = document.createElement("div");
+            cabecalho.className = "parcela-cabecalho";
+
+            const numero = document.createElement("strong");
+            numero.textContent = `Parcela ${parcela.numero}`;
+
+            const status = document.createElement("span");
+            status.className = `status-parcela ${parcela.status.toLowerCase()}`;
+            status.textContent = parcela.status;
+
+            cabecalho.append(numero, status);
+
+            const valor = document.createElement("strong");
+            valor.className = "valor-parcela";
+            valor.textContent = formatarDinheiro(parcela.valor);
+
+            const vencimento = document.createElement("p");
+            vencimento.className = "vencimento-parcela";
+            vencimento.textContent = `Vencimento: ${formatarData(parcela.dataVencimento)}`;
+
+            item.append(cabecalho, valor, vencimento);
+
+            if (parcela.dataPagamento) {
+                const pagamento = document.createElement("p");
+                pagamento.className = "pagamento-parcela";
+                pagamento.textContent = `Paga em ${formatarData(parcela.dataPagamento)}`;
+                item.appendChild(pagamento);
+            }
+
+            if (parcela.status === "PENDENTE") {
+                const botaoPagar = document.createElement("button");
+                botaoPagar.className = "botao-pagar-parcela";
+                botaoPagar.type = "button";
+
+                const emprestimoAprovado = emprestimoAtual.status !== "SOLICITADO";
+                botaoPagar.disabled = !emprestimoAprovado;
+                botaoPagar.textContent = emprestimoAprovado
+                    ? "Pagar parcela"
+                    : "Aguardando aprovação";
+
+                botaoPagar.addEventListener("click", async () => {
+                    if (!confirm(`Deseja pagar a parcela ${parcela.numero} no valor de ${formatarDinheiro(parcela.valor)}?`)) {
+                        return;
+                    }
+
+                    try {
+                        botaoPagar.disabled = true;
+                        botaoPagar.textContent = "Pagando...";
+                        alterarMensagem();
+
+                        await pagarParcela(emprestimoAtual.id, parcela.id);
+                        const parcelasAtualizadas = await buscarParcelas(emprestimoAtual.id);
+
+                        renderizarParcelas(parcelasAtualizadas);
+                        alterarMensagem(`Parcela ${parcela.numero} paga com sucesso.`, "sucesso");
+
+                        if (parcelasAtualizadas.every(itemAtual => itemAtual.status === "PAGA")) {
+                            emprestimoAtual.status = "QUITADO";
+                            exibirEmprestimo(emprestimoAtual);
+                        }
+                    } catch (erro) {
+                        botaoPagar.disabled = false;
+                        botaoPagar.textContent = "Pagar parcela";
+                        alterarMensagem(`Erro: ${erro.message}`, "erro");
+                    }
+                });
+
+                item.appendChild(botaoPagar);
+            }
+
+            listaParcelas.appendChild(item);
+        });
+}
+
+async function carregarParcelas(emprestimoId) {
+    const parcelas = await buscarParcelas(emprestimoId);
+    renderizarParcelas(parcelas);
+}
+
 formSolicitarEmprestimo.addEventListener("input", calcularSimulacao);
 
 formSolicitarEmprestimo.addEventListener("submit", async (evento) => {
@@ -236,6 +448,8 @@ formSolicitarEmprestimo.addEventListener("submit", async (evento) => {
         const emprestimo = await solicitar(dados);
 
         exibirEmprestimo(emprestimo);
+        await carregarParcelas(emprestimo.id);
+        await carregarEmprestimos();
         alterarMensagem("Empréstimo solicitado com sucesso.", "sucesso");
         resultadoEmprestimo.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (erro) {
@@ -259,6 +473,8 @@ botaoAprovar.addEventListener("click", async () => {
         const emprestimo = await aprovar(emprestimoAtual.id);
 
         exibirEmprestimo(emprestimo);
+        await carregarParcelas(emprestimo.id);
+        await carregarEmprestimos();
         alterarMensagem("Empréstimo aprovado e valor liberado na conta.", "sucesso");
     } catch (erro) {
         alterarMensagem(`Erro: ${erro.message}`, "erro");
@@ -277,7 +493,10 @@ async function iniciarPagina() {
 
         if (!contaAtual) {
             alterarMensagem("Não foi possível carregar a conta.", "erro");
+            return;
         }
+
+        await carregarEmprestimos();
     } catch (erro) {
         console.error(erro);
         alterarMensagem(`Erro: ${erro.message}`, "erro");

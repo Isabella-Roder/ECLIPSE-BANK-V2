@@ -27,16 +27,19 @@
 }
 
 .simulacao-emprestimo,
+.meus-emprestimos,
 .resultado-emprestimo {
     padding: clamp(24px, 4vw, 38px);
 }
 
 .simulacao-emprestimo .cabecalho-secao,
+.meus-emprestimos .cabecalho-secao,
 .resultado-emprestimo .cabecalho-secao {
     margin-bottom: 27px;
 }
 
 .simulacao-emprestimo .cabecalho-secao h2,
+.meus-emprestimos .cabecalho-secao h2,
 .resultado-emprestimo .cabecalho-secao h2 {
     margin: 7px 0 0;
     font: 500 1.55rem Georgia, serif;
@@ -85,6 +88,101 @@
     font-weight: 700;
 }
 
+#quantidade-emprestimos {
+    color: #918b99;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.lista-emprestimos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+#estado-emprestimos {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 34px 20px;
+    border: 1px dashed rgba(255, 255, 255, .1);
+    border-radius: 14px;
+    color: #8f8998;
+    text-align: center;
+}
+
+.emprestimo-item {
+    display: grid;
+    align-content: start;
+    gap: 13px;
+    padding: 22px;
+    border: 1px solid rgba(203, 184, 255, .15);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(39, 30, 53, .72), rgba(13, 14, 22, .86));
+}
+
+.emprestimo-item-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.emprestimo-item-cabecalho > strong {
+    color: #ddd7e6;
+    font-size: .8rem;
+}
+
+.status-emprestimo-lista {
+    padding: 5px 7px;
+    border: 1px solid rgba(255, 190, 91, .22);
+    border-radius: 999px;
+    color: #ffcf85;
+    background: rgba(255, 181, 71, .08);
+    font-size: .55rem;
+    font-weight: 850;
+    letter-spacing: .06em;
+}
+
+.status-emprestimo-lista.aprovado,
+.status-emprestimo-lista.em_andamento {
+    border-color: rgba(139, 180, 255, .24);
+    color: #a9c7ff;
+    background: rgba(80, 130, 220, .09);
+}
+
+.status-emprestimo-lista.quitado {
+    border-color: rgba(69, 201, 151, .22);
+    color: #76ddb7;
+    background: rgba(69, 201, 151, .08);
+}
+
+.valor-emprestimo-lista {
+    color: #f1edf5;
+    font: 500 1.65rem Georgia, serif;
+}
+
+.emprestimo-item > p {
+    margin: 0;
+    color: #8f8998;
+    font-size: .74rem;
+}
+
+.emprestimo-item > button {
+    margin-top: 4px;
+    padding: 10px 12px;
+    border: 1px solid rgba(182, 156, 255, .23);
+    border-radius: 10px;
+    color: #e8e2f1;
+    background: rgba(139, 92, 246, .11);
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.emprestimo-item > button:hover {
+    border-color: rgba(182, 156, 255, .4);
+    background: rgba(139, 92, 246, .2);
+}
+
 .resultado-emprestimo .cabecalho-secao > span {
     padding: 7px 10px;
     border: 1px solid rgba(255, 190, 91, .25);
@@ -126,6 +224,125 @@
     width: 100%;
 }
 
+.parcelas-emprestimo {
+    margin-top: 30px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.cabecalho-parcelas,
+.parcela-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.cabecalho-parcelas h3 {
+    margin: 7px 0 0;
+    font: 500 1.35rem Georgia, serif;
+}
+
+#quantidade-parcelas-emprestimo {
+    color: #918b99;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.lista-parcelas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 22px;
+}
+
+#estado-parcelas {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 30px 20px;
+    border: 1px dashed rgba(255, 255, 255, .1);
+    border-radius: 13px;
+    color: #8f8998;
+    text-align: center;
+}
+
+.parcela-item {
+    display: grid;
+    align-content: start;
+    gap: 11px;
+    padding: 20px;
+    border: 1px solid rgba(203, 184, 255, .14);
+    border-radius: 15px;
+    background: rgba(13, 14, 22, .75);
+}
+
+.parcela-cabecalho > strong {
+    color: #ddd7e6;
+    font-size: .82rem;
+}
+
+.status-parcela {
+    padding: 5px 7px;
+    border: 1px solid rgba(255, 190, 91, .22);
+    border-radius: 999px;
+    color: #ffcf85;
+    background: rgba(255, 181, 71, .08);
+    font-size: .56rem;
+    font-weight: 850;
+    letter-spacing: .07em;
+}
+
+.status-parcela.paga {
+    border-color: rgba(69, 201, 151, .22);
+    color: #76ddb7;
+    background: rgba(69, 201, 151, .08);
+}
+
+.status-parcela.atrasada {
+    border-color: rgba(255, 110, 125, .22);
+    color: #ff9aa5;
+    background: rgba(255, 110, 125, .08);
+}
+
+.valor-parcela {
+    color: #f1edf5;
+    font: 500 1.5rem Georgia, serif;
+}
+
+.vencimento-parcela,
+.pagamento-parcela {
+    margin: 0;
+    color: #8f8998;
+    font-size: .72rem;
+}
+
+.pagamento-parcela {
+    color: #76ddb7;
+}
+
+.botao-pagar-parcela {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px 12px;
+    border: 1px solid rgba(182, 156, 255, .23);
+    border-radius: 10px;
+    color: #e8e2f1;
+    background: rgba(139, 92, 246, .11);
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.botao-pagar-parcela:hover:not(:disabled) {
+    border-color: rgba(182, 156, 255, .4);
+    background: rgba(139, 92, 246, .2);
+}
+
+.botao-pagar-parcela:disabled {
+    color: #716c79;
+    cursor: not-allowed;
+    opacity: .7;
+}
+
 @media (max-width: 700px) {
     .apresentacao-emprestimos h1 {
         font-size: clamp(2.5rem, 13vw, 4rem);
@@ -143,6 +360,25 @@
     }
 
     #resumo-simulacao {
+        grid-template-columns: 1fr;
+    }
+
+    .cabecalho-parcelas {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .lista-parcelas {
+        grid-template-columns: 1fr;
+    }
+
+    .meus-emprestimos .cabecalho-secao {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .lista-emprestimos {
         grid-template-columns: 1fr;
     }
 }
