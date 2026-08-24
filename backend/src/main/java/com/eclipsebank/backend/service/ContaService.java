@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eclipsebank.backend.dto.ContaResposta;
+import com.eclipsebank.backend.enums.TipoConta;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Conta;
+import com.eclipsebank.backend.models.Empresa;
 import com.eclipsebank.backend.models.Usuario;
 import com.eclipsebank.backend.repository.ContaRepository;
+import com.eclipsebank.backend.repository.EmpresaRepository;
 import com.eclipsebank.backend.repository.UsuarioRepository;
 
 @Service
@@ -21,12 +24,14 @@ public class ContaService {
 
     private final ContaRepository contaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EmpresaRepository empresaRepository;
     private final SecureRandom secureRandom;
 
-    public ContaService(ContaRepository contaRepository, UsuarioRepository usuarioRepository) {
+    public ContaService(ContaRepository contaRepository, UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository) {
         this.contaRepository = contaRepository;
         this.usuarioRepository = usuarioRepository;
         this.secureRandom = new SecureRandom();
+        this.empresaRepository = empresaRepository;
     }
 
     private String gerarNumeroUnico() {
@@ -71,6 +76,28 @@ public class ContaService {
         conta.setAgencia(AGENCIA_PADRAO);
         conta.setNumero(gerarNumeroUnico());
         conta.setUsuario(usuario);
+
+        return ContaResposta.from(contaRepository.save(conta));
+    }
+
+    @Transactional
+    public ContaResposta criarParaEmpresa(Long empresaId) {
+        Empresa empresa = empresaRepository.findById(empresaId)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Empresa não encontrada com o ID: " + empresaId));
+
+        if (!empresa.getAtiva()) {
+            throw new ConflitoException("Não é possivel criar conta para empresa inativa.");
+        }
+
+        if (contaRepository.existsByEmpresaId(empresaId)) {
+            throw new ConflitoException("A empresa já possui uma conta.");
+        }
+
+        Conta conta = new Conta();
+        conta.setAgencia(AGENCIA_PADRAO);
+        conta.setNumero(gerarNumeroUnico());
+        conta.setEmpresa(empresa);
+        conta.setTipo(TipoConta.PESSOA_JURIDICA);
 
         return ContaResposta.from(contaRepository.save(conta));
     }

@@ -16,10 +16,13 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
 
     boolean existsByUsuarioId(Long usuarioId);
 
+    boolean existsByEmpresaId(Long empresaId);
+
     boolean existsByAgenciaAndNumero(String agencia, String numero);
 
     Optional<Conta> findByUsuarioEmailIgnoreCase(String email);
 
-    @Query("select c.usuario.id from Conta c where c.id = :contaId")
+    @Query("select coalesce(c.usuario.id, c.empresa.usuarioResponsavel.id) from Conta c where c.id = :contaId")
     Optional<Long> buscarUsuarioIdPelaContaId(@Param("contaId") Long contaId);
+
 }

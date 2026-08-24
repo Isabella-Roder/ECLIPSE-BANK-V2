@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.eclipsebank.backend.enums.StatusConta;
+import com.eclipsebank.backend.enums.TipoConta;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.ContaIndisponivelException;
 import com.eclipsebank.backend.exception.SaldoInsuficienteException;
@@ -53,14 +54,25 @@ public class Conta {
     @Column(nullable = false, length = 20)
     private StatusConta status = StatusConta.ATIVA;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoConta tipo = TipoConta.PESSOA_FISICA;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "usuario_id",
-        nullable = false,
         unique = true,
         foreignKey = @ForeignKey(name = "fk_conta_usuario")
     )
     private Usuario usuario;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "empresa_id",
+        unique = true,
+        foreignKey = @ForeignKey(name = "fk_conta_empresa")
+    )
+    private Empresa empresa;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime criadaEm;
@@ -177,6 +189,14 @@ public class Conta {
         return usuario;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public TipoConta getTipo() {
+        return tipo;
+    }
+
     public LocalDateTime getCriadaEm() {
         return criadaEm;
     }
@@ -203,6 +223,14 @@ public class Conta {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public void setTipo(TipoConta tipo) {
+        this.tipo = tipo;
     }
 
 }
