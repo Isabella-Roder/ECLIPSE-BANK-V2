@@ -18,6 +18,7 @@ public record CartaoResposta(
     LocalDateTime criadoEm
 ) {
     public static CartaoResposta from(Cartao cartao) {
+
         return new CartaoResposta(
             cartao.getId(),
             cartao.getConta().getId(),

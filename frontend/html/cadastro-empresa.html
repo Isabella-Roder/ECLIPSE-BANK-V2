@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cadastre sua empresa e abra uma conta empresarial no Eclipse Bank.">
+    <title>Conta empresarial | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-cadastro-empresa">
+    <header class="cabecalho-painel">
+        <a class="marca" href="conta.html" aria-label="Eclipse Bank - minha conta">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <a class="voltar-painel" href="conta.html">← Voltar para a conta</a>
+    </header>
+
+    <main class="conteudo-painel conteudo-cadastro-empresa">
+        <header class="apresentacao-cadastro-empresa">
+            <div>
+                <p class="etiqueta">ECLIPSE BANK EMPRESAS</p>
+                <h1>Uma conta para movimentar o seu negócio.</h1>
+                <p>Cadastre os dados da empresa. Você será identificado como responsável pela conta empresarial.</p>
+            </div>
+        </header>
+
+        <section class="secao-painel formulario-cadastro-empresa" aria-labelledby="titulo-cadastro-empresa">
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">DADOS EMPRESARIAIS</p>
+                    <h2 id="titulo-cadastro-empresa">Cadastre sua empresa</h2>
+                </div>
+
+                <span>Etapa 1 de 2</span>
+            </header>
+
+            <form id="form-cadastro-empresa" class="form-aplicacao">
+                <div class="campo">
+                    <label for="cnpj-empresa">CNPJ</label>
+                    <input
+                        id="cnpj-empresa"
+                        name="cnpj"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        minlength="14"
+                        maxlength="14"
+                        pattern="[0-9]{14}"
+                        placeholder="00000000000000"
+                        aria-describedby="dica-cnpj-empresa"
+                        data-somente-digitos
+                        required
+                    >
+                    <small id="dica-cnpj-empresa">Digite os 14 números do CNPJ, sem pontos ou traços.</small>
+                </div>
+
+                <div class="campo">
+                    <label for="razao-social-empresa">Razão social</label>
+                    <input
+                        id="razao-social-empresa"
+                        name="razaoSocial"
+                        type="text"
+                        maxlength="80"
+                        autocomplete="organization"
+                        placeholder="Nome empresarial registrado"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="nome-fantasia-empresa">
+                        Nome fantasia <span class="opcional">opcional</span>
+                    </label>
+                    <input
+                        id="nome-fantasia-empresa"
+                        name="nomeFantasia"
+                        type="text"
+                        maxlength="80"
+                        placeholder="Nome usado pelos clientes"
+                    >
+                </div>
+
+                <label class="aceite" for="confirmar-responsavel-empresa">
+                    <input id="confirmar-responsavel-empresa" name="confirmarResponsavel" type="checkbox" required>
+                    <span>Confirmo que sou responsável pela empresa informada.</span>
+                </label>
+
+                <p id="mensagem-cadastro-empresa" class="mensagem-operacao" role="status" aria-live="polite"></p>
+
+                <button id="botao-cadastrar-empresa" class="botao-confirmar" type="submit">
+                    Cadastrar e abrir conta <span aria-hidden="true">→</span>
+                </button>
+            </form>
+        </section>
+
+        <section id="resultado-conta-empresarial" class="secao-painel resultado-conta-empresarial" aria-labelledby="titulo-conta-empresarial" hidden>
+            <header class="cabecalho-secao">
+                <div>
+                    <p class="etiqueta">CONTA CRIADA</p>
+                    <h2 id="titulo-conta-empresarial">Sua conta empresarial está pronta</h2>
+                </div>
+
+                <span id="status-conta-empresarial">ATIVA</span>
+            </header>
+
+            <div class="produto-selecionado">
+                <span id="nome-empresa-resultado">Empresa —</span>
+                <strong id="identificacao-conta-empresarial">Agência — · Conta —</strong>
+                <small id="cnpj-empresa-resultado">CNPJ —</small>
+            </div>
+
+            <a class="botao-confirmar" href="conta.html">
+                Voltar para minhas contas <span aria-hidden="true">→</span>
+            </a>
+        </section>
+    </main>
+
+    <script src="../script/mascaras.js"></script>
+    <script src="../script/cadastro-empresa.js"></script>
+</body>
+</html>
