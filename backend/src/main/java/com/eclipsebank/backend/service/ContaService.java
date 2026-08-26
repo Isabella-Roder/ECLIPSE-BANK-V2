@@ -149,4 +149,12 @@ public class ContaService {
 
         return ContaResposta.from(conta);
     }
+
+    @Transactional(readOnly = true)
+    public ContaResposta buscarPorEmpresa(Long empresaId) {
+        Conta conta = contaRepository.findByEmpresaId(empresaId)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Conta empresarial não encontrada."));
+
+        return ContaResposta.from(conta);
+    }
 }

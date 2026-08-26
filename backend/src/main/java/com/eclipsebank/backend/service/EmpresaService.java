@@ -1,5 +1,7 @@
 package com.eclipsebank.backend.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,11 @@ public class EmpresaService {
     public EmpresaService(EmpresaRepository empresaRepository, UsuarioRepository usuarioRepository) {
         this.empresaRepository = empresaRepository;
         this.usuarioRepository = usuarioRepository;
+    }
+
+    private Empresa buscarEntidade(Long empresaId) {
+        return empresaRepository.findById(empresaId)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Empresa não encontrada com o ID: " + empresaId));
     }
 
     @Transactional
@@ -45,5 +52,14 @@ public class EmpresaService {
     public Long obterUsuarioResponsavelId(Long empresaId) {
         return empresaRepository.buscarUsuarioResponsavelIdPelaEmpresaId(empresaId)
             .orElseThrow(() -> new RecursoNaoEncontradoException("Empressa não encontrado com o ID: " + empresaId));
+    }
+
+    @Transactional(readOnly = true) 
+    public List<EmpresaResposta> listarPorUsuarioResponsavel(Long usuarioId) {
+        return empresaRepository
+            .findByUsuarioResponsavelId(usuarioId)
+            .stream()
+            .map(EmpresaResposta::from)
+            .toList();
     }
 }

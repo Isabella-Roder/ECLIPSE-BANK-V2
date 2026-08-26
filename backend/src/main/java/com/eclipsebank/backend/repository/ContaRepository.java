@@ -22,7 +22,9 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
 
     Optional<Conta> findByUsuarioEmailIgnoreCase(String email);
 
-    @Query("select coalesce(c.usuario.id, c.empresa.usuarioResponsavel.id) from Conta c where c.id = :contaId")
+    @Query("select coalesce(u.id, r.id) from Conta c left join c.usuario u left join c.empresa e left join e.usuarioResponsavel r where c.id = :contaId")
     Optional<Long> buscarUsuarioIdPelaContaId(@Param("contaId") Long contaId);
+
+    Optional<Conta> findByEmpresaId(Long empresaId);
 
 }

@@ -113,4 +113,14 @@ public class ContaController {
 
         return ResponseEntity.created(localizacao).body(resposta);
     }
+
+    @GetMapping("/empresa/{empresaId}")
+    public ResponseEntity<ContaResposta> buscarPorEmpresa(
+        @PathVariable Long empresaId,
+        Authentication autenticacao
+    ) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, empresaService.obterUsuarioResponsavelId(empresaId));
+
+        return ResponseEntity.ok(contaService.buscarPorEmpresa(empresaId));
+    }
 }

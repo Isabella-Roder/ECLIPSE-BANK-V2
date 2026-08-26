@@ -1,9 +1,11 @@
 package com.eclipsebank.backend.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +38,12 @@ public class EmpresaController {
         URI localizacao = URI.create("/api/empresas/" + empresa.id());
 
         return ResponseEntity.created(localizacao).body(empresa);
+    }
+    
+    @GetMapping("/minhas-empresas")
+    public ResponseEntity<List<EmpresaResposta>> listarMinhaEmpresas(Authentication autenticacao) {
+        Long usuarioId = usuarioAutenticado.obterId(autenticacao);
+
+        return ResponseEntity.ok(empresaService.listarPorUsuarioResponsavel(usuarioId));
     }
 }

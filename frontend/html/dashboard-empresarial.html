@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Painel da conta empresarial Eclipse Bank.">
+    <title>Conta empresarial | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-dashboard pagina-dashboard-empresarial">
+    <header class="cabecalho-painel cabecalho-dashboard">
+        <a class="marca" href="dashboard-empresarial.html" aria-label="Eclipse Bank - conta empresarial">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <div class="perfil-dashboard">
+            <span class="tipo-dashboard tipo-dashboard-empresa">Conta empresarial</span>
+            <span id="nome-empresa-dashboard">Sua empresa</span>
+            <button id="botao-sair-empresa" type="button">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo-dashboard">
+        <header class="boas-vindas-dashboard">
+            <div>
+                <p class="etiqueta">GESTÃO EMPRESARIAL</p>
+                <h1>O caixa do seu negócio sob controle.</h1>
+                <p>Visualize entradas, compromissos e movimentações para tomar decisões com mais clareza.</p>
+            </div>
+
+            <a class="alternar-dashboard" href="dashboard-pessoa-fisica.html">
+                Ir para conta pessoal <span aria-hidden="true">→</span>
+            </a>
+        </header>
+
+        <section class="grade-resumo-dashboard" aria-label="Resumo da conta empresarial">
+            <article class="cartao-saldo-dashboard cartao-saldo-empresa">
+                <header>
+                    <span>Saldo empresarial disponível</span>
+                    <button id="botao-ocultar-saldo-empresa" type="button" aria-pressed="false">Ocultar</button>
+                </header>
+
+                <strong id="saldo-conta-empresa">R$ 0,00</strong>
+
+                <dl>
+                    <div>
+                        <dt>Agência</dt>
+                        <dd id="agencia-conta-empresa">----</dd>
+                    </div>
+                    <div>
+                        <dt>Conta PJ</dt>
+                        <dd id="numero-conta-empresa">--------</dd>
+                    </div>
+                    <div>
+                        <dt>CNPJ</dt>
+                        <dd id="cnpj-dashboard-empresa">--.---.---/----.--</dd>
+                    </div>
+                </dl>
+            </article>
+
+            <aside class="indicadores-dashboard indicadores-empresa" aria-label="Indicadores do caixa empresarial">
+                <article>
+                    <span>Recebimentos no mês</span>
+                    <strong id="recebimentos-mes-empresa">R$ 0,00</strong>
+                    <small>Entradas confirmadas</small>
+                </article>
+                <article>
+                    <span>Pagamentos no mês</span>
+                    <strong id="pagamentos-mes-empresa">R$ 0,00</strong>
+                    <small>Saídas realizadas</small>
+                </article>
+                <article>
+                    <span>Resultado mensal</span>
+                    <strong id="resultado-mes-empresa">R$ 0,00</strong>
+                    <small>Entradas menos saídas</small>
+                </article>
+            </aside>
+        </section>
+
+        <section class="secao-painel acoes-dashboard" aria-labelledby="titulo-acoes-empresa">
+            <header class="cabecalho-secao-dashboard">
+                <div>
+                    <p class="etiqueta">OPERAÇÕES</p>
+                    <h2 id="titulo-acoes-empresa">Movimente sua empresa</h2>
+                </div>
+            </header>
+
+            <nav class="grade-acoes-dashboard" aria-label="Ações da conta empresarial">
+                <a href="pix.html"><span aria-hidden="true">↗</span><strong>Pix empresarial</strong><small>Envie ou receba</small></a>
+                <a href="transferencia.html"><span aria-hidden="true">⇄</span><strong>Transferir</strong><small>Faça pagamentos</small></a>
+                <a href="deposito.html"><span aria-hidden="true">＋</span><strong>Depositar</strong><small>Adicione recursos</small></a>
+                <a href="extrato.html"><span aria-hidden="true">≡</span><strong>Extrato</strong><small>Acompanhe o caixa</small></a>
+                <a href="cartoes.html"><span aria-hidden="true">▣</span><strong>Cartões</strong><small>Despesas corporativas</small></a>
+                <a href="emprestimos.html"><span aria-hidden="true">◫</span><strong>Crédito</strong><small>Capital para crescer</small></a>
+                <a href="investimentos.html"><span aria-hidden="true">↗</span><strong>Investimentos</strong><small>Recursos da empresa</small></a>
+                <a href="gerenciar-conta.html"><span aria-hidden="true">⚙</span><strong>Gerenciar</strong><small>Dados e segurança</small></a>
+            </nav>
+        </section>
+
+        <div class="grade-conteudo-dashboard">
+            <section class="secao-painel atividade-dashboard" aria-labelledby="titulo-fluxo-empresa">
+                <header class="cabecalho-secao-dashboard">
+                    <div>
+                        <p class="etiqueta">FLUXO DE CAIXA</p>
+                        <h2 id="titulo-fluxo-empresa">Movimentações recentes</h2>
+                    </div>
+                    <a href="extrato.html">Ver extrato completo</a>
+                </header>
+
+                <div id="lista-movimentacoes-empresa" class="lista-dashboard" aria-live="polite">
+                    <p id="estado-movimentacoes-empresa">Nenhuma movimentação empresarial encontrada.</p>
+                </div>
+            </section>
+
+            <aside class="secao-painel dados-empresa-dashboard" aria-labelledby="titulo-dados-empresa">
+                <p class="etiqueta">EMPRESA</p>
+                <h2 id="titulo-dados-empresa">Dados da conta</h2>
+                <dl>
+                    <div><dt>Nome fantasia</dt><dd id="nome-fantasia-dashboard">—</dd></div>
+                    <div><dt>Razão social</dt><dd id="razao-social-dashboard">—</dd></div>
+                    <div><dt>Responsável</dt><dd id="responsavel-dashboard">—</dd></div>
+                    <div><dt>Status</dt><dd id="status-conta-dashboard">ATIVA</dd></div>
+                </dl>
+                <a href="gerenciar-conta.html">Gerenciar conta <span aria-hidden="true">→</span></a>
+            </aside>
+        </div>
+
+        <p id="mensagem-dashboard-empresa" class="mensagem-operacao" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="../script/dashboard-empresarial.js"></script>
+</body>
+</html>

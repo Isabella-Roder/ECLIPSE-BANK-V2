@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Painel da conta pessoal Eclipse Bank.">
+    <title>Conta pessoal | Eclipse Bank</title>
+    <link rel="stylesheet" href="../css/eclipse-bank.css">
+</head>
+<body class="pagina-painel pagina-dashboard pagina-dashboard-pessoal">
+    <header class="cabecalho-painel cabecalho-dashboard">
+        <a class="marca" href="dashboard-pessoa-fisica.html" aria-label="Eclipse Bank - conta pessoal">
+            <span class="marca-simbolo" aria-hidden="true"><span></span></span>
+            <span>ECLIPSE<span>BANK</span></span>
+        </a>
+
+        <div class="perfil-dashboard">
+            <span class="tipo-dashboard">Pessoa física</span>
+            <span id="nome-usuario-pessoal">Olá, cliente</span>
+            <button id="botao-sair-pessoal" type="button">Sair</button>
+        </div>
+    </header>
+
+    <main class="conteudo-dashboard">
+        <header class="boas-vindas-dashboard">
+            <div>
+                <p class="etiqueta">VISÃO PESSOAL</p>
+                <h1>Seu dinheiro, seus próximos passos.</h1>
+                <p>Acompanhe sua rotina financeira e acesse tudo o que precisa em um só lugar.</p>
+            </div>
+
+            <a class="alternar-dashboard" href="dashboard-empresarial.html">
+                Ir para conta empresarial <span aria-hidden="true">→</span>
+            </a>
+        </header>
+
+        <section class="grade-resumo-dashboard" aria-label="Resumo da conta pessoal">
+            <article class="cartao-saldo-dashboard cartao-saldo-pessoal">
+                <header>
+                    <span>Saldo disponível</span>
+                    <button id="botao-ocultar-saldo-pessoal" type="button" aria-pressed="false">Ocultar</button>
+                </header>
+
+                <strong id="saldo-conta-pessoal">R$ 0,00</strong>
+
+                <dl>
+                    <div>
+                        <dt>Agência</dt>
+                        <dd id="agencia-conta-pessoal">----</dd>
+                    </div>
+                    <div>
+                        <dt>Conta</dt>
+                        <dd id="numero-conta-pessoal">--------</dd>
+                    </div>
+                    <div>
+                        <dt>Status</dt>
+                        <dd id="status-conta-pessoal">ATIVA</dd>
+                    </div>
+                </dl>
+            </article>
+
+            <aside class="indicadores-dashboard" aria-label="Indicadores financeiros pessoais">
+                <article>
+                    <span>Entradas no mês</span>
+                    <strong id="entradas-mes-pessoal">R$ 0,00</strong>
+                    <small>Créditos recebidos</small>
+                </article>
+                <article>
+                    <span>Saídas no mês</span>
+                    <strong id="saidas-mes-pessoal">R$ 0,00</strong>
+                    <small>Pagamentos e transferências</small>
+                </article>
+                <article>
+                    <span>Patrimônio investido</span>
+                    <strong id="investido-pessoal">R$ 0,00</strong>
+                    <small>Posição atual da carteira</small>
+                </article>
+            </aside>
+        </section>
+
+        <section class="secao-painel acoes-dashboard" aria-labelledby="titulo-acoes-pessoais">
+            <header class="cabecalho-secao-dashboard">
+                <div>
+                    <p class="etiqueta">ATALHOS</p>
+                    <h2 id="titulo-acoes-pessoais">O que você quer fazer?</h2>
+                </div>
+            </header>
+
+            <nav class="grade-acoes-dashboard" aria-label="Ações da conta pessoal">
+                <a href="pix.html"><span aria-hidden="true">↗</span><strong>Pix</strong><small>Envie em segundos</small></a>
+                <a href="transferencia.html"><span aria-hidden="true">⇄</span><strong>Transferir</strong><small>Entre contas bancárias</small></a>
+                <a href="deposito.html"><span aria-hidden="true">＋</span><strong>Depositar</strong><small>Adicione saldo</small></a>
+                <a href="cartoes.html"><span aria-hidden="true">▣</span><strong>Cartões</strong><small>Limites e faturas</small></a>
+                <a href="investimentos.html"><span aria-hidden="true">↗</span><strong>Investir</strong><small>Veja seu portfólio</small></a>
+                <a href="metas-financeiras.html"><span aria-hidden="true">◎</span><strong>Metas</strong><small>Acompanhe objetivos</small></a>
+                <a href="emprestimos.html"><span aria-hidden="true">◫</span><strong>Empréstimos</strong><small>Crédito e parcelas</small></a>
+                <a href="extrato.html"><span aria-hidden="true">≡</span><strong>Extrato</strong><small>Consulte movimentações</small></a>
+            </nav>
+        </section>
+
+        <div class="grade-conteudo-dashboard">
+            <section class="secao-painel atividade-dashboard" aria-labelledby="titulo-atividade-pessoal">
+                <header class="cabecalho-secao-dashboard">
+                    <div>
+                        <p class="etiqueta">MOVIMENTAÇÕES</p>
+                        <h2 id="titulo-atividade-pessoal">Atividade recente</h2>
+                    </div>
+                    <a href="extrato.html">Ver extrato completo</a>
+                </header>
+
+                <div id="lista-movimentacoes-pessoal" class="lista-dashboard" aria-live="polite">
+                    <p id="estado-movimentacoes-pessoal">Nenhuma movimentação encontrada.</p>
+                </div>
+            </section>
+
+            <aside class="secao-painel progresso-dashboard" aria-labelledby="titulo-progresso-pessoal">
+                <p class="etiqueta">PLANEJAMENTO</p>
+                <h2 id="titulo-progresso-pessoal">Sua meta em destaque</h2>
+                <span id="nome-meta-destaque">Nenhuma meta selecionada</span>
+                <strong id="valor-meta-destaque">R$ 0,00 de R$ 0,00</strong>
+                <div class="barra-dashboard" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <span id="progresso-meta-destaque"></span>
+                </div>
+                <a href="metas-financeiras.html">Gerenciar metas <span aria-hidden="true">→</span></a>
+            </aside>
+        </div>
+
+        <p id="mensagem-dashboard-pessoal" class="mensagem-operacao" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="../script/dashboard-pessoa-fisica.js"></script>
+</body>
+</html>
