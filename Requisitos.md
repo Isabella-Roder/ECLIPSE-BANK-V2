@@ -69,6 +69,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Proteção CSRF nas operações que alteram dados
 - [x] Logout com invalidação da sessão no servidor
 - [x] Expiração da sessão após 30 minutos de inatividade
+- [ ] Restringir `GET /api/usuarios`, `GET /api/usuarios/{id}`, `PATCH /api/usuarios/{id}` e `DELETE /api/usuarios/{id}` a `ROLE_ADMIN` (ou ao próprio usuário no caso de editar-se) — hoje qualquer usuário autenticado consegue listar, ver, editar e desativar a conta de qualquer outra pessoa
 - [ ] Limite absoluto de duração da sessão
 - [x] Renovação do identificador de sessão após o login
 - [ ] Rate limiting para login, Pix, transferências e recuperação de senha
@@ -221,7 +222,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Metas com aportes automáticos simulados
 - [x] Empréstimos com simulação de parcelas e juros
 - [ ] Notificações e central de atividades da conta
-- [ ] Painel administrativo com autorização própria
+- [x] Painel administrativo com autorização própria
 - [ ] Detecção de movimentações suspeitas por regras
 - [ ] Auditoria imutável de ações críticas
 - [ ] Métricas, monitoramento de saúde e alertas da aplicação
@@ -264,4 +265,5 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Contas empresariais
   - [x] Dashboard PF/PJ
   - [ ] Analytics em Python
-  - [ ] Painel administrativo, auditoria imutável, detecção de fraude
+  - [x] Painel administrativo
+  - [ ] Auditoria imutável, detecção de fraude

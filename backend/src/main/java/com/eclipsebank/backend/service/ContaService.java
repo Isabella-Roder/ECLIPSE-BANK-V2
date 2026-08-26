@@ -1,6 +1,7 @@
 package com.eclipsebank.backend.service;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,5 +157,13 @@ public class ContaService {
             .orElseThrow(() -> new RecursoNaoEncontradoException("Conta empresarial não encontrada."));
 
         return ContaResposta.from(conta);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ContaResposta> listarTodas() {
+        return contaRepository.findAll()
+            .stream()
+            .map(ContaResposta::from)
+            .toList();
     }
 }
