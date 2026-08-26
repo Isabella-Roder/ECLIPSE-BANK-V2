@@ -116,6 +116,7 @@ No celular, a URL da API deve usar o IPv4 do computador na rede local, não `loc
 - Fatura de cartão de crédito: `Fatura` agrupa por mês (`lançarCompra`, `fechar`, `pagar`), débito da conta e registro no extrato (`PAGAMENTO_FATURA`) ocorrem na mesma transação; `Compra` guarda cada lançamento individual (valor, descrição, categoria) vinculado à fatura. Autorização valida dono da conta e que o cartão pertence à conta. Tela web (`faturas.html`/`faturas.js`), acessada pelo botão "Ver faturas" nos cartões de crédito: lançar compra, fechar e pagar fatura.
 - Faturas: entidade com lançamento de compra, fechamento e pagamento; repository, DTOs, service e controller protegidos por autorização da conta e do cartão, além de testes de entidade e service. A tela web permite visualizar e pagar a fatura; ainda falta lançar compras e fechar a fatura pela interface.
 - Empréstimos: `Emprestimo` (valor solicitado, taxa de juros simples, quantidade de parcelas, valor total calculado no service) e `Parcela` (número, valor, vencimento, status, data de pagamento); ciclo `SOLICITADO → APROVADO → EM_ANDAMENTO/QUITADO`, com `INADIMPLENTE` reservado para uso futuro. Aprovar credita o valor na conta; pagar parcela debita e registra movimentação (`EMPRESTIMO_LIBERADO`, `PAGAMENTO_PARCELA_EMPRESTIMO`); o empréstimo é quitado automaticamente quando a última parcela é paga. Service e controller protegidos por autorização da conta e por checagem de posse do empréstimo/parcela. Testes de entidade (`EmprestimoTest`, `ParcelaTest`) e service (`EmprestimoServiceTest`), incluindo casos de acesso indevido. Tela web (`emprestimos.html`/`emprestimos.js`) integrada: simulação, solicitação, aprovação, listagem e pagamento de parcelas.
+- Contas empresariais: `Empresa` (CNPJ único, razão social, nome fantasia opcional, vinculada a um `usuarioResponsavel`) não conhece `Conta` — o relacionamento é de mão única (só `Conta` aponta pra `Usuario`/`Empresa`), evitando dependência circular na criação. `Conta` ganhou o campo `tipo` (`PESSOA_FISICA`/`PESSOA_JURIDICA`, default PF) e passou a aceitar `usuario` **ou** `empresa`, nunca os dois. A resolução do dono da conta (`ContaRepository.buscarUsuarioIdPelaContaId`) usa `LEFT JOIN` explícito nos dois caminhos (usuário direto ou responsável da empresa) — **cuidado**: navegação encadeada implícita (`c.usuario.id`, `c.empresa.usuarioResponsavel.id`) sem `left join` explícito gera `INNER JOIN` por padrão no Hibernate e elimina a linha quando o lado oposto é nulo. Isso torna toda autorização por conta (Cartões, Faturas, Empréstimos, etc.) automaticamente compatível com contas PJ. Cadastro de empresa (`POST /api/empresas`) exige usuário autenticado, que vira o responsável; criação de conta PJ exige ser esse responsável. Testes de service (`EmpresaServiceTest`, `ContaServiceTest`). Telas web: `cadastro-empresa.html`/`.js` (cadastro + abertura de conta em um fluxo só) e dashboards (`dashboard-pessoa-fisica.html`/`.js`, `dashboard-empresarial.html`/`.js`).
 
 ## Rotas existentes
 
@@ -173,6 +174,11 @@ GET    /api/contas/{contaId}/emprestimos
 PATCH  /api/contas/{contaId}/emprestimos/{emprestimoId}/aprovar
 GET    /api/contas/{contaId}/emprestimos/{emprestimoId}/parcelas
 POST   /api/contas/{contaId}/emprestimos/{emprestimoId}/parcelas/{parcelaId}/pagar
+
+POST   /api/empresas
+GET    /api/empresas/minhas-empresas
+POST   /api/contas/empresa/{empresaId}
+GET    /api/contas/empresa/{empresaId}
 ```
 
 ## Regras arquiteturais

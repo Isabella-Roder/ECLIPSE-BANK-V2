@@ -140,8 +140,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Testes das entidades e da orquestração do service
   - [x] Tela web responsiva com simulação, solicitação e aprovação
 - [ ] Investimentos
-- [ ] Contas empresariais
-- [ ] Dashboard separado para conta pessoa física e conta empresarial
+- [x] Contas empresariais
+- [x] Dashboard separado para conta pessoa física e conta empresarial
 - [ ] Módulo de analytics em Python para relatórios financeiros
 - [ ] Conversão de moedas
 
@@ -261,6 +261,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Fase 8 — cartões, crédito, antifraude e módulos avançados
   - [x] Cartões e faturas
   - [x] Empréstimos
-  - [ ] Contas empresariais
-  - [ ] Dashboard PF/PJ, analytics em Python
+  - [x] Contas empresariais
+  - [x] Dashboard PF/PJ
+  - [ ] Analytics em Python
   - [ ] Painel administrativo, auditoria imutável, detecção de fraude
