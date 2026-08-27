@@ -15,7 +15,11 @@ Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://g
 - Carteira de investimentos simulados com aplicação, resgate, posição consolidada e rentabilidade.
 - Fundos imobiliários com cotas e pagamento simulado de proventos.
 - Metas financeiras com criação, aporte, resgate e acompanhamento de progresso.
+- Contas empresariais vinculadas a um responsável, com dashboard próprio.
+- Cartões de débito e crédito, compras, fechamento e pagamento de faturas.
 - Empréstimos simulados com cálculo de juros, geração de parcelas, aprovação e pagamento.
+- Painel administrativo, auditoria imutável e detecção de operações suspeitas.
+- Exportação de extrato em CSV e impressão de extrato e comprovantes em PDF.
 - Frontend web responsivo servido pelo próprio Spring Boot em produção.
 - Aplicativo React Native integrado à mesma API segura.
 - PostgreSQL e aplicação executados com Docker Compose.
@@ -106,6 +110,31 @@ Use a conta fictícia abaixo para conhecer as funcionalidades do Eclipse Bank:
 - Registro da liberação e dos pagamentos no extrato bancário.
 - Quitação automática quando todas as parcelas são pagas.
 
+### Cartões e faturas
+
+- Emissão de cartões de débito e crédito.
+- Bloqueio, desbloqueio e cancelamento de cartões.
+- Lançamento individual de compras por descrição e categoria.
+- Fechamento e pagamento da fatura com débito na conta.
+- Registro do pagamento no extrato bancário.
+
+### Contas empresariais
+
+- Cadastro de empresa com CNPJ, razão social e nome fantasia.
+- Vínculo da empresa ao usuário responsável autenticado.
+- Abertura de conta pessoa jurídica.
+- Dashboards distintos para contas de pessoa física e pessoa jurídica.
+- Compatibilidade das autorizações bancárias com os dois tipos de conta.
+
+### Administração, auditoria e antifraude
+
+- Rotas administrativas protegidas por perfil `ADMIN`.
+- Consulta de usuários, contas e registros de auditoria.
+- Bloqueio e desbloqueio administrativo de contas.
+- Auditoria imutável de ações críticas.
+- Bloqueio temporário diante de muitas tentativas recentes de login.
+- Identificação e registro de movimentações suspeitas por regras de negócio.
+
 ### Aplicativo mobile
 
 - Login e sessão integrada à API.
@@ -181,7 +210,10 @@ mobile/
 - Expiração da sessão por inatividade.
 - Logout com invalidação no servidor.
 - Autorização por proprietário da conta no backend.
+- Rotas administrativas protegidas por `ROLE_ADMIN`.
 - O `usuarioId` enviado pelo navegador ou aplicativo nunca é suficiente para autorizar uma operação.
+- Tentativas excessivas de login são bloqueadas e auditadas.
+- Movimentações suspeitas são identificadas e registradas para consulta administrativa.
 - Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência.
 - Senhas, tokens, banco local e arquivos `.env` não são enviados ao Git.
 - Valores monetários são representados por `BigDecimal`.
@@ -283,7 +315,7 @@ cd backend
 ./mvnw test
 ```
 
-Atualmente, a suíte possui 101 testes automatizados cobrindo, entre outros pontos:
+Atualmente, a suíte possui 113 testes automatizados cobrindo, entre outros pontos:
 
 - Regras de crédito, débito e saldo insuficiente.
 - Bloqueio e encerramento de contas.
@@ -295,6 +327,8 @@ Atualmente, a suíte possui 101 testes automatizados cobrindo, entre outros pont
 - Metas financeiras.
 - Empréstimos, geração de parcelas, aprovação e pagamento.
 - Cálculo e pagamento de proventos.
+- Contas empresariais e autorização das contas pessoa jurídica.
+- Administração, auditoria e detecção de atividades suspeitas.
 
 ## Documentação da API
 
@@ -324,6 +358,9 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 - [x] Depósito, saque, transferência e Pix.
 - [x] Investimentos simulados e metas financeiras.
 - [x] Cartões, faturas e empréstimos simulados.
+- [x] Contas empresariais e dashboards separados para pessoa física e jurídica.
+- [x] Painel administrativo, auditoria imutável e detecção de fraude.
+- [x] Exportação do extrato em CSV e impressão em PDF.
 - [x] Aplicativo mobile integrado à API.
 - [x] Testes, OpenAPI, Docker e PostgreSQL.
 - [x] Frontend e API preparados para o mesmo domínio.
@@ -331,7 +368,7 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 - [x] Screenshots do frontend web e mobile.
 - [x] Deploy público com HTTPS.
 - [ ] Integração com dados externos de mercado.
-- [ ] Contas empresariais, integração de mercado e antifraude.
+- [ ] Analytics financeiro, categorização de gastos e notificações.
 
 O roadmap detalhado está em [Requisitos.md](Requisitos.md).
 
