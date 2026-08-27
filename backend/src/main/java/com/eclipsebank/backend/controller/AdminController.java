@@ -10,23 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eclipsebank.backend.dto.ContaResposta;
+import com.eclipsebank.backend.dto.RegistroAuditoriaResposta;
 import com.eclipsebank.backend.dto.UsuarioResposta;
+import com.eclipsebank.backend.service.AuditoriaService;
 import com.eclipsebank.backend.service.ContaService;
 import com.eclipsebank.backend.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    
+
     private final UsuarioService usuarioService;
     private final ContaService contaService;
+    private final AuditoriaService auditoriaService;
 
     public AdminController(
         UsuarioService usuarioService,
-        ContaService contaService
+        ContaService contaService,
+        AuditoriaService auditoriaService
     ) {
         this.usuarioService = usuarioService;
         this.contaService = contaService;
+        this.auditoriaService = auditoriaService;
     }
 
     @GetMapping("/usuarios")
@@ -51,5 +56,10 @@ public class AdminController {
         @PathVariable Long id
     ) {
         return ResponseEntity.ok(contaService.desbloquear(id));
+    }
+
+    @GetMapping("/auditoria")
+    public ResponseEntity<List<RegistroAuditoriaResposta>> listarAuditoria() {
+        return ResponseEntity.ok(auditoriaService.listar());
     }
 }

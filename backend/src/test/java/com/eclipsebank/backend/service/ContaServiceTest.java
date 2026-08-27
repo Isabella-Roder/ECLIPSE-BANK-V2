@@ -36,11 +36,14 @@ public class ContaServiceTest {
     @Mock
     private EmpresaRepository empresaRepository;
 
+    @Mock
+    private AuditoriaService auditoriaService;
+
     private ContaService contaService;
 
     @BeforeEach
     void preparar() {
-        contaService = new ContaService(contaRepository, usuarioRepository, empresaRepository);
+        contaService = new ContaService(contaRepository, usuarioRepository, empresaRepository, auditoriaService);
     }
 
     private Empresa criarEmpresaAtiva() {

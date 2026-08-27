@@ -224,7 +224,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Notificações e central de atividades da conta
 - [x] Painel administrativo com autorização própria
 - [ ] Detecção de movimentações suspeitas por regras
-- [ ] Auditoria imutável de ações críticas
+- [x] Auditoria imutável de ações críticas
 - [ ] Métricas, monitoramento de saúde e alertas da aplicação
 - [ ] Open Finance somente após análise de segurança e conformidade
 - [x] Exportar extrato e comprovante em PDF ou CSV
@@ -266,4 +266,5 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Dashboard PF/PJ
   - [ ] Analytics em Python
   - [x] Painel administrativo
-  - [ ] Auditoria imutável, detecção de fraude
+  - [x] Auditoria imutável
+  - [ ] Detecção de fraude

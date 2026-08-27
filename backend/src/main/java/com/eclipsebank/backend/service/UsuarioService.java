@@ -10,6 +10,7 @@ import com.eclipsebank.backend.dto.LoginRequisicao;
 import com.eclipsebank.backend.dto.UsuarioAtualizacao;
 import com.eclipsebank.backend.dto.UsuarioCadastro;
 import com.eclipsebank.backend.dto.UsuarioResposta;
+import com.eclipsebank.backend.enums.AcaoAuditoria;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.CredenciaisInvalidasException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
@@ -23,10 +24,12 @@ public class UsuarioService {
     
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuditoriaService auditoriaService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AuditoriaService auditoriaService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.auditoriaService = auditoriaService;
     }
 
     private void validarEmailDisponivel(String email) {
@@ -155,26 +158,23 @@ public class UsuarioService {
         usuario.setAtivo(false);
     }
     
-    @Transactional(readOnly = true)
+    @Transactional
     public UsuarioResposta login(LoginRequisicao dados) {
         String email = normalizarEmail(dados.email());
 
-        Usuario usuario = usuarioRepository.findByEmailIgnoreCase(email)
-            .orElseThrow(CredenciaisInvalidasException::new);
+        Usuario usuario = usuarioRepository.findByEmailIgnoreCase(email).orElse(null);
 
-        if (!usuario.getAtivo()) {
+        boolean credenciaisValidas = usuario != null
+            && usuario.getAtivo()
+            && passwordEncoder.matches(dados.senha(), usuario.getSenhaHash());
+
+        if (!credenciaisValidas) {
+            Long usuarioId = usuario != null ? usuario.getId() : null;
+            auditoriaService.registrar(usuarioId, AcaoAuditoria.LOGIN_FALHA, "Tentativa de login: " + email);
             throw new CredenciaisInvalidasException();
         }
 
-        boolean senhaCorreta = passwordEncoder.matches(
-            dados.senha(),
-            usuario.getSenhaHash()
-        );
-
-        if (!senhaCorreta) {
-            throw new CredenciaisInvalidasException();
-        }
-
+        auditoriaService.registrar(usuario.getId(), AcaoAuditoria.LOGIN_SUCESSO, null);
         return UsuarioResposta.from(usuario);
     }
 }

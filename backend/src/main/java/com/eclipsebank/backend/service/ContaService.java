@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.eclipsebank.backend.dto.ContaResposta;
+import com.eclipsebank.backend.enums.AcaoAuditoria;
 import com.eclipsebank.backend.enums.TipoConta;
 import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
@@ -27,12 +28,14 @@ public class ContaService {
     private final UsuarioRepository usuarioRepository;
     private final EmpresaRepository empresaRepository;
     private final SecureRandom secureRandom;
+    private final AuditoriaService auditoriaService;
 
-    public ContaService(ContaRepository contaRepository, UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository) {
+    public ContaService(ContaRepository contaRepository, UsuarioRepository usuarioRepository, EmpresaRepository empresaRepository, AuditoriaService auditoriaService) {
         this.contaRepository = contaRepository;
         this.usuarioRepository = usuarioRepository;
         this.secureRandom = new SecureRandom();
         this.empresaRepository = empresaRepository;
+        this.auditoriaService = auditoriaService;
     }
 
     private String gerarNumeroUnico() {
@@ -130,6 +133,9 @@ public class ContaService {
 
         conta.bloquear();
 
+        Long usuarioId = contaRepository.buscarUsuarioIdPelaContaId(contaId).orElse(null);
+        auditoriaService.registrar(usuarioId, AcaoAuditoria.CONTA_BLOQUEADA, "Conta " + contaId);
+
         return ContaResposta.from(conta);
     }
 
@@ -138,6 +144,9 @@ public class ContaService {
         Conta conta = buscarEntidade(contaId);
 
         conta.desbloquear();
+
+        Long usuarioId = contaRepository.buscarUsuarioIdPelaContaId(contaId).orElse(null);
+        auditoriaService.registrar(usuarioId, AcaoAuditoria.CONTA_DESBLOQUEADA, "Conta " + contaId);
 
         return ContaResposta.from(conta);
     }
