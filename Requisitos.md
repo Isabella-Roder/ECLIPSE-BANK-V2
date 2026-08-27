@@ -223,6 +223,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Empréstimos com simulação de parcelas e juros
 - [ ] Notificações e central de atividades da conta
 - [x] Painel administrativo com autorização própria
+- [x] Detecção de login suspeito por força bruta (bloqueia após muitas tentativas falhas recentes)
 - [ ] Detecção de movimentações suspeitas por regras
 - [x] Auditoria imutável de ações críticas
 - [ ] Métricas, monitoramento de saúde e alertas da aplicação

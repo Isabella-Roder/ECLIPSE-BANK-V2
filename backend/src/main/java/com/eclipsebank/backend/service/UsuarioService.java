@@ -1,5 +1,6 @@
 package com.eclipsebank.backend.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,6 +16,7 @@ import com.eclipsebank.backend.exception.ConflitoException;
 import com.eclipsebank.backend.exception.CredenciaisInvalidasException;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Usuario;
+import com.eclipsebank.backend.repository.RegistroAuditoriaRepository;
 import com.eclipsebank.backend.repository.UsuarioRepository;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +27,16 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuditoriaService auditoriaService;
+    private final RegistroAuditoriaRepository auditoriaRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AuditoriaService auditoriaService) {
+    private static final int LIMITE_TENTATIVAS_LOGIN = 5;
+    private static final int JANELA_MINUTOS_LOGIN = 15;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, AuditoriaService auditoriaService, RegistroAuditoriaRepository auditoriaRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.auditoriaService = auditoriaService;
+        this.auditoriaRepository = auditoriaRepository;
     }
 
     private void validarEmailDisponivel(String email) {
@@ -163,6 +170,18 @@ public class UsuarioService {
         String email = normalizarEmail(dados.email());
 
         Usuario usuario = usuarioRepository.findByEmailIgnoreCase(email).orElse(null);
+
+        if (usuario != null) {
+            LocalDateTime desde = LocalDateTime.now().minusMinutes(JANELA_MINUTOS_LOGIN);
+            long tentativasFalhas = auditoriaRepository.countByUsuarioIdAndAcaoAndCriadoEmAfter(
+                usuario.getId(), AcaoAuditoria.LOGIN_FALHA, desde
+            );
+
+            if (tentativasFalhas >= LIMITE_TENTATIVAS_LOGIN) {
+                auditoriaService.registrar(usuario.getId(), AcaoAuditoria.LOGIN_BLOQUEADO_SUSPEITA, "Muitas tentativas de login recentes");
+                throw new CredenciaisInvalidasException();
+            }
+        }
 
         boolean credenciaisValidas = usuario != null
             && usuario.getAtivo()
