@@ -45,13 +45,17 @@ class MovimentacaoServiceTest {
     @Mock
     private Conta contaDestino;
 
+    @Mock
+    private AuditoriaService auditoriaService;
+
     private MovimentacaoService movimentacaoService;
 
     @BeforeEach
     void preparar() {
         movimentacaoService = new MovimentacaoService(
             contaRepository,
-            movimentacaoRepository
+            movimentacaoRepository,
+            auditoriaService
         );
     }
 

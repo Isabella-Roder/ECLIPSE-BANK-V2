@@ -10,6 +10,7 @@ import com.eclipsebank.backend.dto.MovimentacaoResposta;
 import com.eclipsebank.backend.dto.OperacaoValor;
 import com.eclipsebank.backend.dto.PixRequisicao;
 import com.eclipsebank.backend.dto.TransferenciaRequisicao;
+import com.eclipsebank.backend.enums.AcaoAuditoria;
 import com.eclipsebank.backend.enums.TipoMovimentacao;
 import com.eclipsebank.backend.exception.RecursoNaoEncontradoException;
 import com.eclipsebank.backend.models.Conta;
@@ -19,13 +20,15 @@ import com.eclipsebank.backend.repository.MovimentacaoRepository;
 
 @Service
 public class MovimentacaoService {
-    
+
     private final ContaRepository contaRepository;
     private final MovimentacaoRepository movimentacaoRepository;
+    private final AuditoriaService auditoriaService;
 
-    public MovimentacaoService(ContaRepository contaRepository, MovimentacaoRepository movimentacaoRepository) {
+    public MovimentacaoService(ContaRepository contaRepository, MovimentacaoRepository movimentacaoRepository, AuditoriaService auditoriaService) {
         this.contaRepository = contaRepository;
         this.movimentacaoRepository = movimentacaoRepository;
+        this.auditoriaService = auditoriaService;
     }
 
     private Conta buscarConta(Long contaId) {
@@ -51,7 +54,19 @@ public class MovimentacaoService {
         movimentacao.setValor(valor);
         movimentacao.setSaldoResultante(conta.getSaldo());
         movimentacao.setDescricao(descricao);
-        
+
+        long quantidadeAnterior = movimentacaoRepository.countByContaIdAndTipo(conta.getId(), tipo);
+
+        if (quantidadeAnterior >= 3) {
+            BigDecimal media = movimentacaoRepository.calcularValorMedioPorContaETipo(conta.getId(), tipo);
+
+            if (media != null && valor.compareTo(media.multiply(new BigDecimal("5"))) > 0) {
+                Long usuarioId = contaRepository.buscarUsuarioIdPelaContaId(conta.getId()).orElse(null);
+                auditoriaService.registrar(usuarioId, AcaoAuditoria.MOVIMENTACAO_SUSPEITA, 
+                    String.format("%s de %s muito acima da média (R$ %s)", tipo, valor, media));
+            }
+        }
+
         Movimentacao movimentacaoSalva = movimentacaoRepository.save(movimentacao);
 
         return MovimentacaoResposta.from(movimentacaoSalva);

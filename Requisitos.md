@@ -224,7 +224,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Notificações e central de atividades da conta
 - [x] Painel administrativo com autorização própria
 - [x] Detecção de login suspeito por força bruta (bloqueia após muitas tentativas falhas recentes)
-- [ ] Detecção de movimentações suspeitas por regras
+- [x] Detecção de movimentações suspeitas por regras
 - [x] Auditoria imutável de ações críticas
 - [ ] Métricas, monitoramento de saúde e alertas da aplicação
 - [ ] Open Finance somente após análise de segurança e conformidade
@@ -268,4 +268,4 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [ ] Analytics em Python
   - [x] Painel administrativo
   - [x] Auditoria imutável
-  - [ ] Detecção de fraude
+  - [x] Detecção de fraude
