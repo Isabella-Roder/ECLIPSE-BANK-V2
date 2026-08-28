@@ -8,3 +8,8 @@ backend/target/
 backend/data/
 backend/scripts/
 .env
+
+analytics/.venv/
+analytics/dados/
+analytics/relatorios/*.html
+analytics/relatorios/*.png

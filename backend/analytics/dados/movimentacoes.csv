@@ -1,0 +1,33 @@
+"USUARIO_ID","USUARIO_NOME","CONTA_ID","TIPO","VALOR","SALDO_RESULTANTE","CRIADA_EM","DESCRICAO"
+"1","Nome Demo","1","DEPOSITO","5000.00","5000.00","2026-08-19 15:04:41.534415","Depósito inicial de demonstração"
+"1","Nome Demo","1","SAQUE","120.00","4880.00","2026-08-19 15:06:11.819969",
+"1","Nome Demo","1","DEPOSITO","500.00","5380.00","2026-08-19 15:06:47.649602",
+"1","Nome Demo","1","APLICACAO_INVESTIMENTO","500.00","4880.00","2026-08-19 15:07:33.863696","Aplicação em CDB Eclipse"
+"1","Nome Demo","1","APLICACAO_INVESTIMENTO","50.00","4830.00","2026-08-19 15:07:39.482396","Aplicação em Ação Eclipse"
+"1","Nome Demo","1","APLICACAO_INVESTIMENTO","50.00","4780.00","2026-08-19 15:07:47.370021","Aplicação em Fundo Órbita"
+"1","Nome Demo","1","DEPOSITO","10000.00","14780.00","2026-08-19 15:10:40.235359",
+"1","Nome Demo","1","APORTE_META_FINANCEIRA","7000.00","7780.00","2026-08-19 15:10:55.143587","Aporte em Reserva de emergencia"
+"1","Nome Demo","1","APORTE_META_FINANCEIRA","2500.00","5280.00","2026-08-19 15:11:11.365053","Aporte em PC NOVO"
+"1","Nome Demo","1","RESGATE_META_FINANCEIRA","500.00","5780.00","2026-08-19 15:11:49.61182","Resgate em PC NOVO"
+"9","Isabella Roder","7","DEPOSITO","10000.00","10000.00","2026-08-20 20:14:42.022638",
+"10","Teste Fatura","8","DEPOSITO","500.00","500.00","2026-08-21 15:52:39.261977","Deposito teste"
+"10","Teste Fatura","8","PAGAMENTO_FATURA","89.90","410.10","2026-08-21 15:53:59.292905","Pagamento de fatura 2026-08"
+"9","Isabella Roder","7","APLICACAO_INVESTIMENTO","10000.00","0.00","2026-08-22 14:30:40.962758","Aplicação em CDB Eclipse"
+"9","Isabella Roder","7","DEPOSITO","10000.00","10000.00","2026-08-22 14:30:58.50137",
+"9","Isabella Roder","7","EMPRESTIMO_LIBERADO","10.00","10010.00","2026-08-22 14:37:58.214424","Liberação de empréstimo"
+"9","Isabella Roder","7","EMPRESTIMO_LIBERADO","100.00","10110.00","2026-08-24 11:26:07.188423","Liberação de empréstimo"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.33","10100.67","2026-08-24 11:26:11.897382","Pagamento da parcela 1"
+"9","Isabella Roder","7","EMPRESTIMO_LIBERADO","100.00","10200.67","2026-08-24 11:31:08.594705","Liberação de empréstimo"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10191.50","2026-08-24 11:31:10.67177","Pagamento da parcela 1"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10182.33","2026-08-24 11:31:12.059817","Pagamento da parcela 2"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10173.16","2026-08-24 11:31:13.137635","Pagamento da parcela 3"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10163.99","2026-08-24 11:31:14.352206","Pagamento da parcela 4"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10154.82","2026-08-24 11:31:15.855611","Pagamento da parcela 8"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10145.65","2026-08-24 11:31:17.168512","Pagamento da parcela 7"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10136.48","2026-08-24 11:31:18.681584","Pagamento da parcela 6"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10127.31","2026-08-24 11:31:20.111929","Pagamento da parcela 5"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10118.14","2026-08-24 11:31:21.695742","Pagamento da parcela 9"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10108.97","2026-08-24 11:31:24.500778","Pagamento da parcela 10"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10099.80","2026-08-24 11:31:25.862485","Pagamento da parcela 11"
+"9","Isabella Roder","7","PAGAMENTO_PARCELA_EMPRESTIMO","9.17","10090.63","2026-08-24 11:31:27.286241","Pagamento da parcela 12"
+"9","Isabella Roder","7","APORTE_META_FINANCEIRA","1.20","10089.43","2026-08-26 13:55:19.522552","Aporte em test"

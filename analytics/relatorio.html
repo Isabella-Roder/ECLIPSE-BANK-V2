@@ -1,0 +1,92 @@
+
+<html>
+<head><meta charset="utf-8"><title>Relatório financeiro</title></head>
+<body>
+<h1>Relatório financeiro por usuário</h1>
+
+<h2>Receitas e despesas por usuário</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DIRECAO</th>
+      <th>DESPESA</th>
+      <th>RECEITA</th>
+    </tr>
+    <tr>
+      <th>USUARIO_ID</th>
+      <th>USUARIO_NOME</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <th>Nome Demo</th>
+      <td>10220.00</td>
+      <td>16000.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <th>Isabella Roder</th>
+      <td>10120.57</td>
+      <td>20210.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <th>Teste Fatura</th>
+      <td>89.90</td>
+      <td>500.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Maiores movimentações</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>USUARIO_NOME</th>
+      <th>TIPO</th>
+      <th>VALOR</th>
+      <th>CRIADA_EM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nome Demo</td>
+      <td>DEPOSITO</td>
+      <td>10000.0</td>
+      <td>2026-08-19 15:10:40.235359</td>
+    </tr>
+    <tr>
+      <td>Isabella Roder</td>
+      <td>DEPOSITO</td>
+      <td>10000.0</td>
+      <td>2026-08-20 20:14:42.022638</td>
+    </tr>
+    <tr>
+      <td>Isabella Roder</td>
+      <td>APLICACAO_INVESTIMENTO</td>
+      <td>10000.0</td>
+      <td>2026-08-22 14:30:40.962758</td>
+    </tr>
+    <tr>
+      <td>Isabella Roder</td>
+      <td>DEPOSITO</td>
+      <td>10000.0</td>
+      <td>2026-08-22 14:30:58.501370</td>
+    </tr>
+    <tr>
+      <td>Nome Demo</td>
+      <td>APORTE_META_FINANCEIRA</td>
+      <td>7000.0</td>
+      <td>2026-08-19 15:10:55.143587</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Gastos por tipo</h2>
+<img src="grafico_despesas.png" alt="Gráfico de despesas por tipo">
+</body>
+</html>

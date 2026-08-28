@@ -143,7 +143,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Investimentos
 - [x] Contas empresariais
 - [x] Dashboard separado para conta pessoa física e conta empresarial
-- [ ] Módulo de analytics em Python para relatórios financeiros
+- [x] Módulo de analytics em Python para relatórios financeiros
 - [ ] Conversão de moedas
 
 ## 8. Investimentos e dados de mercado
@@ -265,7 +265,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Empréstimos
   - [x] Contas empresariais
   - [x] Dashboard PF/PJ
-  - [ ] Analytics em Python
+  - [x] Analytics em Python
   - [x] Painel administrativo
   - [x] Auditoria imutável
   - [x] Detecção de fraude
