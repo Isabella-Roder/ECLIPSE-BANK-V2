@@ -260,7 +260,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Selic/CDI/IPCA via API do Banco Central (`GET /api/mercado/selic`, `/cdi`, `/ipca`, público)
   - [x] Cotações de ações e FIIs via provedor terceiro (brapi.dev, `GET /api/investimentos/produtos/{codigo}/cotacao`)
   - [x] Câmbio para ativos internacionais (AwesomeAPI, `GET /api/mercado/cambio/{moeda}`, público)
-- [ ] Fase 8 — cartões, crédito, antifraude e módulos avançados
+- [x] Fase 8 — cartões, crédito, antifraude e módulos avançados
   - [x] Cartões e faturas
   - [x] Empréstimos
   - [x] Contas empresariais
