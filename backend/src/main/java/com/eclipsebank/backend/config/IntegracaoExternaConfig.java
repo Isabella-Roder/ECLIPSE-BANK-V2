@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration 
-public class BancoCentralConfig {
+public class IntegracaoExternaConfig {
     
     @Bean 
     RestClient bancoCentralClient() {
@@ -18,6 +18,13 @@ public class BancoCentralConfig {
     RestClient brapiRestClient() {
         return RestClient.builder()
             .baseUrl("https://brapi.dev/api")
+            .build();
+    }
+
+    @Bean 
+    RestClient awesomeapiRestClient() {
+        return RestClient.builder()
+            .baseUrl("https://economia.awesomeapi.com.br/json/last")
             .build();
     }
 }

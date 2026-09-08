@@ -256,10 +256,10 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Screenshots do frontend web e aplicativo mobile no README
   - [x] Dados de demonstração sem informações pessoais reais
   - [x] Publicação/deploy da demonstração (Render, `https://eclipse-bank-v2.onrender.com/`)
-- [ ] Fase 6 — integração com dados externos de mercado
+- [x] Fase 6 — integração com dados externos de mercado
   - [x] Selic/CDI/IPCA via API do Banco Central (`GET /api/mercado/selic`, `/cdi`, `/ipca`, público)
   - [x] Cotações de ações e FIIs via provedor terceiro (brapi.dev, `GET /api/investimentos/produtos/{codigo}/cotacao`)
-  - [ ] Câmbio para ativos internacionais
+  - [x] Câmbio para ativos internacionais (AwesomeAPI, `GET /api/mercado/cambio/{moeda}`, público)
 - [ ] Fase 8 — cartões, crédito, antifraude e módulos avançados
   - [x] Cartões e faturas
   - [x] Empréstimos
