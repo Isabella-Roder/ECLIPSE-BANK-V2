@@ -181,9 +181,9 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Integração com API de câmbio para ativos internacionais
 - [ ] Exibir fonte, moeda e horário da última atualização de cada cotação
 - [ ] Cache de cotações para reduzir chamadas, latência e custo
-- [ ] Tratamento de indisponibilidade e limite de requisições da API externa
+- [x] Tratamento de indisponibilidade da API externa (`ServicoExternoIndisponivelException`, resposta `503`); limite de requisições/cache do lado do EclipseBank ainda não implementado
 - [ ] Camada própria de integração para permitir a troca do provedor de dados
-- [ ] Chaves das APIs externas armazenadas somente no backend
+- [x] Chaves das APIs externas armazenadas somente no backend (Banco Central, brapi.dev e AwesomeAPI não exigem chave; nenhuma credencial é exposta ao frontend)
 - [ ] Dados simulados como alternativa quando o provedor estiver indisponível
 - [x] Aviso claro de caráter educacional e ausência de recomendação financeira
 - [ ] Verificação dos termos de uso e licença dos dados antes da publicação
