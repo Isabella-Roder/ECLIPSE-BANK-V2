@@ -14,7 +14,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Senhas armazenadas somente com hash BCrypt
 - [x] Validação dos dados recebidos pela API
 - [x] Tratamento global e padronizado de erros
-- [ ] Testes unitários e de integração das regras críticas
+- [x] Testes unitários e de integração das regras críticas
 - [x] Documentação da API com OpenAPI/Swagger
 - [x] Docker para aplicação e banco de produção
 
@@ -75,8 +75,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Rate limiting para login, Pix e transferências (`RateLimitFilter`, 10 requisições/minuto por IP e rota); recuperação de senha ainda não existe como funcionalidade
 - [x] Proteção contra tentativa de acesso a recursos de outro cliente
 - [x] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência
-- [ ] HTTPS obrigatório em produção
-- [ ] Segredos e credenciais somente em variáveis de ambiente
+- [x] HTTPS obrigatório em produção (deploy no Render)
+- [x] Segredos e credenciais de produção somente em variáveis de ambiente
 - [x] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis (`DataIntegrityViolationException` tratada à parte, sem logar a mensagem original do driver, que poderia embutir o valor conflitante)
 - [x] Testes de autorização, CSRF, sessão expirada e força bruta (linha de base; rate limiting adicionado separadamente via `RateLimitFilter`)
 - [x] Verificação de dependências vulneráveis no pipeline (Dependabot: Maven, npm e GitHub Actions)
@@ -140,11 +140,11 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
   - [x] Pagamento de parcela com débito da conta e quitação automática do empréstimo
   - [x] Testes das entidades e da orquestração do service
   - [x] Tela web responsiva com simulação, solicitação e aprovação
-- [ ] Investimentos
+- [x] Investimentos
 - [x] Contas empresariais
 - [x] Dashboard separado para conta pessoa física e conta empresarial
 - [x] Módulo de analytics em Python para relatórios financeiros
-- [ ] Conversão de moedas
+- [x] Conversão de moedas
 
 ## 8. Investimentos e dados de mercado
 
@@ -177,8 +177,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] Lista de ativos favoritos
 - [ ] Simulador de investimento por prazo e rentabilidade
 - [ ] Gráficos de evolução da carteira e distribuição por categoria
-- [ ] Integração com API externa para cotações e histórico de preços
-- [ ] Integração com API de câmbio para ativos internacionais
+- [x] Integração com API externa para cotações atuais de ações e FIIs; histórico ainda pendente
+- [x] Integração com API de câmbio para ativos internacionais
 - [ ] Exibir fonte, moeda e horário da última atualização de cada cotação
 - [ ] Cache de cotações para reduzir chamadas, latência e custo
 - [x] Tratamento de indisponibilidade da API externa (`ServicoExternoIndisponivelException`, resposta `503`); limite de requisições/cache do lado do EclipseBank ainda não implementado

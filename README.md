@@ -19,6 +19,8 @@ Esta é uma reconstrução completa do projeto original [ECLIPSE-BANK](https://g
 - Cartões de débito e crédito, compras, fechamento e pagamento de faturas.
 - Empréstimos simulados com cálculo de juros, geração de parcelas, aprovação e pagamento.
 - Painel administrativo, auditoria imutável e detecção de operações suspeitas.
+- Indicadores Selic, CDI e IPCA, cotações de ações/FIIs e conversão cambial por APIs externas.
+- Analytics financeiro em Python com relatório HTML e gráfico de despesas.
 - Exportação de extrato em CSV e impressão de extrato e comprovantes em PDF.
 - Frontend web responsivo servido pelo próprio Spring Boot em produção.
 - Aplicativo React Native integrado à mesma API segura.
@@ -155,7 +157,9 @@ Use a conta fictícia abaixo para conhecer as funcionalidades do Eclipse Bank:
 | Documentação | OpenAPI e Swagger UI |
 | Frontend web | HTML5, CSS3 e JavaScript |
 | Mobile | React Native, Expo SDK 54, Expo Router e TypeScript |
-| Infraestrutura | Docker e Docker Compose |
+| Analytics | Python, FastAPI, pandas e Matplotlib |
+| Integrações | Banco Central do Brasil, brapi.dev e AwesomeAPI |
+| Infraestrutura | Docker, Docker Compose e Render |
 
 ## Arquitetura
 
@@ -315,7 +319,7 @@ cd backend
 ./mvnw test
 ```
 
-Atualmente, a suíte possui 113 testes automatizados cobrindo, entre outros pontos:
+Atualmente, a suíte possui 123 testes automatizados cobrindo, entre outros pontos:
 
 - Regras de crédito, débito e saldo insuficiente.
 - Bloqueio e encerramento de contas.
@@ -329,6 +333,7 @@ Atualmente, a suíte possui 113 testes automatizados cobrindo, entre outros pont
 - Cálculo e pagamento de proventos.
 - Contas empresariais e autorização das contas pessoa jurídica.
 - Administração, auditoria e detecção de atividades suspeitas.
+- Indicadores econômicos, cotações, câmbio e tratamento de indisponibilidade externa.
 
 ## Documentação da API
 
@@ -367,8 +372,9 @@ As rotas são documentadas automaticamente por OpenAPI. Endpoints bancários pro
 - [x] Dados fictícios para demonstração pública.
 - [x] Screenshots do frontend web e mobile.
 - [x] Deploy público com HTTPS.
-- [ ] Integração com dados externos de mercado.
-- [ ] Analytics financeiro, categorização de gastos e notificações.
+- [x] Integração com dados externos de mercado.
+- [x] Analytics financeiro em Python.
+- [ ] Categorização de gastos e notificações.
 
 O roadmap detalhado está em [Requisitos.md](Requisitos.md).
 

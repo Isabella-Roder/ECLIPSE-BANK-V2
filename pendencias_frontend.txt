@@ -1,59 +1,39 @@
 ECLIPSE BANK V2 — PENDÊNCIAS DE FRONTEND
 
-PARA CONCLUIR A VERSÃO 1.0
+PRIORIDADES PARA A PRÓXIMA VERSÃO
 
 - Mostrar as compras dentro de cada fatura.
 - Exibir descrição, categoria, data e valor de cada compra.
 - Mostrar limite utilizado e limite disponível do cartão.
-- Testar visualmente o fluxo: lançar compra, fechar fatura e pagar fatura.
+- Criar a tela administrativa para as rotas já protegidas por ROLE_ADMIN.
+- Testar visualmente o fluxo de compra, fechamento e pagamento na demonstração.
 - Adicionar screenshots das telas de cartões e faturas ao README.
-- Atualizar o README com cartões, compras, faturas e o total atual de testes.
 
+EVOLUÇÕES DO FRONTEND WEB
 
-MELHORIAS DE INTERFACE CONCLUÍDAS
-
-- [x] Ocultação e restauração do saldo no painel.
-- [x] Máscaras de CPF e telefone no cadastro.
-- [x] Restrição numérica para agência e conta de destino.
-- [x] Máscara monetária nos campos de depósito, saque, Pix, transferência,
-  faturas, investimentos e metas financeiras.
-
-
-EVOLUÇÕES FUTURAS — FRONTEND WEB
-
-- Histórico visual de aplicações, resgates, proventos e rendimentos.
-- Lista de ativos favoritos.
-- Simulador de investimentos.
-- Gráficos de evolução e distribuição da carteira.
+- Histórico visual de investimentos e proventos.
+- Favoritos, simulador e gráficos da carteira.
 - Exibir fonte, moeda e horário das cotações externas.
-- Dashboard separado para pessoa física e pessoa jurídica.
-- Tela de empréstimos e simulação de parcelas.
-- Painel administrativo.
 - Central de notificações e atividades.
-- [x] Exportação de extrato e comprovante em PDF ou CSV concluída.
 - Resumo mensal e categorização de gastos.
-- [x] Página "Sobre o projeto" concluída.
-- Interface para favorecidos e novas chaves Pix.
-- Interface para agendamentos e pagamentos recorrentes.
+- Interface para favorecidos, novas chaves Pix e pagamentos agendados.
 
+EVOLUÇÕES DO APLICATIVO MOBILE
 
-EVOLUÇÕES FUTURAS — APLICATIVO MOBILE
-
-- Cadastro mobile.
-- Cartões e faturas mobile.
-- Interface adaptada para diferentes tamanhos de tela.
+- Cadastro de usuário.
+- Cartões e faturas.
+- Responsividade para diferentes tamanhos de tela.
 - Tema claro e escuro.
-- Desbloqueio local com biometria.
-- Encerramento e expiração de sessão.
-- Notificações de login e movimentações.
-- Ocultar valores quando o aplicativo entrar em segundo plano.
-- Impedir informações sensíveis em logs e mensagens de erro.
-- Testes em emulador Android.
-- Pipeline de build separado para desenvolvimento e produção.
+- Armazenamento seguro no Keychain/Keystore e biometria.
+- Expiração e encerramento de sessão.
+- Ocultação de valores em segundo plano.
+- Notificações e proteção de dados sensíveis em logs.
+- Testes em emulador Android e pipeline de build.
 
+JÁ CONCLUÍDO
 
-OBSERVAÇÃO
-
-Os itens de evolução futura não impedem a publicação da versão 1.0. Para finalizar
-o projeto de portfólio, a prioridade é concluir a visualização das compras da
-fatura, revisar a documentação e validar o fluxo completo no deploy.
+- Dashboards separados para pessoa física e jurídica.
+- Tela de empréstimos e simulação de parcelas.
+- Exportação de extrato e comprovante.
+- Página Sobre o projeto.
+- Máscaras de entrada e ocultação de saldo.
