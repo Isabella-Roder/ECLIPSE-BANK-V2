@@ -105,6 +105,8 @@ public class UsuarioController {
         SecurityContextHolder.setContext(contexto);
         securityContextRepository.saveContext(contexto, requisicao, resposta);
 
+        requisicao.getSession(true).setAttribute("criadaEm", java.time.Instant.now());
+
         return ResponseEntity.ok(usuario);
     }
 

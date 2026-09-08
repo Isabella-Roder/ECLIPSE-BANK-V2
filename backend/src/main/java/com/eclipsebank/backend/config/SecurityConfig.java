@@ -18,6 +18,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy;
 
 import com.eclipsebank.backend.security.CsrfCookieFilter;
+import com.eclipsebank.backend.security.DuracaoMaximaSessaoFilter;
 import com.eclipsebank.backend.security.RateLimitFilter;
 
 @Configuration
@@ -33,7 +34,8 @@ public class SecurityConfig {
         HttpSecurity http,
         SecurityContextRepository securityContextRepository,
         CsrfCookieFilter csrfCookieFilter,
-        RateLimitFilter rateLimitFilter
+        RateLimitFilter rateLimitFilter,
+        DuracaoMaximaSessaoFilter duracaoMaximaSessaoFilter
     ) throws Exception {
         http
             .cors(withDefaults())
@@ -45,6 +47,7 @@ public class SecurityConfig {
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
             )
             .addFilterBefore(rateLimitFilter, CsrfFilter.class)
+            .addFilterBefore(duracaoMaximaSessaoFilter, CsrfFilter.class)
             .addFilterAfter(csrfCookieFilter, BasicAuthenticationFilter.class)
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())
