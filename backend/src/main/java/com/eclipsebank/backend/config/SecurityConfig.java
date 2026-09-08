@@ -95,6 +95,7 @@ public class SecurityConfig {
                     "/swagger-ui.html"
                 ).permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/mercado/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/investimentos/produtos").hasRole("ADMIN")
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

@@ -194,4 +194,18 @@ public class ManipuladorGlobalException {
             Map.of()
         );
     }
+
+    @ExceptionHandler(ServicoExternoIndisponivelException.class)
+    public ResponseEntity<ErroResposta> tratarServicoExternoIndisponivel(
+        ServicoExternoIndisponivelException exception,
+        HttpServletRequest request
+    ) {
+        return criarResposta(
+            HttpStatus.SERVICE_UNAVAILABLE,
+            "Serviço externo indisponível",
+            exception.getMessage(),
+            request,
+            Map.of()
+        );
+    }
 }
