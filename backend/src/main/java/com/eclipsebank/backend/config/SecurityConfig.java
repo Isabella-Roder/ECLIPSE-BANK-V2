@@ -13,10 +13,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy;
 
 import com.eclipsebank.backend.security.CsrfCookieFilter;
+import com.eclipsebank.backend.security.RateLimitFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -30,7 +32,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(
         HttpSecurity http,
         SecurityContextRepository securityContextRepository,
-        CsrfCookieFilter csrfCookieFilter
+        CsrfCookieFilter csrfCookieFilter,
+        RateLimitFilter rateLimitFilter
     ) throws Exception {
         http
             .cors(withDefaults())
@@ -41,6 +44,7 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
             )
+            .addFilterBefore(rateLimitFilter, CsrfFilter.class)
             .addFilterAfter(csrfCookieFilter, BasicAuthenticationFilter.class)
             .formLogin(form -> form.disable())
             .httpBasic(basic -> basic.disable())

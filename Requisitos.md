@@ -72,7 +72,7 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Restringir `GET /api/usuarios/{id}`, `PATCH /api/usuarios/{id}` e `DELETE /api/usuarios/{id}` ao próprio usuário ou a `ROLE_ADMIN`; `GET /api/usuarios` removido do `UsuarioController` por já existir como `GET /api/admin/usuarios`, restrito a admin
 - [ ] Limite absoluto de duração da sessão
 - [x] Renovação do identificador de sessão após o login
-- [ ] Rate limiting para login, Pix, transferências e recuperação de senha
+- [x] Rate limiting para login, Pix e transferências (`RateLimitFilter`, 10 requisições/minuto por IP e rota); recuperação de senha ainda não existe como funcionalidade
 - [x] Proteção contra tentativa de acesso a recursos de outro cliente
 - [x] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência
 - [ ] HTTPS obrigatório em produção
