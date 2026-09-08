@@ -13,4 +13,11 @@ public class BancoCentralConfig {
             .baseUrl("https://api.bcb.gov.br/dados/serie")
             .build();
     }
+
+    @Bean 
+    RestClient brapiRestClient() {
+        return RestClient.builder()
+            .baseUrl("https://brapi.dev/api")
+            .build();
+    }
 }

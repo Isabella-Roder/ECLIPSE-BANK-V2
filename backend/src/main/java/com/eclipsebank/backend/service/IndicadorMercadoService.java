@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -23,7 +24,7 @@ public class IndicadorMercadoService {
 
     private final RestClient bancoCentralRestClient;
 
-    public IndicadorMercadoService(RestClient bancoCentralRestClient) {
+    public IndicadorMercadoService(@Qualifier("bancoCentralClient") RestClient bancoCentralRestClient) {
         this.bancoCentralRestClient = bancoCentralRestClient;
     }
 

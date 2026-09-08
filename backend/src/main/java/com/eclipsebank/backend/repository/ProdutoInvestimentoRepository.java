@@ -1,6 +1,7 @@
 package com.eclipsebank.backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,6 @@ public interface ProdutoInvestimentoRepository extends JpaRepository<ProdutoInve
     boolean existsByCodigoIgnoreCase(String codigo);
 
     List<ProdutoInvestimento> findByAtivoTrueOrderByNomeAsc();
+
+    Optional<ProdutoInvestimento> findByCodigoIgnoreCase(String codigo);
 }
