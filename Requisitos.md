@@ -70,14 +70,14 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [x] Logout com invalidação da sessão no servidor
 - [x] Expiração da sessão após 30 minutos de inatividade
 - [x] Restringir `GET /api/usuarios/{id}`, `PATCH /api/usuarios/{id}` e `DELETE /api/usuarios/{id}` ao próprio usuário ou a `ROLE_ADMIN`; `GET /api/usuarios` removido do `UsuarioController` por já existir como `GET /api/admin/usuarios`, restrito a admin
-- [ ] Limite absoluto de duração da sessão
+- [x] Limite absoluto de duração da sessão (8h, `DuracaoMaximaSessaoFilter`, independente de atividade)
 - [x] Renovação do identificador de sessão após o login
 - [x] Rate limiting para login, Pix e transferências (`RateLimitFilter`, 10 requisições/minuto por IP e rota); recuperação de senha ainda não existe como funcionalidade
 - [x] Proteção contra tentativa de acesso a recursos de outro cliente
 - [x] Cabeçalhos CSP, HSTS, `X-Content-Type-Options` e política de referência
 - [ ] HTTPS obrigatório em produção
 - [ ] Segredos e credenciais somente em variáveis de ambiente
-- [ ] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis
+- [x] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis (`DataIntegrityViolationException` tratada à parte, sem logar a mensagem original do driver, que poderia embutir o valor conflitante)
 - [x] Testes de autorização, CSRF, sessão expirada e força bruta (linha de base; rate limiting adicionado separadamente via `RateLimitFilter`)
 - [x] Verificação de dependências vulneráveis no pipeline (Dependabot: Maven, npm e GitHub Actions)
 - [ ] Autenticação em dois fatores como evolução futura
