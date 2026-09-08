@@ -24,6 +24,7 @@ import com.eclipsebank.backend.dto.UsuarioAtualizacao;
 import com.eclipsebank.backend.dto.UsuarioCadastro;
 import com.eclipsebank.backend.dto.UsuarioResposta;
 import com.eclipsebank.backend.exception.CredenciaisInvalidasException;
+import com.eclipsebank.backend.security.UsuarioAutenticado;
 import com.eclipsebank.backend.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,10 +41,12 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final SecurityContextRepository securityContextRepository;
+    private final UsuarioAutenticado usuarioAutenticado;
 
-    public UsuarioController(UsuarioService usuarioService, SecurityContextRepository securityContextRepository) {
+    public UsuarioController(UsuarioService usuarioService, SecurityContextRepository securityContextRepository, UsuarioAutenticado usuarioAutenticado) {
         this.usuarioService = usuarioService;
         this.securityContextRepository = securityContextRepository;
+        this.usuarioAutenticado = usuarioAutenticado;
     }
 
     @Operation(summary = "Cadastrar usuário", description = "Cria um novo usuário com e-mail e CPF únicos")
@@ -55,27 +58,24 @@ public class UsuarioController {
         return ResponseEntity.created(localizacao).body(usuario);
     }
 
-    @Operation(summary = "Listar usuários", description = "Lista todos os usuários cadastrados")
-    @GetMapping
-    public ResponseEntity<List<UsuarioResposta>> listar() {
-        return ResponseEntity.ok(usuarioService.listar());
-    }
-
     @Operation(summary = "Buscar usuário por ID", description = "Retorna os dados de um usuário pelo ID")
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResposta> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResposta> buscarPorId(@PathVariable Long id, Authentication authentication) {
+        usuarioAutenticado.validarAcessoAoUsuario(authentication, id);
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
 
     @Operation(summary = "Atualizar usuário", description = "Atualiza os dados cadastrais de um usuário")
     @PatchMapping("/{id}")
-    public ResponseEntity<UsuarioResposta> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioAtualizacao dados) {
+    public ResponseEntity<UsuarioResposta> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioAtualizacao dados, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, id);
         return ResponseEntity.ok(usuarioService.atualizar(id, dados));
     }
 
     @Operation(summary = "Desativar usuário", description = "Desativa um usuário, impedindo novos logins")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> desativar(@PathVariable Long id) {
+    public ResponseEntity<Void> desativar(@PathVariable Long id, Authentication autenticacao) {
+        usuarioAutenticado.validarAcessoAoUsuario(autenticacao, id);
         usuarioService.desativar(id);
         return ResponseEntity.noContent().build();
     }
