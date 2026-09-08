@@ -78,8 +78,8 @@ Reconstruir o Eclipse Bank com arquitetura organizada, regras bancárias seguras
 - [ ] HTTPS obrigatório em produção
 - [ ] Segredos e credenciais somente em variáveis de ambiente
 - [ ] Logs de auditoria sem senha, token, CPF completo ou dados bancários sensíveis
-- [x] Testes de autorização, CSRF, sessão expirada e força bruta (linha de base, sem rate limiting ainda)
-- [ ] Verificação de dependências vulneráveis no pipeline
+- [x] Testes de autorização, CSRF, sessão expirada e força bruta (linha de base; rate limiting adicionado separadamente via `RateLimitFilter`)
+- [x] Verificação de dependências vulneráveis no pipeline (Dependabot: Maven, npm e GitHub Actions)
 - [ ] Autenticação em dois fatores como evolução futura
 
 ## 6. Frontend
